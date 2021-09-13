@@ -1,2 +1,6 @@
 # Lorem-Ipsum
-Inheritance 2021 git intro
+Project Description:VJTI Social Media 
+Team Members:Utkarsh Chheda
+             Abhishek Gupta
+             Mayuri Pawar
+             Dhanashree Pawar
