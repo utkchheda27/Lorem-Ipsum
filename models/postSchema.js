@@ -12,7 +12,7 @@ const postSchema = {
     type: Number,
     default: 0,
   },
-  Commemt: {
+  Comments: {
     type: [String],
   },
 };

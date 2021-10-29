@@ -2,8 +2,12 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 dotenv.config();
-import User from "./models/userSchema.js";
 import Post from "./models/postSchema.js";
+import path from "path";
+const __dirname = path.resolve();
+import { homepageHandler, getPosts } from './contollers/homepage.js';
+
+const app = express();
 
 mongoose.connect(process.env.DB_ACCESS_LINK);
 
@@ -14,14 +18,15 @@ mongoose.connection.once("open", () => {
   console.log("connected to db");
 });
 
-const app = express();
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "/views"));
+app.use(express.static(path.join(__dirname, "public")));
 
 const port = 4000;
 
-app.get("/api/posts", async (req, res) => {
-  const data = await Post.find({});
-  res.json(data);
-});
+app.get("/", homepageHandler);
+
+app.get('/get_posts', getPosts)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}`);
