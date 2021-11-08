@@ -7,15 +7,63 @@ const loadingElement = document.createElement('div')
 loadingElement.classList.add('lds-dual-ring')
 loadingElementCtn.append(loadingElement)
 
+// body
+const body = document.querySelector('body')
 
 const loadedPosts = new Map() // stores all post on th page
 let pageNo = 1; // page no
+/*
 
+*/
 // load more btn which is at the bottom of the page 
 const loadMoreBtn = document.createElement('button')
 loadMoreBtn.innerText = "load more posts"
 loadMoreBtn.classList.add('loadmore-btn')
 
+//overlay
+const overlay = document.createElement('div')
+overlay.classList.add('overlay')
+overlay.addEventListener('click', () => {
+  overlay.innerHTML = ``;
+  overlay.remove()
+  body.classList.remove('noscroll')
+})
+
+
+// create post form
+const postInput = document.querySelector('.create-post-form .create-post-form-input')
+postInput.addEventListener('click', (e) => {
+  overlay.innerHTML = `
+  <div class="create-post-overlay">
+              <div class="create-post-title">
+                <h3>Create Post</h3>
+              </div>
+              <div class="create-post-user-info">
+                <div class="create-post-user-img-ctn">
+                  <img
+                    src="https://img.etimg.com/thumb/msid-50589035,width-650,imgsize-123073,,resizemode-4,quality-100/.jpg"
+                    alt="loggedInUserInfo" class="create-post-user-img">
+                </div>
+                <div class="create-post-user-name">
+                  <span>Rajesh Koothrappali</span>
+                </div>
+              </div>
+              <form action="/createPost" method="post" class="create-post-form-overlay">
+                <textarea name="caption" id="" cols="30" rows="10" class="create-post-caption"
+                  placeholder="What's in your find, Rajesh ?"></textarea>
+                <input type="text" name="image" class="create-post-img-link"
+                  placeholder="Wanna share image? submit link here">
+                <div class="create-post-submit-btn-ctn">
+                  <button type="submit" class="submit-btn">
+                    Post
+                  </button>
+                </div>
+              </form>
+  `
+  main.append(overlay)
+  body.classList.add('noscroll')
+  postInput.blur()
+})
 
 
 const toogleMoreOptionMenu = (btn) => { // toogles more option on a post
