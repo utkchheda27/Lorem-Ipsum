@@ -14,6 +14,7 @@ const postSchema = {
   },
   Comments: {
     type: [String],
+    default: [],
   },
 };
 
