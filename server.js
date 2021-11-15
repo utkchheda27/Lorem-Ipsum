@@ -5,7 +5,7 @@ dotenv.config();
 import Post from "./models/postSchema.js";
 import path from "path";
 const __dirname = path.resolve();
-import { homepageHandler, getPosts } from './contollers/homepage.js';
+import { homepageHandler, getPosts, createPostHandler } from './contollers/homepage.js';
 
 const app = express();
 
@@ -26,15 +26,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const port = 4000;
 
-app.post('/createPost', async (req, res) => {
-  const { caption, image } = req.body;
-  // console.log(caption, image)
-  const tempPost = new Post({ Description: caption, Images: [image] })
-  const res1 = await tempPost.save();
-  console.log(res1);
-  res.redirect('/')
-})
-
+app.post('/createPost', createPostHandler)
 app.get("/", homepageHandler);
 app.get('/get_posts', getPosts)
 
