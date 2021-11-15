@@ -23,46 +23,67 @@ loadMoreBtn.classList.add('loadmore-btn')
 //overlay
 const overlay = document.createElement('div')
 overlay.classList.add('overlay')
-overlay.addEventListener('click', () => {
-  overlay.innerHTML = ``;
-  overlay.remove()
-  body.classList.remove('noscroll')
-})
 
+
+let closeOverLayBtn; // create-post-elemt-close-btn
 
 // create post form
 const postInput = document.querySelector('.create-post-form .create-post-form-input')
 postInput.addEventListener('click', (e) => {
+  console.log("here")
   overlay.innerHTML = `
-  <div class="create-post-overlay">
+ <div class="create-post-overlay">
               <div class="create-post-title">
-                <h3>Create Post</h3>
+                <div class="placeholder">
+
+                </div>
+                <div class="title-ctn">
+                  <h3>Create Post</h3>
+                </div>
+                <div class="close-btn-ctn">
+                  <button><i class="fa fa-times" aria-hidden="true"></i></button>
+                </div>
               </div>
               <div class="create-post-user-info">
                 <div class="create-post-user-img-ctn">
-                  <img
+                  <a href="#">
+                    <img
                     src="https://img.etimg.com/thumb/msid-50589035,width-650,imgsize-123073,,resizemode-4,quality-100/.jpg"
                     alt="loggedInUserInfo" class="create-post-user-img">
+                  </a>
                 </div>
                 <div class="create-post-user-name">
-                  <span>Rajesh Koothrappali</span>
+                  <a href="#">
+                    <span>Rajesh Koothrappali</span>
+                  </a>
                 </div>
               </div>
               <form action="/createPost" method="post" class="create-post-form-overlay">
                 <textarea name="caption" id="" cols="30" rows="10" class="create-post-caption"
                   placeholder="What's in your find, Rajesh ?"></textarea>
                 <input type="text" name="image" class="create-post-img-link"
-                  placeholder="Wanna share image? submit link here">
+                  placeholder="Wanna share image? submit link here" autocomplete="off">
                 <div class="create-post-submit-btn-ctn">
                   <button type="submit" class="submit-btn">
                     Post
                   </button>
                 </div>
               </form>
+            </div>
   `
   main.append(overlay)
+  console.log(overlay.innerHTML)
   body.classList.add('noscroll')
   postInput.blur()
+  closeOverLayBtn = document.querySelector(".create-post-title .close-btn-ctn button")
+  console.log(closeOverLayBtn)
+  closeOverLayBtn.addEventListener('click', () => {
+    overlay.innerHTML = ``;
+    overlay.remove()
+    closeOverLayBtn = undefined;
+    body.classList.remove('noscroll')
+
+  })
 })
 
 
@@ -88,18 +109,19 @@ const commentShowAndHide = (Btn) => { // shows and hides comment
 }
 
 
-const createPost = ({ Description, Likes, Comments }) => {
+const createPost = ({ Description, Likes, Comments, Images }) => {
   const post = document.createElement('div') // post element
   post.classList.add('post')
-
   post.innerHTML = `<div class="post-header">
                 <div class="post-user-img-ctn">
-                  <img
+                  <a href="#">
+                    <img
                     src="https://images6.fanpop.com/image/photos/39400000/Bernadette-Rostenkowski-bernadette-rostenkowski-39458985-466-304.jpg"
                     alt="user profile" class="post-user-img">
+                  </a>
                 </div>
                 <div class="user-name-date">
-                  <span class="username">Bernadette Rostenkowski</span>
+                  <a href="#"><span class="username">Bernadette Rostenkowski</span></a>
                   <span>3h</span>
                 </div>
                 <div class="morebtn-ctn">
@@ -128,7 +150,7 @@ const createPost = ({ Description, Likes, Comments }) => {
                 </p>
                 <div class="post-img-ctn">
                   <img
-                    src="https://previews.123rf.com/images/ewastudio/ewastudio1608/ewastudio160800344/61486457-beauty-nature-scenery-landscape-background-nature-composition-beautiful-landscape.jpg"
+                    src=${Images[0]}
                     alt="post images" class="post-img">
                 </div>
               </div>
@@ -164,11 +186,15 @@ const createPost = ({ Description, Likes, Comments }) => {
     <article class="comment">
                     <div class="comment-header">
                       <div class="commentators-img-ctn">
-                        <img src="https://upload.wikimedia.org/wikipedia/en/d/da/Matt_LeBlanc_as_Joey_Tribbiani.jpg"
+                        <a href="#">
+                          <img src="https://upload.wikimedia.org/wikipedia/en/d/da/Matt_LeBlanc_as_Joey_Tribbiani.jpg"
                           alt="commentators picture" class="commentators-img">
+                        </a>
                       </div>
                       <div class="commentators-details">
-                        <span class="commentators-name">Joey_Tribbiani__</span>
+                        <a href="#">
+                          <span class="commentators-name">Joey_Tribbiani__</span>
+                        </a>
                         <span class="time">3 h</span>
                       </div>
                       <div class="comment-morebtn-ctn">
@@ -215,6 +241,7 @@ const loadMoreHandler = async (e) => { // add more post at the end when user cli
   pageNo++;
   const posts = await axios.get(`/get_posts?pageNo=${pageNo}`) // request backend for more posts
   const morePosts = posts.data.posts  // extract posts
+  const more = posts.data.more;
   const temp = []
   for (let post of morePosts) { // going through moreposts we check whether a post in moreposts is present in the loadedPosts if not we add post to main element and add that it to loaded posts
 
@@ -226,7 +253,17 @@ const loadMoreHandler = async (e) => { // add more post at the end when user cli
   }
   loadingElementCtn.remove() // removing loading animation
   main.append(...temp)      // adding posts
-  main.append(loadMoreBtn) // appending load more posts option
+  if (!more) {
+    const noMorePostsCtn = document.createElement('div');
+    const h3 = document.createElement('h3');
+    h3.innerText = "No More Posts";
+    noMorePostsCtn.append(h3);
+    noMorePostsCtn.classList.add('no-more-posts')
+    main.append(noMorePostsCtn);
+  }
+  else {
+    main.append(loadMoreBtn) // appending load more posts option
+  }
 
 }
 loadMoreBtn.addEventListener('click', loadMoreHandler) // adds click event to loadmorw btn

@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import Post from "../models/postSchema.js";
-
 const id = 1065376;
 mongoose.connect(
   "mongodb+srv://Abhishek_Gupta:Dqg5Y8K71aZS8rgT@cluster0.332em.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
@@ -28,7 +27,7 @@ const seedApi = async () => {
   await Post.deleteMany({});
   for (let i = 0; i < 51; i++) {
     const post = new Post({
-      Images: [`https://source.unsplash.com/collection/${id}/1600x900`],
+      Images: [`https://cdn.mos.cms.futurecdn.net/6zicBixtUpfUHJYqcwrzmS-1024-80.jpg.webp`],
       Description: caption[Math.floor(Math.random() * caption.length)],
       Likes: 10 + Math.floor(Math.random() * 101),
       Comments: comments,
