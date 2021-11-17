@@ -1,7 +1,5 @@
 import express from "express";
-import dotenv from "dotenv";
 import mongoose from "mongoose";
-dotenv.config();
 import Post from "./models/postSchema.js";
 import path from "path";
 const __dirname = path.resolve();
@@ -9,6 +7,8 @@ import { homepageHandler, getPosts, createPostHandler } from './contollers/homep
 
 const app = express();
 
+import dotenv from "dotenv";
+dotenv.config();
 mongoose.connect(process.env.DB_ACCESS_LINK);
 
 mongoose.connection.on("error", (e) => {
@@ -29,6 +29,10 @@ const port = 4000;
 app.post('/createPost', createPostHandler)
 app.get("/", homepageHandler);
 app.get('/get_posts', getPosts)
+
+app.get("/user/:id", (req, res) => {
+  res.render('profilePage')
+})
 
 app.listen(port, () => {
   console.log(`App running on port ${port}`);

@@ -11,6 +11,7 @@ body {
   width: 100vw;
   max-width: 100%;
   overflow-x: hidden;
+  position: relative;
 }
 
 span {
@@ -20,6 +21,7 @@ span {
 input {
   border: 0;
   outline: 0;
+  display: inline-block !important;
 }
 input,
 textarea:focus {
