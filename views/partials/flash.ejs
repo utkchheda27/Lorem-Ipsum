@@ -1,0 +1,13 @@
+<% if(success && success.length) {%> 
+    <div class="success">
+    <%=success %> 
+    <button type="button"><i class="fas fa-check success"></i></button>
+    </div>
+    <% } %> 
+    
+    <% if(error && error.length) {%> 
+        <div class="alert">
+        <%=error %> 
+        <button type="button" ></button>
+        </div>
+        <% } %> 
