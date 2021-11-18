@@ -50,3 +50,65 @@
 .description p {
   font-size: 1.25em;
 }
+
+.friends-posts-ctn {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.user-posts {
+  width: 50%;
+}
+
+.friends {
+  width: 47%;
+  background-color: #c4bab8;
+  height: auto;
+  padding: 20px;
+  border-radius: 10px;
+  position: sticky;
+  top: 90px;
+}
+
+.friends-title {
+  width: 100%;
+  text-align: center;
+  margin: 5px1 0;
+  font-size: 2.5em;
+}
+
+.friends-ctn {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.friend {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+}
+
+.friend .friend-img {
+  height: 90px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.friend .friend-name {
+  width: 100%;
+  height: 30px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.friend .friend-name:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

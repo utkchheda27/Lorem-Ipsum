@@ -10,11 +10,11 @@ loadingElementCtn.append(loadingElement)
 // body
 const body = document.querySelector('body')
 
-const loadedPosts = new Map() // stores all post on th page
+const loadedPosts = new Map() // stores all post on the page
 let pageNo = 1; // page no
-/*
 
-*/
+
+
 // load more btn which is at the bottom of the page 
 const loadMoreBtn = document.createElement('button')
 loadMoreBtn.innerText = "load more posts"
@@ -30,7 +30,6 @@ let closeOverLayBtn; // create-post-elemt-close-btn
 // create post form
 const postInput = document.querySelector('.create-post-form .create-post-form-input')
 postInput.addEventListener('click', (e) => {
-  console.log("here")
   overlay.innerHTML = `
  <div class="create-post-overlay">
               <div class="create-post-title">
@@ -72,11 +71,9 @@ postInput.addEventListener('click', (e) => {
             </div>
   `
   main.append(overlay)
-  console.log(overlay.innerHTML)
   body.classList.add('noscroll')
   postInput.blur()
   closeOverLayBtn = document.querySelector(".create-post-title .close-btn-ctn button")
-  console.log(closeOverLayBtn)
   closeOverLayBtn.addEventListener('click', () => {
     overlay.innerHTML = ``;
     overlay.remove()
