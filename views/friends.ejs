@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends</title>
+    <link rel="stylesheet" href="/CSS/navbar.css">
+    <link rel="stylesheet" href="/CSS/app.css">
+    <link rel="stylesheet" href="/CSS/friends.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.min.js"
+        integrity="sha512-Idr7xVNnMWCsgBQscTSCivBNWWH30oo/tzYORviOCrLKmBaRxRflm2miNhTFJNVmXvCtzgms5nlJF4az2hiGnA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/JS/friends.js" defer type="module"></script>
+</head>
+
+<body>
+    <%- include('partials/navbar') %>
+        <div class="friends-ctn">
+            <div class="list-options">
+                <div class="list-option suggestions">
+                    <button><span>Suggestions</span><i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="list-option friends">
+                    <button><span>Friends</span> <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="list-option requests is-active">
+                    <button><span>Friend Requests</span> <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="list-option sent-requests">
+                    <button><span>Sent Requests</span> <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="type-friends-ctn">
+            </div>
+        </div>
+</body>
+
+</html>
+<!-- <div class="type-friends">
+    <div class="profile-img-ctn">
+        <img src="https://st1.bollywoodlife.com/wp-content/uploads/2020/09/FotoJet382.jpg?impolicy=Medium_Widthonly&w=800"
+            alt="" class="profile">
+    </div>
+    <div class="name-ctn">
+        <h4 class="username">Shinchan</h4>
+    </div>
+    <div class="response-ctn">
+        <div>
+            <button>Accept <i class="fa fa-check" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div>
+            <button>
+                Reject <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+</div> -->
+
+<!-- <div class="align-center-ctn">
+                        <div class="lds-ellipsis">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div> -->

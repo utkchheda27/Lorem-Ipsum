@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Post from "../models/postSchema.js";
+import User from "../models/user.js";
 const id = 1065376;
 mongoose.connect(
   "mongodb+srv://Abhishek_Gupta:Dqg5Y8K71aZS8rgT@cluster0.332em.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
@@ -25,15 +26,27 @@ const comments = ["nice pic", "indeed!!", "insightful!!", "how you doin'"];
 
 const seedApi = async () => {
   await Post.deleteMany({});
-  for (let i = 0; i < 51; i++) {
+  const user = await User.findById("619dd6e7604166e151fd8548");
+
+  for (let i = 0; i < 10; i++) {
+    const date = new Date;
+    const dateN = `${date.getDate()}|${date.getMonth()}|${date.getFullYear()}`
+    const time = `${date.getHours()}:${date.getMinutes()}`
     const post = new Post({
       Images: [`https://cdn.mos.cms.futurecdn.net/6zicBixtUpfUHJYqcwrzmS-1024-80.jpg.webp`],
       Description: caption[Math.floor(Math.random() * caption.length)],
       Likes: 10 + Math.floor(Math.random() * 101),
       Comments: comments,
+      User: '619dd6e7604166e151fd8548',
+      Date: dateN,
+      Time: time
     });
-    await post.save();
+    const tpost = await post.save();
+    console.log(tpost);
+    user.posts.push(tpost);
   }
+  const tuser = await user.save();
+  console.log(tuser);
 };
 
 seedApi();

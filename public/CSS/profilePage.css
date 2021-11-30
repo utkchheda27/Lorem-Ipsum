@@ -1,0 +1,235 @@
+.main-ctn {
+  width: 80%;
+  margin: auto;
+  height: auto;
+  margin-top: 25px;
+}
+
+.profile-background-img {
+  background-image: url("https://www.hellomagazine.com/imagenes/film/20210317109117/the-big-bang-theory-cast-real-life-children/0-526-707/the-big-bang-theory-insta-a-a.webp?filter=high");
+  height: 400px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* filter: blur(4px); blur effect */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  border-radius: 5px;
+  position: relative;
+  top: 0;
+}
+
+.profile-img-ctn {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+}
+
+/* box-shadow: none|h-offset v-offset blur spread color |inset|initial|inherit; */
+
+.btn-ctn-profile-page{
+  position: absolute;
+  bottom: 20px;
+  left: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-background-img  .request-btn {
+  background-color: #c4bab8;
+  height: 50px;
+  padding: 10px 5px;
+  width: auto;
+  border-radius: 5px;
+}
+
+.btn1{
+  background-color: #c4bab8;
+  height: auto;
+  padding: 10px 5px;
+  min-width: 75px;
+  width: auto;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 1em;
+  margin: auto 10px;
+}
+
+.btn1:active{
+  transform: scale(0.95);
+}
+
+.profile-background-img  .request-btn:active{
+  height: 45px;
+}
+
+.profile-img {
+  height: inherit;
+  width: inherit;
+  border-radius: inherit;
+  border: 5px solid white;
+  object-fit: cover;
+}
+
+.username {
+  width: 100%;
+  margin: 10px auto;
+  text-align: center;
+}
+.username h2 {
+  font-size: 2em;
+}
+
+.description {
+  width: 100%;
+  margin: 5px;
+  text-align: center;
+}
+
+.description p {
+  font-size: 1.25em;
+}
+
+.friends-posts-ctn {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.user-posts {
+  width: 50%;
+}
+
+.friends {
+  width: 47%;
+  background-color: #c4bab8;
+  height: auto;
+  padding: 20px;
+  border-radius: 10px;
+  position: sticky;
+  top: 90px;
+}
+
+.friends-title {
+  width: 100%;
+  text-align: center;
+  margin: 5px1 0;
+  font-size: 2.5em;
+}
+
+.friends-ctn {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.friend {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+}
+
+.friend .friend-img {
+  height: 90px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.friend .friend-name {
+  width: 100%;
+  height: 30px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.friend .friend-name:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+
+/* loading animation */
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgb(0, 0, 0);
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+/* Overlay */
+
+.cover-screen{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.align-center-ctn{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -16,6 +16,19 @@ const postSchema = {
     type: [String],
     default: [],
   },
+  User: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  Date: {
+    type: String,
+    required: true,
+  },
+  Time: {
+    type: String,
+    required: true,
+  }
 };
 
 export default mongoose.model("Post", new mongoose.Schema(postSchema));

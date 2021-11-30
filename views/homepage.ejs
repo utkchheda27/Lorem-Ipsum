@@ -2,62 +2,60 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
-    <link rel="stylesheet" href="/CSS/app.css" />
-    <link rel="stylesheet" href="/CSS/navbar.css" />
-    <link rel="stylesheet" href="/CSS/homepage.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
-        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet">
-    <script src="/JS/homepage.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.min.js"
-        integrity="sha512-Idr7xVNnMWCsgBQscTSCivBNWWH30oo/tzYORviOCrLKmBaRxRflm2miNhTFJNVmXvCtzgms5nlJF4az2hiGnA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homepage</title>
+  <link rel="stylesheet" href="/CSS/app.css" />
+  <link rel="stylesheet" href="/CSS/navbar.css" />
+  <link rel="stylesheet" href="/CSS/homepage.css" />
+  <link rel="stylesheet" href="/CSS/footer.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+    integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.min.js"
+    integrity="sha512-Idr7xVNnMWCsgBQscTSCivBNWWH30oo/tzYORviOCrLKmBaRxRflm2miNhTFJNVmXvCtzgms5nlJF4az2hiGnA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/JS/homepage.js" defer></script>
 </head>
 
 <body>
-    <%- include('partials/navbar') %>
-        <div class="main-ctn">
+  <%- include('partials/navbar') %>
+    <div class="main-ctn">
+      <aside class="loggedin-user-info">
+        <section class="profile-img-ctn">
+          <img src=<%=currentUser.profilePicture %> alt="logged in user
+          profile picture" class="profile-pic">
+        </section>
+        <section>
+          <a href="/user/<%= currentUser._id %>">
+            <span>
+              <%= currentUser.username %>
+            </span>
+          </a>
+        </section>
+        <section class="no-of-friends">
+          <span>friends <%= currentUser.friends.length %> </span>
+        </section>
+        <section class="no-of-posts">
+          <span>posts <%= currentUser.posts.length %> </span>
+        </section>
+      </aside>
 
-            <aside class="loggedin-user-info">
-                <section class="profile-img-ctn">
-                    <img src="https://img.etimg.com/thumb/msid-50589035,width-650,imgsize-123073,,resizemode-4,quality-100/.jpg"
-                        alt="logged in user profile picture" class="profile-pic">
-                </section>
-                <section>
-                    <a href="">
-                        <span>Rajesh Koothrappali</span>
-                    </a>
-                </section>
-                <section class="no-of-friends">
-                    <span>friends 5</span>
-                </section>
-                <section class="no-of-posts">
-                    <span>posts 15</span>
-                </section>
-            </aside>
-
-
-            <main class="main">
-                <form class="create-post-form">
-                    <a href="#">
-                        <img src="https://img.etimg.com/thumb/msid-50589035,width-650,imgsize-123073,,resizemode-4,quality-100/.jpg"
-                            alt="logged in user image" class="loggedin-user-img-post">
-                    </a>
-                    <input type="text" name="post" id="post" placeholder="Share Something"
-                        class="create-post-form-input">
-                </form>
-            </main>
-            <aside class="sidebar2"></aside>
-        </div>
-        </div>
-        <%- include('partials/footer') %>
+      <main class="main">
+        <form class="create-post-form">
+          <a href="/user/<%= currentUser._id %>">
+            <img src=<%=currentUser.profilePicture%>
+            alt="logged in user image" class="loggedin-user-img-post">
+          </a>
+          <input type="text" name="post" id="post" placeholder="Share Something" class="create-post-form-input" />
+        </form>
+      </main>
+      <aside class="sidebar2"></aside>
+    </div>
 </body>
 
 </html>
