@@ -16,12 +16,53 @@
   justify-content: center;
   align-items: flex-end;
   border-radius: 5px;
+  position: relative;
+  top: 0;
 }
 
 .profile-img-ctn {
   height: 200px;
   width: 200px;
   border-radius: 50%;
+}
+
+/* box-shadow: none|h-offset v-offset blur spread color |inset|initial|inherit; */
+
+.btn-ctn-profile-page{
+  position: absolute;
+  bottom: 20px;
+  left: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-background-img  .request-btn {
+  background-color: #c4bab8;
+  height: 50px;
+  padding: 10px 5px;
+  width: auto;
+  border-radius: 5px;
+}
+
+.btn1{
+  background-color: #c4bab8;
+  height: auto;
+  padding: 10px 5px;
+  min-width: 75px;
+  width: auto;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 1em;
+  margin: auto 10px;
+}
+
+.btn1:active{
+  transform: scale(0.95);
+}
+
+.profile-background-img  .request-btn:active{
+  height: 45px;
 }
 
 .profile-img {
@@ -107,8 +148,88 @@
   height: 30px;
   overflow: hidden;
   white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 .friend .friend-name:hover {
   cursor: pointer;
   text-decoration: underline;
+}
+
+
+/* loading animation */
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgb(0, 0, 0);
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+/* Overlay */
+
+.cover-screen{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.align-center-ctn{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -5,9 +5,14 @@
   font-family: "Work Sans", sans-serif;
 }
 
+html{
+  height: 100%;
+}
+
 body {
   background-color: #f8edeb;
-  min-height: 100vh;
+  min-height: 100%;
+  overflow-y: scroll;
   width: 100vw;
   max-width: 100%;
   overflow-x: hidden;
@@ -104,14 +109,19 @@ label {
 
 .post-header .user-name-date {
   width: 60%;
+  height: 70%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: flex-start;
 }
 
 .post-header .user-name-date .username {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+}
+
+.user-name-date .date-time span {
+  margin-right: 10px;
 }
 
 .post-header .morebtn-ctn {
@@ -183,7 +193,9 @@ label {
 
 .post-body .post-caption {
   font-size: 0.9em;
-  margin-bottom: 20px;
+}
+.post-img-ctn {
+  margin-top: 20px;
 }
 
 .post-body .post-img-ctn .post-img {
@@ -465,4 +477,29 @@ label {
   border: none;
   background-color: blue;
   border-radius: 5px;
+}
+
+/* ================================Error============================================ */
+.errorCtn{
+  position: absolute;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -500px;
+  transition: all 0.75s;
+}
+
+.error{
+  width: auto;
+  max-width: 400px;
+  height: auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgb(255, 25, 70);
+}
+
+.show{
+  top: 100px !important;
 }

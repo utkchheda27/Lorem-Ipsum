@@ -25,6 +25,14 @@ const overlay = document.createElement('div')
 overlay.classList.add('overlay')
 
 
+let loggedInuser = undefined
+
+const getLoggedInUser = async () => {
+  const res = await axios.get('/loggedInUserInfo');
+  loggedInuser = res.data
+  console.log(loggedInuser)
+}
+getLoggedInUser()
 let closeOverLayBtn; // create-post-elemt-close-btn
 
 // create post form
@@ -45,21 +53,21 @@ postInput.addEventListener('click', (e) => {
               </div>
               <div class="create-post-user-info">
                 <div class="create-post-user-img-ctn">
-                  <a href="#">
+                  <a href="/user/${loggedInuser._id}">
                     <img
-                    src="https://img.etimg.com/thumb/msid-50589035,width-650,imgsize-123073,,resizemode-4,quality-100/.jpg"
+                    src=${loggedInuser.profilePicture}
                     alt="loggedInUserInfo" class="create-post-user-img">
                   </a>
                 </div>
                 <div class="create-post-user-name">
                   <a href="#">
-                    <span>Rajesh Koothrappali</span>
+                    <span>${loggedInuser.username}</span>
                   </a>
                 </div>
               </div>
-              <form action="/createPost" method="post" class="create-post-form-overlay">
+              <form action="/post" method="post" class="create-post-form-overlay">
                 <textarea name="caption" id="" cols="30" rows="10" class="create-post-caption"
-                  placeholder="What's in your find, Rajesh ?"></textarea>
+                  placeholder="What's in your find, ${loggedInuser.username.trim().split(" ")[0]} ?"></textarea>
                 <input type="text" name="image" class="create-post-img-link"
                   placeholder="Wanna share image? submit link here" autocomplete="off">
                 <div class="create-post-submit-btn-ctn">
@@ -106,20 +114,25 @@ const commentShowAndHide = (Btn) => { // shows and hides comment
 }
 
 
-const createPost = ({ Description, Likes, Comments, Images }) => {
+const createPost = ({ Description, Likes, Comments, Images, Date, User, Time }) => {
   const post = document.createElement('div') // post element
   post.classList.add('post')
+  console.log(Images)
+  const imageCtn = Images.length !== 0 ? `<div class="post-img-ctn"><img src = ${Images[0]} alt = "post images" class="post-img" ></div >` : " "
   post.innerHTML = `<div class="post-header">
                 <div class="post-user-img-ctn">
-                  <a href="#">
+                  <a href="/user/${User._id}">
                     <img
-                    src="https://images6.fanpop.com/image/photos/39400000/Bernadette-Rostenkowski-bernadette-rostenkowski-39458985-466-304.jpg"
+                    src=${User.profilePicture}
                     alt="user profile" class="post-user-img">
                   </a>
                 </div>
                 <div class="user-name-date">
-                  <a href="#"><span class="username">Bernadette Rostenkowski</span></a>
-                  <span>3h</span>
+                  <a href="/user/${User._id}"><span class="username">${User.username}</span></a>
+                  <div class="date-time">
+                    <span>${Date}</span>
+                    <span>${Time}</span>
+                  </div>
                 </div>
                 <div class="morebtn-ctn">
                   <button class="more-btn">
@@ -145,11 +158,7 @@ const createPost = ({ Description, Likes, Comments, Images }) => {
                 <p class="post-caption">
                   ${Description}
                 </p>
-                <div class="post-img-ctn">
-                  <img
-                    src=${Images[0]}
-                    alt="post images" class="post-img">
-                </div>
+                ${imageCtn}
               </div>
               <div class="likes-comment-count">
                 <span class="like-count">
@@ -238,6 +247,7 @@ const loadMoreHandler = async (e) => { // add more post at the end when user cli
   pageNo++;
   const posts = await axios.get(`/get_posts?pageNo=${pageNo}`) // request backend for more posts
   const morePosts = posts.data.posts  // extract posts
+
   const more = posts.data.more;
   const temp = []
   for (let post of morePosts) { // going through moreposts we check whether a post in moreposts is present in the loadedPosts if not we add post to main element and add that it to loaded posts
@@ -271,7 +281,9 @@ loadMoreBtn.addEventListener('click', loadMoreHandler) // adds click event to lo
 const mainLoadEventHandler = async () => {  // load event handler
   main.append(loadingElementCtn)
   const data = await axios.get('/get_posts');
+
   const posts = data.data.posts
+
   for (let post of posts) {
     loadedPosts.set(post._id, post)
   }

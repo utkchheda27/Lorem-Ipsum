@@ -1,47 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rajesh Koothrappali</title>
-    <link rel="stylesheet" href="/CSS/app.css" />
-    <link rel="stylesheet" href="/CSS/navbar.css" />
-    <link rel="stylesheet" href="/CSS/profilePage.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
-      integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap"
-      rel="stylesheet"
-    />
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.min.js"
-      integrity="sha512-Idr7xVNnMWCsgBQscTSCivBNWWH30oo/tzYORviOCrLKmBaRxRflm2miNhTFJNVmXvCtzgms5nlJF4az2hiGnA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-  </head>
-  <body>
-    <%- include('partials/navbar') %>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= user.username.toUpperCase() %> | | FB
+  </title>
+  <link rel="stylesheet" href="/CSS/app.css" />
+  <link rel="stylesheet" href="/CSS/navbar.css" />
+  <link rel="stylesheet" href="/CSS/profilePage.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+    integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.min.js"
+    integrity="sha512-Idr7xVNnMWCsgBQscTSCivBNWWH30oo/tzYORviOCrLKmBaRxRflm2miNhTFJNVmXvCtzgms5nlJF4az2hiGnA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+
+<body>
+  <%- include('partials/navbar') %>
     <main class="main-ctn">
       <div class="profile-background-img">
         <div class="profile-img-ctn">
-          <img
-            src="https://img.etimg.com/thumb/msid-50589035,width-650,imgsize-123073,,resizemode-4,quality-100/.jpg"
-            alt=""
-            class="profile-img"
+          <img src=<%=user.profilePicture %>
+          alt=""
+          class="profile-img"
           />
         </div>
+
+
+        <% if (String(currentUser._id)!==String(user._id)) { %>
+
+          <div class="btn-ctn-profile-page">
+          </div>
+          <% } %>
       </div>
       <div class="username">
-        <h2>Rajesh Koothrappali</h2>
+        <h2>
+          <%= user.username %>
+        </h2>
       </div>
       <div class="description">
         <p>Wierdo</p>
@@ -50,404 +53,105 @@
         <div class="friends">
           <h3 class="friends-title">Friends</h3>
           <div class="friends-ctn">
-            <div class="friend">
-              <img
-                src="https://img.etimg.com/thumb/msid-50589035,width-650,imgsize-123073,,resizemode-4,quality-100/.jpg"
-                alt="friend image"
-                class="friend-img"
-              />
-              <span class="friend-name">
-                <a href="#">Rajesh Koothrappali</a>
-              </span>
-            </div>
-            <div class="friend">
-              <img
-                src="https://img.etimg.com/thumb/msid-50589035,width-650,imgsize-123073,,resizemode-4,quality-100/.jpg"
-                alt="friend image"
-                class="friend-img"
-              />
-              <span class="friend-name">Rajesh Koothrappali</span>
-            </div>
-            <div class="friend">
-              <img
-                src="https://img.etimg.com/thumb/msid-50589035,width-650,imgsize-123073,,resizemode-4,quality-100/.jpg"
-                alt="friend image"
-                class="friend-img"
-              />
-              <span class="friend-name">Rajesh Koothrappali</span>
-            </div>
-            <div class="friend">
-              <img
-                src="https://img.etimg.com/thumb/msid-50589035,width-650,imgsize-123073,,resizemode-4,quality-100/.jpg"
-                alt="friend image"
-                class="friend-img"
-              />
-              <span class="friend-name">Rajesh Koothrappali</span>
-            </div>
-            <div class="friend">
-              <img
-                src="https://img.etimg.com/thumb/msid-50589035,width-650,imgsize-123073,,resizemode-4,quality-100/.jpg"
-                alt="friend image"
-                class="friend-img"
-              />
-              <span class="friend-name">Rajesh Koothrappali</span>
-            </div>
+            <% for(let friend of user.friends){ %>
+              <div class="friend">
+                <img src=<%=friend.profilePicture %>
+                alt="friend image" class="friend-img" />
+                <span class="friend-name">
+                  <a href='/user/<%= friend._id %>'>
+                    <%= friend.username %>
+                  </a>
+                </span>
+              </div>
+              <% } %>
           </div>
         </div>
         <div class="user-posts">
           <form class="create-post-form">
-            <a href="#">
-              <img
-                src="https://img.etimg.com/thumb/msid-50589035,width-650,imgsize-123073,,resizemode-4,quality-100/.jpg"
-                alt="logged in user image"
-                class="loggedin-user-img-post"
+            <a href=<%=`/user/${user._id}` %>>
+              <img src=<%=user.profilePicture %>
+              alt="logged in user image"
+              class="loggedin-user-img-post"
               />
             </a>
-            <input
-              type="text"
-              name="post"
-              id="post"
-              placeholder="Share Something"
-              class="create-post-form-input"
-            />
+            <input type="text" name="post" id="post" placeholder="Share Something" class="create-post-form-input" />
           </form>
-          <div class="post">
-            <div class="post-header">
-              <div class="post-user-img-ctn">
-                <a href="#">
-                  <img
-                    src="https://images6.fanpop.com/image/photos/39400000/Bernadette-Rostenkowski-bernadette-rostenkowski-39458985-466-304.jpg"
-                    alt="user profile"
-                    class="post-user-img"
-                  />
-                </a>
-              </div>
-              <div class="user-name-date">
-                <a href="#"
-                  ><span class="username">Bernadette Rostenkowski</span></a
-                >
-                <span>3h</span>
-              </div>
-              <div class="morebtn-ctn">
-                <button class="more-btn">
-                  <i class="fas fa-ellipsis-h"></i>
-                </button>
-                <div class="post-header-pop-up-options display-none">
-                  <div>
-                    <i class="fas fa-bookmark"></i>
-                    <span>Save post</span>
-                  </div>
-                  <div>
-                    <i class="fa fa-link"></i>
-                    <span>Copy link</span>
-                  </div>
-                  <div>
-                    <i class="fa fa-times"></i>
-                    <span>Hide post</span>
+          <% for(let post of user.posts) { %>
+            <div class="post">
+              <div class="post-header">
+                <div class="post-user-img-ctn">
+                  <a href="/user/<%= user._id %> ">
+                    <img src="<%= user.profilePicture %> " alt="user profile" class="post-user-img" />
+                  </a>
+                </div>
+                <div class="user-name-date">
+                  <a href="/user/<%= user._id %>"><span class="username">
+                      <%= user.username %>
+                    </span></a>
+                  <span>3h</span>
+                </div>
+                <div class="morebtn-ctn">
+                  <button class="more-btn">
+                    <i class="fas fa-ellipsis-h"></i>
+                  </button>
+                  <div class="post-header-pop-up-options display-none">
+                    <div>
+                      <i class="fas fa-bookmark"></i>
+                      <span>Save post</span>
+                    </div>
+                    <div>
+                      <i class="fa fa-link"></i>
+                      <span>Copy link</span>
+                    </div>
+                    <div>
+                      <i class="fa fa-times"></i>
+                      <span>Hide post</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="post-body">
-              <p class="post-caption">${Description}</p>
-              <div class="post-img-ctn">
-                <img
-                  src="https://images6.fanpop.com/image/photos/39400000/Bernadette-Rostenkowski-bernadette-rostenkowski-39458985-466-304.jpg"
-                  alt="post images"
-                  class="post-img"
-                />
-              </div>
-            </div>
-            <div class="likes-comment-count">
-              <span class="like-count"> 32 Likes </span>
-              <span class="dot"></span>
-              <span class="comment-count"> 5 comments </span>
-            </div>
-            <div class="post-footer">
-              <button class="like-btn">
-                <span>Like</span>
-                <i class="far fa-thumbs-up"></i>
-              </button>
-              <button class="comment-btn">
-                <span>Comment</span>
-                <i class="far fa-comments"></i>
-              </button>
-              <button class="share-btn">
-                <span>Share</span>
-                <i class="fas fa-share"></i>
-              </button>
-            </div>
-          </div>
-          <div class="post">
-            <div class="post-header">
-              <div class="post-user-img-ctn">
-                <a href="#">
-                  <img
-                    src="https://images6.fanpop.com/image/photos/39400000/Bernadette-Rostenkowski-bernadette-rostenkowski-39458985-466-304.jpg"
-                    alt="user profile"
-                    class="post-user-img"
-                  />
-                </a>
-              </div>
-              <div class="user-name-date">
-                <a href="#"
-                  ><span class="username">Bernadette Rostenkowski</span></a
-                >
-                <span>3h</span>
-              </div>
-              <div class="morebtn-ctn">
-                <button class="more-btn">
-                  <i class="fas fa-ellipsis-h"></i>
-                </button>
-                <div class="post-header-pop-up-options display-none">
-                  <div>
-                    <i class="fas fa-bookmark"></i>
-                    <span>Save post</span>
-                  </div>
-                  <div>
-                    <i class="fa fa-link"></i>
-                    <span>Copy link</span>
-                  </div>
-                  <div>
-                    <i class="fa fa-times"></i>
-                    <span>Hide post</span>
-                  </div>
+              <div class="post-body">
+                <p class="post-caption">
+                  <%= post.Description %>
+                </p>
+                <div class="post-img-ctn">
+                  <% for(let image of post.Images) { %>
+                    <img src=<%=image %>
+                    alt="post images"
+                    class="post-img"
+                    />
+                    <% } %>
                 </div>
               </div>
-            </div>
-            <div class="post-body">
-              <p class="post-caption">${Description}</p>
-              <div class="post-img-ctn">
-                <img
-                  src="https://images6.fanpop.com/image/photos/39400000/Bernadette-Rostenkowski-bernadette-rostenkowski-39458985-466-304.jpg"
-                  alt="post images"
-                  class="post-img"
-                />
+              <div class="likes-comment-count">
+                <span class="like-count">
+                  <%= post.Likes %> Likes
+                </span>
+                <span class="dot"></span>
+                <span class="comment-count">
+                  <%= post.Comments.length %> comments
+                </span>
               </div>
-            </div>
-            <div class="likes-comment-count">
-              <span class="like-count"> 32 Likes </span>
-              <span class="dot"></span>
-              <span class="comment-count"> 5 comments </span>
-            </div>
-            <div class="post-footer">
-              <button class="like-btn">
-                <span>Like</span>
-                <i class="far fa-thumbs-up"></i>
-              </button>
-              <button class="comment-btn">
-                <span>Comment</span>
-                <i class="far fa-comments"></i>
-              </button>
-              <button class="share-btn">
-                <span>Share</span>
-                <i class="fas fa-share"></i>
-              </button>
-            </div>
-          </div>
-          <div class="post">
-            <div class="post-header">
-              <div class="post-user-img-ctn">
-                <a href="#">
-                  <img
-                    src="https://images6.fanpop.com/image/photos/39400000/Bernadette-Rostenkowski-bernadette-rostenkowski-39458985-466-304.jpg"
-                    alt="user profile"
-                    class="post-user-img"
-                  />
-                </a>
-              </div>
-              <div class="user-name-date">
-                <a href="#"
-                  ><span class="username">Bernadette Rostenkowski</span></a
-                >
-                <span>3h</span>
-              </div>
-              <div class="morebtn-ctn">
-                <button class="more-btn">
-                  <i class="fas fa-ellipsis-h"></i>
+              <div class="post-footer">
+                <button class="like-btn">
+                  <span>Like</span>
+                  <i class="far fa-thumbs-up"></i>
                 </button>
-                <div class="post-header-pop-up-options display-none">
-                  <div>
-                    <i class="fas fa-bookmark"></i>
-                    <span>Save post</span>
-                  </div>
-                  <div>
-                    <i class="fa fa-link"></i>
-                    <span>Copy link</span>
-                  </div>
-                  <div>
-                    <i class="fa fa-times"></i>
-                    <span>Hide post</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="post-body">
-              <p class="post-caption">${Description}</p>
-              <div class="post-img-ctn">
-                <img
-                  src="https://images6.fanpop.com/image/photos/39400000/Bernadette-Rostenkowski-bernadette-rostenkowski-39458985-466-304.jpg"
-                  alt="post images"
-                  class="post-img"
-                />
-              </div>
-            </div>
-            <div class="likes-comment-count">
-              <span class="like-count"> 32 Likes </span>
-              <span class="dot"></span>
-              <span class="comment-count"> 5 comments </span>
-            </div>
-            <div class="post-footer">
-              <button class="like-btn">
-                <span>Like</span>
-                <i class="far fa-thumbs-up"></i>
-              </button>
-              <button class="comment-btn">
-                <span>Comment</span>
-                <i class="far fa-comments"></i>
-              </button>
-              <button class="share-btn">
-                <span>Share</span>
-                <i class="fas fa-share"></i>
-              </button>
-            </div>
-          </div>
-          <div class="post">
-            <div class="post-header">
-              <div class="post-user-img-ctn">
-                <a href="#">
-                  <img
-                    src="https://images6.fanpop.com/image/photos/39400000/Bernadette-Rostenkowski-bernadette-rostenkowski-39458985-466-304.jpg"
-                    alt="user profile"
-                    class="post-user-img"
-                  />
-                </a>
-              </div>
-              <div class="user-name-date">
-                <a href="#"
-                  ><span class="username">Bernadette Rostenkowski</span></a
-                >
-                <span>3h</span>
-              </div>
-              <div class="morebtn-ctn">
-                <button class="more-btn">
-                  <i class="fas fa-ellipsis-h"></i>
+                <button class="comment-btn">
+                  <span>Comment</span>
+                  <i class="far fa-comments"></i>
                 </button>
-                <div class="post-header-pop-up-options display-none">
-                  <div>
-                    <i class="fas fa-bookmark"></i>
-                    <span>Save post</span>
-                  </div>
-                  <div>
-                    <i class="fa fa-link"></i>
-                    <span>Copy link</span>
-                  </div>
-                  <div>
-                    <i class="fa fa-times"></i>
-                    <span>Hide post</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="post-body">
-              <p class="post-caption">${Description}</p>
-              <div class="post-img-ctn">
-                <img
-                  src="https://images6.fanpop.com/image/photos/39400000/Bernadette-Rostenkowski-bernadette-rostenkowski-39458985-466-304.jpg"
-                  alt="post images"
-                  class="post-img"
-                />
-              </div>
-            </div>
-            <div class="likes-comment-count">
-              <span class="like-count"> 32 Likes </span>
-              <span class="dot"></span>
-              <span class="comment-count"> 5 comments </span>
-            </div>
-            <div class="post-footer">
-              <button class="like-btn">
-                <span>Like</span>
-                <i class="far fa-thumbs-up"></i>
-              </button>
-              <button class="comment-btn">
-                <span>Comment</span>
-                <i class="far fa-comments"></i>
-              </button>
-              <button class="share-btn">
-                <span>Share</span>
-                <i class="fas fa-share"></i>
-              </button>
-            </div>
-          </div>
-          <div class="post">
-            <div class="post-header">
-              <div class="post-user-img-ctn">
-                <a href="#">
-                  <img
-                    src="https://images6.fanpop.com/image/photos/39400000/Bernadette-Rostenkowski-bernadette-rostenkowski-39458985-466-304.jpg"
-                    alt="user profile"
-                    class="post-user-img"
-                  />
-                </a>
-              </div>
-              <div class="user-name-date">
-                <a href="#"
-                  ><span class="username">Bernadette Rostenkowski</span></a
-                >
-                <span>3h</span>
-              </div>
-              <div class="morebtn-ctn">
-                <button class="more-btn">
-                  <i class="fas fa-ellipsis-h"></i>
+                <button class="share-btn">
+                  <span>Share</span>
+                  <i class="fas fa-share"></i>
                 </button>
-                <div class="post-header-pop-up-options display-none">
-                  <div>
-                    <i class="fas fa-bookmark"></i>
-                    <span>Save post</span>
-                  </div>
-                  <div>
-                    <i class="fa fa-link"></i>
-                    <span>Copy link</span>
-                  </div>
-                  <div>
-                    <i class="fa fa-times"></i>
-                    <span>Hide post</span>
-                  </div>
-                </div>
               </div>
             </div>
-            <div class="post-body">
-              <p class="post-caption">${Description}</p>
-              <div class="post-img-ctn">
-                <img
-                  src="https://images6.fanpop.com/image/photos/39400000/Bernadette-Rostenkowski-bernadette-rostenkowski-39458985-466-304.jpg"
-                  alt="post images"
-                  class="post-img"
-                />
-              </div>
-            </div>
-            <div class="likes-comment-count">
-              <span class="like-count"> 32 Likes </span>
-              <span class="dot"></span>
-              <span class="comment-count"> 5 comments </span>
-            </div>
-            <div class="post-footer">
-              <button class="like-btn">
-                <span>Like</span>
-                <i class="far fa-thumbs-up"></i>
-              </button>
-              <button class="comment-btn">
-                <span>Comment</span>
-                <i class="far fa-comments"></i>
-              </button>
-              <button class="share-btn">
-                <span>Share</span>
-                <i class="fas fa-share"></i>
-              </button>
-            </div>
-          </div>
+            <% } %>
         </div>
       </div>
     </main>
-  </body>
+</body>
+<script src="/JS/profilePage.js" defer></script>
+
 </html>

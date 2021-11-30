@@ -1,48 +1,60 @@
 <nav class="navbar">
-    <div class="brand-icon-searchCtn">
-        <div class="brand-icon-ctn">
-            <a href="/">
-                <i class="fab fa-facebook" class="brand-icon"></i>
-            </a>
-        </div>
-        <div class="search-form">
-            <form action="#">
-                <div>
-                    <label for="search"><i class="fa fa-search" aria-hidden="true"></i></label>
-                    <input type="text" class="search-input" id="search">
-                </div>
-            </form>
-        </div>
+  <div class="brand-icon-searchCtn">
+    <div class="brand-icon-ctn">
+      <a href="/">
+        <i class="fab fa-facebook" class="brand-icon"></i>
+      </a>
     </div>
-    <div class="icons-ctn">
+    <div class="search-form">
+      <form action="#">
         <div>
-            <a href="/">
-                <i class="fas fa-home"></i>
-            </a>
-            
+          <label for="search"><i class="fa fa-search" aria-hidden="true"></i></label>
+          <input type="text" class="search-input" id="search" />
         </div>
-        <div>
-            <a href="#">
-                <i class="fab fa-facebook-messenger"></i>
-            </a>
-            <div class="no-of-notifications">5</div>
-        </div>
-        <div>
-            <a href="#" >
-                <i class="fas fa-bell"></i>
-            </a>
-            <div class="no-of-messages">5</div>
-        </div>
+      </form>
     </div>
-    <div class="user-page-redirect-btn">
+  </div>
+  <div class="icons-ctn">
+    <div>
+      <a href="/">
+        <i class="fas fa-home"></i>
+      </a>
+    </div>
+    <div>
+      <a href="#">
+        <i class="fab fa-facebook-messenger"></i>
+      </a>
+      <div class="no-of-notifications">5</div>
+    </div>
+    <div>
+      <a href="/friends">
+        <i class="fas fa-user-friends"></i>
+      </a>
+      <div class="no-of-requests">
+        <%= currentUser.requests.length %>
+      </div>
+    </div>
+    <div>
+      <a href="#">
+        <i class="fas fa-bell"></i>
+      </a>
+      <div class="no-of-messages">5</div>
+    </div>
+  </div>
+  <div class="user-page-redirect-btn">
+    <% if(!currentUser) {%>
+      <button><a href="/register">Sign Up</a></button>
+      <button><a href="/login">Sign In</a></button>
+      <% }else{ %>
         <button>
-            <img src="https://img.etimg.com/thumb/msid-50589035,width-650,imgsize-123073,,resizemode-4,quality-100/.jpg"
-                alt="" class="user-img">
+          <img src=<%=currentUser.profilePicture%>
+          alt="" class="user-img" />
         </button>
-    </div>
+        <button><a href="/logout">Sign Out</a></button>
+        <% } %>
+  </div>
 </nav>
 <!-- 
-
 <i class="fas fa-bell"></i>
 <div class="no-of-messages">5</div>
 <div class="no-of-notifications">5</div> -->

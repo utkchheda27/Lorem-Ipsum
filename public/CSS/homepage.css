@@ -79,15 +79,6 @@
 .loadmore-btn:hover {
   cursor: pointer;
 }
-/* ============================= footer ==================== */
-
-.footer {
-  width: 100%;
-  background-color: black;
-  height: 100px;
-  position: absolute;
-  bottom: 0;
-}
 
 /* top pririority classes */
 
