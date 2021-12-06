@@ -6,10 +6,10 @@
       </a>
     </div>
     <div class="search-form">
-      <form action="#">
+      <form action="/search">
         <div>
           <label for="search"><i class="fa fa-search" aria-hidden="true"></i></label>
-          <input type="text" class="search-input" id="search" />
+          <input type="text" class="search-input" id="search" placeholder="Search Friend" name="search_query" />
         </div>
       </form>
     </div>
@@ -21,7 +21,7 @@
       </a>
     </div>
     <div>
-      <a href="#">
+      <a href="/chat">
         <i class="fab fa-facebook-messenger"></i>
       </a>
       <div class="no-of-notifications">5</div>
@@ -42,19 +42,17 @@
     </div>
   </div>
   <div class="user-page-redirect-btn">
-    <% if(!currentUser) {%>
-      <button><a href="/register">Sign Up</a></button>
-      <button><a href="/login">Sign In</a></button>
-      <% }else{ %>
-        <button>
-          <img src=<%=currentUser.profilePicture%>
-          alt="" class="user-img" />
-        </button>
-        <button><a href="/logout">Sign Out</a></button>
-        <% } %>
+    <button class="drop-down-menu-btn">
+      <img src=<%=currentUser.profilePicture%>
+      alt="" class="user-img" />
+    </button>
+
+    <div class="drop-down-menu display-none">
+      <span class="arrow">
+      </span>
+      <ul>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
   </div>
 </nav>
-<!-- 
-<i class="fas fa-bell"></i>
-<div class="no-of-messages">5</div>
-<div class="no-of-notifications">5</div> -->

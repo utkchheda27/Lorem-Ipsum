@@ -13,8 +13,6 @@ const body = document.querySelector('body')
 const loadedPosts = new Map() // stores all post on the page
 let pageNo = 1; // page no
 
-
-
 // load more btn which is at the bottom of the page 
 const loadMoreBtn = document.createElement('button')
 loadMoreBtn.innerText = "load more posts"
@@ -29,10 +27,60 @@ let loggedInuser = undefined
 
 const getLoggedInUser = async () => {
   const res = await axios.get('/loggedInUserInfo');
-  loggedInuser = res.data
+  loggedInuser = res.data.loggedInuser
   console.log(loggedInuser)
 }
 getLoggedInUser()
+
+
+
+const createCommentObj = (commentText, date, time) => {
+  const commentCtn = document.createElement('article')
+  commentCtn.classList.add('comment')
+  commentCtn.innerHTML = `<div class="comment-header">
+      <div class="commentators-img-ctn">
+        <a href="#">
+          <img src=${loggedInuser.profilePicture}
+            alt="commentators picture" class="commentators-img">
+        </a>
+      </div>
+      <div class="commentators-details">
+        <a href="/user/${loggedInuser._id}">
+          <span class="commentators-name">${loggedInuser.username}</span>
+        </a>
+        <span class="time">${date}</span>
+        <span class="time">${time}</span>
+      </div>
+      <div class="comment-morebtn-ctn">
+        <button class="comment-morebtn">
+          <i class="fas fa-ellipsis-h"></i>
+        </button>
+      </div>
+    </div>
+    <div class="comment-body">
+      <p class="comment-text">
+        ${commentText}
+      </p>
+    </div>`
+  return commentCtn;
+}
+
+const handleCommentForm = async (id, post1) => {
+  const commentInput = post1.children[post1.children.length - 2].children[0].children[1].children[0]
+  const commentText = commentInput.value
+  const { data } = await axios.post(`/posts/${id}/comments`, {
+    commentBody: commentText
+  })
+  const { date, time } = data
+  if (data.status) {
+    const commentElement = createCommentObj(commentText, date, time)
+    post1.children[post1.children.length - 1].prepend(commentElement)
+    post1.children[post1.children.length - 1].classList.remove('display-none')
+    post1.children[3].children[1].classList.add('comment-click-btn')
+  }
+}
+
+// comment-click-btn
 let closeOverLayBtn; // create-post-elemt-close-btn
 
 // create post form
@@ -65,11 +113,11 @@ postInput.addEventListener('click', (e) => {
                   </a>
                 </div>
               </div>
-              <form action="/post" method="post" class="create-post-form-overlay">
+              <form action="/post" method="post" class="create-post-form-overlay" enctype="multipart/form-data">
                 <textarea name="caption" id="" cols="30" rows="10" class="create-post-caption"
                   placeholder="What's in your find, ${loggedInuser.username.trim().split(" ")[0]} ?"></textarea>
-                <input type="text" name="image" class="create-post-img-link"
-                  placeholder="Wanna share image? submit link here" autocomplete="off">
+                <input type="file" name="images" class="create-post-img-link"
+                   autocomplete="off" multiple >
                 <div class="create-post-submit-btn-ctn">
                   <button type="submit" class="submit-btn">
                     Post
@@ -78,7 +126,7 @@ postInput.addEventListener('click', (e) => {
               </form>
             </div>
   `
-  main.append(overlay)
+  body.append(overlay)
   body.classList.add('noscroll')
   postInput.blur()
   closeOverLayBtn = document.querySelector(".create-post-title .close-btn-ctn button")
@@ -94,7 +142,7 @@ postInput.addEventListener('click', (e) => {
 
 const toogleMoreOptionMenu = (btn) => { // toogles more option on a post
   // btn.nextElementSibling.classList.remove('display-none')
-  if (btn.nextElementSibling.classList.contains('display-none')) {
+  if (btn.nextElementSibling.nextElementSibling.classList.contains('display-none')) {
     btn.nextElementSibling.classList.remove('display-none')
   } else {
     btn.nextElementSibling.classList.add('display-none')
@@ -102,23 +150,41 @@ const toogleMoreOptionMenu = (btn) => { // toogles more option on a post
 }
 
 const commentShowAndHide = (Btn) => { // shows and hides comment
-
-  if (Btn.parentNode.nextElementSibling.classList.contains('display-none')) {
-    Btn.parentNode.nextElementSibling.classList.remove('display-none')
+  if (Btn.parentNode.nextElementSibling.nextElementSibling.classList.contains('display-none')) {
+    Btn.parentNode.nextElementSibling.nextElementSibling.classList.remove('display-none')
     Btn.classList.add('comment-click-btn')
   }
   else {
-    Btn.parentNode.nextElementSibling.classList.add('display-none')
+    Btn.parentNode.nextElementSibling.nextElementSibling.classList.add('display-none')
     Btn.classList.remove('comment-click-btn')
   }
 }
 
 
-const createPost = ({ Description, Likes, Comments, Images, Date, User, Time }) => {
+const createPost = ({ caption, likes, comments, images, date, User, time }) => {
   const post = document.createElement('div') // post element
   post.classList.add('post')
-  console.log(Images)
-  const imageCtn = Images.length !== 0 ? `<div class="post-img-ctn"><img src = ${Images[0]} alt = "post images" class="post-img" ></div >` : " "
+
+  let sliderImages = ''
+  for (let image of images) {
+    sliderImages += ` <div class="swiper-slide">
+                    <img
+                      src=${image}
+                      class="slide-image" alt="">
+                  </div> `
+  }
+
+  const postImgCtn = images.length !== 0 ? `<div class="post-img-ctn">
+              <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                  ${sliderImages}
+              </div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
+            </div>
+          </div> ` : ""
+
+
   post.innerHTML = `<div class="post-header">
                 <div class="post-user-img-ctn">
                   <a href="/user/${User._id}">
@@ -130,8 +196,8 @@ const createPost = ({ Description, Likes, Comments, Images, Date, User, Time }) 
                 <div class="user-name-date">
                   <a href="/user/${User._id}"><span class="username">${User.username}</span></a>
                   <div class="date-time">
-                    <span>${Date}</span>
-                    <span>${Time}</span>
+                    <span>${date}</span>
+                    <span>${time}</span>
                   </div>
                 </div>
                 <div class="morebtn-ctn">
@@ -155,18 +221,18 @@ const createPost = ({ Description, Likes, Comments, Images, Date, User, Time }) 
                 </div>
               </div>
               <div class="post-body">
-                <p class="post-caption">
-                  ${Description}
+                <p class="post-caption ${images.length === 0 ? "marginB" : ""}">
+                  ${caption}
                 </p>
-                ${imageCtn}
+                ${postImgCtn}
               </div>
               <div class="likes-comment-count">
                 <span class="like-count">
-                  ${Likes} Likes
+                  ${likes.length} Likes
                 </span>
                 <span class="dot"></span>
                 <span class="comment-count">
-                   ${Comments.length}  comments
+                   ${comments.length}  comments
                 </span>
               </div>
               <div class="post-footer">
@@ -183,25 +249,46 @@ const createPost = ({ Description, Likes, Comments, Images, Date, User, Time }) 
                   <i class="fas fa-share"></i>
                 </button>
               </div>
+              <div class="create-comment-form">
+            <form class="comment-form">
+              <div class="img-ctn">
+                <a href="/user/${loggedInuser._id} ">
+                  <img src=${loggedInuser.profilePicture} alt="" class="comment-loggedIn-user"></a>
+              </div>
+              <div class="text-input">
+                <textarea name="commentBody" class="comment-body-input"></textarea>
+              </div>
+              <div class="btn-ctn">
+                <button type="submit">
+                  <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </form>
+          </div>
               `
 
 
   let s = ''
-  for (let comment of Comments) {
-    s += `
+  if (comments.length === 0) {
+    s = `<h3>This post has no commnets</h3>`
+  }
+  else {
+    for (let comment of comments) {
+      s += `
     <article class="comment">
                     <div class="comment-header">
                       <div class="commentators-img-ctn">
                         <a href="#">
-                          <img src="https://upload.wikimedia.org/wikipedia/en/d/da/Matt_LeBlanc_as_Joey_Tribbiani.jpg"
+                          <img src=${comment.author.profilePicture}
                           alt="commentators picture" class="commentators-img">
                         </a>
                       </div>
                       <div class="commentators-details">
-                        <a href="#">
-                          <span class="commentators-name">Joey_Tribbiani__</span>
+                        <a href="/user/${comment.author._id}">
+                          <span class="commentators-name">${comment.author.username}</span>
                         </a>
-                        <span class="time">3 h</span>
+                        <span class="time">${comment.date}</span>
+                        <span class="time">${comment.time}</span>
                       </div>
                       <div class="comment-morebtn-ctn">
                         <button class="comment-morebtn">
@@ -211,11 +298,12 @@ const createPost = ({ Description, Likes, Comments, Images, Date, User, Time }) 
                     </div>
                     <div class="comment-body">
                       <p class="comment-text">
-                        ${comment}
+                        ${comment.body}
                       </p>
                     </div>
                   </article>
     `
+    }
   }
   const commentContainer = document.createElement('div')
   commentContainer.classList.add('comments-ctn')
@@ -237,6 +325,10 @@ const addApost = (post) => {
   btn.addEventListener('click', () => {
     toogleMoreOptionMenu(btn)
   })
+  post1.children[post1.children.length - 2].children[0].addEventListener("submit", (e) => {
+    e.preventDefault()
+    handleCommentForm(post._id, post1)
+  })
   return post1
 }
 
@@ -247,8 +339,18 @@ const loadMoreHandler = async (e) => { // add more post at the end when user cli
   pageNo++;
   const posts = await axios.get(`/get_posts?pageNo=${pageNo}`) // request backend for more posts
   const morePosts = posts.data.posts  // extract posts
+  console.log(loadedPosts.size, morePosts.length)
+  if (loadedPosts.size === morePosts.length) {
+    const noMorePostsCtn = document.createElement('div');
+    const h3 = document.createElement('h3');
+    h3.innerText = "No More Posts";
+    noMorePostsCtn.append(h3);
+    noMorePostsCtn.classList.add('no-more-posts')
+    loadingElementCtn.remove()
+    main.append(noMorePostsCtn);
+    return;
+  }
 
-  const more = posts.data.more;
   const temp = []
   for (let post of morePosts) { // going through moreposts we check whether a post in moreposts is present in the loadedPosts if not we add post to main element and add that it to loaded posts
 
@@ -260,17 +362,9 @@ const loadMoreHandler = async (e) => { // add more post at the end when user cli
   }
   loadingElementCtn.remove() // removing loading animation
   main.append(...temp)      // adding posts
-  if (!more) {
-    const noMorePostsCtn = document.createElement('div');
-    const h3 = document.createElement('h3');
-    h3.innerText = "No More Posts";
-    noMorePostsCtn.append(h3);
-    noMorePostsCtn.classList.add('no-more-posts')
-    main.append(noMorePostsCtn);
-  }
-  else {
-    main.append(loadMoreBtn) // appending load more posts option
-  }
+  carasolSelector()
+  main.append(loadMoreBtn) // appending load more posts option
+
 
 }
 loadMoreBtn.addEventListener('click', loadMoreHandler) // adds click event to loadmorw btn
@@ -281,7 +375,7 @@ loadMoreBtn.addEventListener('click', loadMoreHandler) // adds click event to lo
 const mainLoadEventHandler = async () => {  // load event handler
   main.append(loadingElementCtn)
   const data = await axios.get('/get_posts');
-
+  console.log(data.length, loadedPosts.size);
   const posts = data.data.posts
 
   for (let post of posts) {
@@ -291,9 +385,21 @@ const mainLoadEventHandler = async () => {  // load event handler
   for (let post of posts) {
     postElements.push(addApost(post))
   }
-  loadingElementCtn.remove()
   main.append(...postElements)
+  loadingElementCtn.remove()
+  carasolSelector()
   main.append(loadMoreBtn)
+
+}
+
+const carasolSelector = () => {
+  var swiper = new Swiper(".mySwiper", {
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+  });
+
 }
 
 window.addEventListener('load', mainLoadEventHandler)  // adds load event to window which adds post to main element

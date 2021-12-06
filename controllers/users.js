@@ -1,19 +1,18 @@
 import User from "../models/user.js"
 
+
+
 export const renderRegister = (req, res) => {
     res.render("users/register")
 }
 
 export const register = async (req, res, next) => {
     try {
-        const { email, username, password, profilePicture = undefined } = req.body;
-        let user = undefined;
-        if (profilePicture)
-            user = new User({ email, username, profilePicture });
-        else
-            user = new User({ email, username });
-        const registeredUser = await User.register(user, password);
-
+        console.log(req.file)
+        const user = new User(req.body)
+        user.profilePicture = req.file.path;
+        const registeredUser = await User.register(user, req.body.password);
+        console.log(registeredUser)
         req.login(registeredUser, err => {
             if (err) return next(err);
             const redirectUrl = req.session.returnTo || "/";
@@ -21,6 +20,7 @@ export const register = async (req, res, next) => {
             delete req.session.returnTo;
             res.redirect(redirectUrl)
         })
+        res.send('success')
     } catch (e) {
         req.flash("error", e.message);
         res.redirect("register")

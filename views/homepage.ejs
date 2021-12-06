@@ -16,10 +16,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet" />
+  <link rel="shortcut icon" href="#">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.min.js"
     integrity="sha512-Idr7xVNnMWCsgBQscTSCivBNWWH30oo/tzYORviOCrLKmBaRxRflm2miNhTFJNVmXvCtzgms5nlJF4az2hiGnA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script src="/JS/homepage.js" defer></script>
+  <script src="/JS/navbar.js" defer></script>
 </head>
 
 <body>
@@ -53,6 +57,109 @@
           </a>
           <input type="text" name="post" id="post" placeholder="Share Something" class="create-post-form-input" />
         </form>
+        <div class="post">
+          <div class="post-header">
+            <div class="post-user-img-ctn">
+              <a href="/user/${User._id}">
+                <img src='https://i.insider.com/5c93980bdd086100517da2e5?width=700&format=jpeg&auto=webp'
+                  alt="user profile" class="post-user-img">
+              </a>
+            </div>
+            <div class="user-name-date">
+              <a href="/user/${User._id}"><span class="username">Penny</span></a>
+              <div class="date-time">
+                <span>12/07/21</span>
+                <span>07:30</span>
+              </div>
+            </div>
+            <div class="morebtn-ctn">
+              <button class="more-btn">
+                <i class="fas fa-ellipsis-h"></i>
+              </button>
+              <div class="post-header-pop-up-options display-none">
+                <div>
+                  <i class="fas fa-bookmark"></i>
+                  <span>Save post</span>
+                </div>
+                <div>
+                  <i class="fa fa-link"></i>
+                  <span>Copy link</span>
+                </div>
+                <div>
+                  <i class="fa fa-times"></i>
+                  <span>Hide post</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="post-body">
+            <p class="post-caption">
+              Carosel Testing
+            </p>
+            <div class="post-img-ctn">
+              <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <img
+                      src="https://www.coolest-homemade-costumes.com/files/2012/10/all-female-big-bang-theory-13963-800x600.jpg"
+                      class="slide-image" alt="">
+                  </div>
+                  <div class="swiper-slide">
+                    <img
+                      src="https://www.coolest-homemade-costumes.com/files/2012/10/all-female-big-bang-theory-13963-800x600.jpg"
+                      class="slide-image" alt="">
+                  </div>
+                  <div class="swiper-slide">
+                    <img
+                      src="https://www.coolest-homemade-costumes.com/files/2012/10/all-female-big-bang-theory-13963-800x600.jpg"
+                      class="slide-image" alt="">
+                  </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+              </div>
+            </div>
+            <div class="likes-comment-count">
+              <span class="like-count">
+                12 Likes
+              </span>
+              <span class="dot"></span>
+              <span class="comment-count">
+                3 comments
+              </span>
+            </div>
+          </div>
+          <div class="post-footer">
+            <button class="like-btn">
+              <span>Like</span>
+              <i class="far fa-thumbs-up"></i>
+            </button>
+            <button class="comment-btn">
+              <span>Comment</span>
+              <i class="far fa-comments"></i>
+            </button>
+            <button class="share-btn">
+              <span>Share</span>
+              <i class="fas fa-share"></i>
+            </button>
+          </div>
+          <div class="create-comment-form">
+            <form class="comment-form">
+              <div class="img-ctn">
+                <a href="/user/<%= currentUser._id %> ">
+                  <img src=<%=currentUser.profilePicture %> alt="" class="comment-loggedIn-user"></a>
+              </div>
+              <div class="text-input">
+                <textarea name="commentBody" class="comment-body-input"></textarea>
+              </div>
+              <div class="btn-ctn">
+                <button type="submit">
+                  <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </main>
       <aside class="sidebar2"></aside>
     </div>

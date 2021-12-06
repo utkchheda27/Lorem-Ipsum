@@ -11,5 +11,5 @@ export const isLoggedIn = (req, res, next) => {
 export const isThisLoggedInUser = (req, res, next) => {
     const { id } = req.params;
     if (String(req.user._id) === String(id)) return next();
-    res.status(403).json({ status: false, })
+    res.json({ status: false, error: "Not Allowed" })
 }

@@ -87,46 +87,6 @@
   border-radius: 10px !important;
 }
 
-.noscroll {
-  overflow: hidden;
-}
-/* loading animation */
-
-.loading-animation-ctn {
-  width: 100%;
-  height: auto;
-  /* background-color: black; */
-  display: flex;
-  justify-content: center;
-  margin-bottom: 50px;
-}
-
-/* rings */
-.lds-dual-ring {
-  display: inline-block;
-  width: 80px;
-  height: 80px;
-}
-.lds-dual-ring:after {
-  content: " ";
-  display: block;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  border-radius: 50%;
-  border: 6px solid rgb(184, 49, 49);
-  border-color: rgb(0, 0, 0) transparent rgb(0, 0, 0) transparent;
-  animation: lds-dual-ring 1.2s linear infinite;
-}
-@keyframes lds-dual-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 @media all and (max-width: 1000px) {
   .loggedin-user-info {
     display: none;
