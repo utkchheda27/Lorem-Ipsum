@@ -17,10 +17,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet" />
+  <link rel="shortcut icon" href="#">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.min.js"
     integrity="sha512-Idr7xVNnMWCsgBQscTSCivBNWWH30oo/tzYORviOCrLKmBaRxRflm2miNhTFJNVmXvCtzgms5nlJF4az2hiGnA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 </head>
 
 <body>
@@ -67,91 +69,94 @@
           </div>
         </div>
         <div class="user-posts">
-          <form class="create-post-form">
-            <a href=<%=`/user/${user._id}` %>>
-              <img src=<%=user.profilePicture %>
-              alt="logged in user image"
-              class="loggedin-user-img-post"
-              />
-            </a>
-            <input type="text" name="post" id="post" placeholder="Share Something" class="create-post-form-input" />
-          </form>
-          <% for(let post of user.posts) { %>
-            <div class="post">
-              <div class="post-header">
-                <div class="post-user-img-ctn">
-                  <a href="/user/<%= user._id %> ">
-                    <img src="<%= user.profilePicture %> " alt="user profile" class="post-user-img" />
-                  </a>
-                </div>
-                <div class="user-name-date">
-                  <a href="/user/<%= user._id %>"><span class="username">
-                      <%= user.username %>
-                    </span></a>
-                  <span>3h</span>
-                </div>
-                <div class="morebtn-ctn">
-                  <button class="more-btn">
-                    <i class="fas fa-ellipsis-h"></i>
-                  </button>
-                  <div class="post-header-pop-up-options display-none">
-                    <div>
-                      <i class="fas fa-bookmark"></i>
-                      <span>Save post</span>
-                    </div>
-                    <div>
-                      <i class="fa fa-link"></i>
-                      <span>Copy link</span>
-                    </div>
-                    <div>
-                      <i class="fa fa-times"></i>
-                      <span>Hide post</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="post-body">
-                <p class="post-caption">
-                  <%= post.Description %>
-                </p>
-                <div class="post-img-ctn">
-                  <% for(let image of post.Images) { %>
-                    <img src=<%=image %>
-                    alt="post images"
-                    class="post-img"
-                    />
-                    <% } %>
-                </div>
-              </div>
-              <div class="likes-comment-count">
-                <span class="like-count">
-                  <%= post.Likes %> Likes
-                </span>
-                <span class="dot"></span>
-                <span class="comment-count">
-                  <%= post.Comments.length %> comments
-                </span>
-              </div>
-              <div class="post-footer">
-                <button class="like-btn">
-                  <span>Like</span>
-                  <i class="far fa-thumbs-up"></i>
-                </button>
-                <button class="comment-btn">
-                  <span>Comment</span>
-                  <i class="far fa-comments"></i>
-                </button>
-                <button class="share-btn">
-                  <span>Share</span>
-                  <i class="fas fa-share"></i>
-                </button>
-              </div>
-            </div>
+          <% if (String(currentUser._id)===String(user._id)) { %>
+            <form class="create-post-form">
+              <a href=<%=`/user/${user._id}` %>>
+                <img src=<%=user.profilePicture %>
+                alt="logged in user image"
+                class="loggedin-user-img-post"
+                />
+              </a>
+              <input type="text" name="post" id="post" placeholder="Share Something" class="create-post-form-input" />
+            </form>
             <% } %>
         </div>
       </div>
     </main>
 </body>
 <script src="/JS/profilePage.js" defer></script>
+<script src="/JS/navbar.js" defer></script>
 
 </html>
+<!-- <% for(let post of user.posts) { %>
+  <div class="post">
+    <div class="post-header">
+      <div class="post-user-img-ctn">
+        <a href="/user/<%= user._id %> ">
+          <img src="<%= user.profilePicture %> " alt="user profile" class="post-user-img" />
+        </a>
+      </div>
+      <div class="user-name-date">
+        <a href="/user/<%= user._id %>"><span class="username">
+            <%= user.username %>
+          </span></a>
+        <span>3h</span>
+      </div>
+      <div class="morebtn-ctn">
+        <button class="more-btn">
+          <i class="fas fa-ellipsis-h"></i>
+        </button>
+        <div class="post-header-pop-up-options display-none">
+          <div>
+            <i class="fas fa-bookmark"></i>
+            <span>Save post</span>
+          </div>
+          <div>
+            <i class="fa fa-link"></i>
+            <span>Copy link</span>
+          </div>
+          <div>
+            <i class="fa fa-times"></i>
+            <span>Hide post</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="post-body">
+      <p class="post-caption">
+        <%= post.caption %>
+      </p>
+      <div class="post-img-ctn">
+        <% for(let image of post.images) { %>
+          <img src=<%=image %>
+          alt="post images"
+          class="post-img"
+          />
+          <% } %>
+      </div>
+    </div>
+    <div class="likes-comment-count">
+      <span class="like-count">
+        <%= post.likes %> Likes
+      </span>
+      <span class="dot"></span>
+      <span class="comment-count">
+        <%= post.comments.length %> comments
+      </span>
+    </div>
+    <div class="post-footer">
+      <button class="like-btn">
+        <span>Like</span>
+        <i class="far fa-thumbs-up"></i>
+      </button>
+      <button class="comment-btn">
+        <span>Comment</span>
+        <i class="far fa-comments"></i>
+      </button>
+      <button class="share-btn">
+        <span>Share</span>
+        <i class="fas fa-share"></i>
+      </button>
+    </div>
+  </div>
+  <% } %> -->

@@ -112,6 +112,7 @@ const getRequests = async () => {
 
     } else {
         requests = data.requests
+        console.log(requests)
         showRequests()
         loadingAnimationCtn.remove()
     }
