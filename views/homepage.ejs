@@ -159,6 +159,36 @@
               </div>
             </form>
           </div>
+          <div class="comments-ctn">
+            <article class="comment">
+              <div class="comment-header">
+                <div class="commentators-img-ctn">
+                  <a href="#">
+                    <img
+                      src="https://onecms-res.cloudinary.com/image/upload/s--_S_cxkh5--/c_crop%2Ch_549%2Cw_732%2Cx_0%2Cy_83/c_fill%2Cg_auto%2Ch_622%2Cw_830/fl_relative%2Cg_south_east%2Cl_one-cms:core:watermark:afp_watermark%2Cw_0.1/f_auto%2Cq_auto/v1/mediacorp/cna/image/2021/10/25/063_455563312.jpg?itok=m9zH3saX"
+                      alt="commentators picture" class="commentators-img">
+                  </a>
+                </div>
+                <div class="commentators-details">
+                  <a href="/user/${comment.author._id}">
+                    <span class="commentators-name">${comment.author.username}</span>
+                  </a>
+                  <span class="time">${comment.date}</span>
+                  <span class="time">${comment.time}</span>
+                </div>
+                <div class="comment-morebtn-ctn">
+                  <button class="comment-morebtn">
+                    <i class="fas fa-ellipsis-h"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="comment-body">
+                <p class="comment-text">
+                  ${comment.body}
+                </p>
+              </div>
+            </article>
+          </div>
         </div>
       </main>
       <aside class="sidebar2"></aside>

@@ -48,14 +48,11 @@ const createCommentObj = (commentText, date, time) => {
         <a href="/user/${loggedInuser._id}">
           <span class="commentators-name">${loggedInuser.username}</span>
         </a>
-        <span class="time">${date}</span>
-        <span class="time">${time}</span>
-      </div>
-      <div class="comment-morebtn-ctn">
-        <button class="comment-morebtn">
-          <i class="fas fa-ellipsis-h"></i>
-        </button>
-      </div>
+        <div>
+          <span class="time">${date}</span>
+          <span class="time">${time}</span>
+        </div>
+      </div> <div class="comment-morebtn-ctn"><button class="comment-morebtn">Delete</button></div>
     </div>
     <div class="comment-body">
       <p class="comment-text">
@@ -75,6 +72,7 @@ const handleCommentForm = async (id, post1) => {
   if (data.status) {
     const commentElement = createCommentObj(commentText, date, time)
     post1.children[post1.children.length - 1].prepend(commentElement)
+    console.log(post1.children[post1.children.length - 1])
     post1.children[post1.children.length - 1].classList.remove('display-none')
     post1.children[3].children[1].classList.add('comment-click-btn')
   }
@@ -160,8 +158,15 @@ const commentShowAndHide = (Btn) => { // shows and hides comment
   }
 }
 
+const delteComment = async (commentId, postId, domELe) => {
+  console.log(commentId, postId, domELe)
+  const { data } = await axios.delete(`/posts/${postId}/comments/${commentId}`);
+  if (data.status) {
+    domELe.remove();
+  }
+}
 
-const createPost = ({ caption, likes, comments, images, date, User, time }) => {
+const createPost = ({ caption, likes, comments, images, date, User, time, _id }) => {
   const post = document.createElement('div') // post element
   post.classList.add('post')
 
@@ -256,7 +261,7 @@ const createPost = ({ caption, likes, comments, images, date, User, time }) => {
                   <img src=${loggedInuser.profilePicture} alt="" class="comment-loggedIn-user"></a>
               </div>
               <div class="text-input">
-                <textarea name="commentBody" class="comment-body-input"></textarea>
+                <input name="commentBody" class="comment-body-input">
               </div>
               <div class="btn-ctn">
                 <button type="submit">
@@ -267,48 +272,54 @@ const createPost = ({ caption, likes, comments, images, date, User, time }) => {
           </div>
               `
 
-
-  let s = ''
-  if (comments.length === 0) {
-    s = `<h3>This post has no commnets</h3>`
-  }
-  else {
-    for (let comment of comments) {
-      s += `
-    <article class="comment">
-                    <div class="comment-header">
-                      <div class="commentators-img-ctn">
-                        <a href="#">
-                          <img src=${comment.author.profilePicture}
-                          alt="commentators picture" class="commentators-img">
-                        </a>
-                      </div>
-                      <div class="commentators-details">
-                        <a href="/user/${comment.author._id}">
-                          <span class="commentators-name">${comment.author.username}</span>
-                        </a>
-                        <span class="time">${comment.date}</span>
-                        <span class="time">${comment.time}</span>
-                      </div>
-                      <div class="comment-morebtn-ctn">
-                        <button class="comment-morebtn">
-                          <i class="fas fa-ellipsis-h"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <div class="comment-body">
-                      <p class="comment-text">
-                        ${comment.body}
-                      </p>
-                    </div>
-                  </article>
-    `
-    }
-  }
   const commentContainer = document.createElement('div')
   commentContainer.classList.add('comments-ctn')
   commentContainer.classList.add('display-none')
-  commentContainer.innerHTML = s;
+  console.log(comments)
+  if (comments.length === 0) {
+    commentContainer.innerHTML = `<h3>This post has no commnets</h3>`
+  }
+  else {
+    for (let comment of comments) {
+      console.log(comment == null)
+      if (comment != null) {
+        const tempArticle = document.createElement('article')
+        tempArticle.classList.add('comment')
+        tempArticle.innerHTML = `
+                      <div class="comment-header">
+                        <div class="commentators-img-ctn">
+                          <a href="#">
+                            <img src=${comment.author.profilePicture}
+                            alt="commentators picture" class="commentators-img">
+                          </a>
+                        </div>
+                        <div class="commentators-details">
+                          <a href="/user/${comment.author._id}">
+                            <span class="commentators-name">${comment.author.username}</span>
+                          </a>
+                          <div>
+                            <span class="time">${comment.date}</span>
+                            <span class="time">${comment.time}</span>
+                          </div>
+                        </div>
+                        ${String(comment.author._id) === String(loggedInuser._id) ? '<div class="comment-morebtn-ctn"><button class="comment-morebtn">Delete</button></div>' : ""}
+                      </div>
+                      <div class="comment-body">
+                        <p class="comment-text">
+                          ${comment.body}
+                        </p>
+                      </div>
+      `
+        if (tempArticle.children[0].children[2]) {
+          tempArticle.children[0].children[2].children[0].addEventListener('click', () => {
+            delteComment(comment._id, _id, tempArticle);
+          })
+        }
+        commentContainer.append(tempArticle)
+      }
+
+    }
+  }
   post.append(commentContainer)
 
   return post
@@ -328,6 +339,7 @@ const addApost = (post) => {
   post1.children[post1.children.length - 2].children[0].addEventListener("submit", (e) => {
     e.preventDefault()
     handleCommentForm(post._id, post1)
+    e.target.children[1].children[0].value = ""
   })
   return post1
 }
