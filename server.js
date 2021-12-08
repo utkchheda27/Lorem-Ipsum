@@ -178,6 +178,20 @@ app.post('/posts/:pId/comments', isLoggedIn, async (req, res) => {
     res.json({ status: true, date, time })
 })
 
+app.delete('/posts/:postID/comments/:commentID', async (req, res) => {
+    const { postID, commentID } = req.params
+    const data = await Comment.findOneAndDelete({ '_id': commentID })
+    let post = await Post.findById(postID)
+    post.comments = post.comments.filter(comment => String(comment._id) !== String(commentID))
+    console.log(post.comments)
+    const t = await post.save();
+    // console.log(t)
+    // console.log(data)
+    console.log(data)
+    res.json({ status: true })
+
+})
+
 app.get('/search', async (req, res) => {
     const { search_query: username } = req.query
     const users = await User.find({
