@@ -86,7 +86,6 @@ passport.deserializeUser(User.deserializeUser());
 
 let onlineUsers = {}
 
-
 io.on('connection', function (socket) {
     let username = '';
     if (socket.handshake && socket.handshake.headers && socket.handshake.headers.cookie) {
@@ -115,12 +114,11 @@ const port = 4000;
 
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
+    console.log(req.user)
     res.locals.success = req.flash('success');
     res.locals.error = req.flash("error");
     next();
 }) //enabling contents of flash file
-
-
 
 
 app.use('/user/:id/requests', requestRoutes)
@@ -196,6 +194,7 @@ app.all('*', isLoggedIn, (req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
+    console.log(err)
     const { statusCode = 500 } = err;
     if (!err.message) err.message = "Oh no something went wrong!!";
     res.status(statusCode).render("error", { err })

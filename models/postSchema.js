@@ -10,7 +10,6 @@ const likeSchema = new mongoose.Schema({
   }
 })
 
-
 const postSchema = {
   images: {
     type: [String],
