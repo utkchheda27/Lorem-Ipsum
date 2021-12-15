@@ -1,11 +1,9 @@
 export const isLoggedIn = (req, res, next) => {
-    if (req.user) {
-        return next();
+    if(!req.isAuthenticated()){
+        req.session.returnTo = req.originalUrl
+        return res.redirect("/login")
     }
-    req.session.returnTo = req.path;
-    req.flash('error', "You need to log in first")
-    return res.redirect('/login')
-
+    next();
 }
 
 export const isThisLoggedInUser = (req, res, next) => {

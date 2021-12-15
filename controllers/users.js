@@ -1,6 +1,4 @@
-import User from "../models/user.js"
-
-
+import User from "../models/user.js";
 
 export const renderRegister = (req, res) => {
     res.render("users/register")
@@ -8,7 +6,7 @@ export const renderRegister = (req, res) => {
 
 export const register = async (req, res, next) => {
     try {
-        console.log(req.file)
+        console.log('Here')
         const user = new User(req.body)
         user.profilePicture = req.file.path;
         const registeredUser = await User.register(user, req.body.password);
