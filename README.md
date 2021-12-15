@@ -39,7 +39,7 @@ resource to the broader community.
 
 Github Repository Link: [Link to the Repository](https://github.com/utkchheda27/Lorem-Ipsum)
 
-Drive Link: [Drive Link here]()
+Drive Link: [Drive Link here](https://drive.google.com/drive/folders/1uHh5ttyB0eHTOSBb9G-DnI0fvuHgO5mH?usp=sharing)
 
 Website Link: will put it here shortly
 
