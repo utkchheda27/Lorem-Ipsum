@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import Post from "../models/postSchema.js";
 import User from "../models/user.js";
+import Comment from "../models/commentModel.js"
 const id = 1065376;
 mongoose.connect(
   "mongodb://Abhishek_2:aorrbg_02@cluster0-shard-00-00.332em.mongodb.net:27017,cluster0-shard-00-01.332em.mongodb.net:27017,cluster0-shard-00-02.332em.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-ezvhz9-shard-0&authSource=admin&retryWrites=true&w=majority"
 );
-import Comment from "../models/commentModel.js"
 
 mongoose.connection.on("error", (e) => {
   console.log(e.message);
@@ -45,7 +45,7 @@ const saveComments = async () => {
   }
 }
 
-saveComments()
+// saveComments()
 const seedApi = async () => {
   await Post.deleteMany({});
   const user = await User.findById("619dd6e7604166e151fd8548");
@@ -76,4 +76,13 @@ const seedApi = async () => {
   console.log(tuser);
 };
 
-seedApi();
+const clearComments = async () => {
+  const allComments = await Comment.find({});
+  for (let comment of allComments) {
+    const res = await Comment.findByIdAndDelete(comment._id);
+    console.log(res);
+  }
+}
+
+// seedApi();
+clearComments()

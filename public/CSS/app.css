@@ -4,6 +4,7 @@
   box-sizing: border-box;
   font-family: "Work Sans", sans-serif;
   scrollbar-width: thin;
+  list-style: none;
 }
 
 html {

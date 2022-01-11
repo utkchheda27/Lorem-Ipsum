@@ -27,6 +27,10 @@ const userSchema = new Schema({
     sentRequests: [{
         type: Schema.Types.ObjectId,
         ref: "User"
+    }],
+    personalChats: [{
+        type: Schema.Types.ObjectId,
+        ref: "PersonalChat"
     }]
 })
 

@@ -5,7 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "devStart": "nodemon server.js",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +22,6 @@
     "ejs-mate": "^3.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
-    "method-override": "^3.0.0",
     "mongoose": "^6.0.9",
     "multer": "^1.4.3",
     "multer-storage-cloudinary": "^4.0.0",

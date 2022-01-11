@@ -23,6 +23,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <link rel="shortcut icon" href="#">
 </head>
 
 <body>
@@ -88,17 +89,17 @@
 <script src="/JS/navbar.js" defer></script>
 
 </html>
-<!-- <% for(let post of user.posts) { %>
+<!-- <for(let post of user.posts) { %>
   <div class="post">
     <div class="post-header">
       <div class="post-user-img-ctn">
-        <a href="/user/<%= user._id %> ">
-          <img src="<%= user.profilePicture %> " alt="user profile" class="post-user-img" />
+        <a href="/user/<= user._id %> ">
+          <img src="<= user.profilePicture %> " alt="user profile" class="post-user-img" />
         </a>
       </div>
       <div class="user-name-date">
-        <a href="/user/<%= user._id %>"><span class="username">
-            <%= user.username %>
+        <a href="/user/<= user._id %>"><span class="username">
+            <= user.username %>
           </span></a>
         <span>3h</span>
       </div>
@@ -124,24 +125,24 @@
     </div>
     <div class="post-body">
       <p class="post-caption">
-        <%= post.caption %>
+        <= post.caption %>
       </p>
       <div class="post-img-ctn">
-        <% for(let image of post.images) { %>
-          <img src=<%=image %>
+        < for(let image of post.images) { %>
+          <img src=<=image %>
           alt="post images"
           class="post-img"
           />
-          <% } %>
+          < } %>
       </div>
     </div>
     <div class="likes-comment-count">
       <span class="like-count">
-        <%= post.likes %> Likes
+        <= post.likes %> Likes
       </span>
       <span class="dot"></span>
       <span class="comment-count">
-        <%= post.comments.length %> comments
+        <= post.comments.length %> comments
       </span>
     </div>
     <div class="post-footer">
@@ -159,4 +160,4 @@
       </button>
     </div>
   </div>
-  <% } %> -->
+  < } %> -->

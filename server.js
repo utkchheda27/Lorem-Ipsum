@@ -1,43 +1,43 @@
 import * as http from 'http';
 import express from "express";
 import mongoose from "mongoose";
-import { homepageHandler, getPosts, createPostHandler } from './controllers/homepage.js';
+import { homepageHandler, friendsPageHandler, searchResult, setGlobelVariables } from './controllers/generalControllers.js';
 import path from "path"; // path
 import session from "express-session";
 import flash from "connect-flash";
-import methodOverride from "method-override";
 import passport from "passport";
-import User from "./models/user.js";
-import Comment from "./models/commentModel.js";
-import Post from "./models/postSchema.js";
 import LocalStrategy from "passport-local";
-import userRoutes from "./routes/users.js";
-import friendsRoutes from "./routes/friends.js";
+
+import User from "./models/user.js";
+import Message from "./models/Message.js"
+import PersonalChat from './models/PersonalChat.js';
+
+import userRouter from "./routes/user.js"
+import authRouter from "./routes/auth.js";
+import friendRouter from "./routes/friends.js";
+import postRouter from "./routes/posts.js"
+import commentRouter from "./routes/comments.js"
+import chatRouter from "./routes/chat.js"
+import apiRouter from "./routes/api.js"
+
 import { isLoggedIn } from "./middlewares.js";
-import requestRoutes from "./routes/requests.js";
-import { Server } from 'socket.io';
-import dotenv from "dotenv";
 import ExpressError from "./utilities/ExpressError.js";
-import catchAsync from "./utilities/catchAsync.js";
-dotenv.config();
 const __dirname = path.resolve();
+
+import { Server } from 'socket.io';
 import * as signature from 'cookie-signature';
 import * as cookie from 'cookie';
-import { storage } from "./cloudinary/posts.js"
-import multer from "multer"
-const upload = multer({ storage })
 import MongoStore from 'connect-mongo'
-import { getDateAndTime } from './utilities/getDateAndTime.js';
+
+import dotenv from "dotenv";
+dotenv.config();
+
 // initializing app instance
 const app = express()
 const server = http.createServer(app);
 const io = new Server(server);
 
-
-
-
 mongoose.connect(process.env.DB_ACCESS_LINK);
-
 mongoose.connection.on("error", (e) => {
     console.log(e.message);
 });
@@ -50,7 +50,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views")); // path
-app.use(methodOverride("_method"))
 app.use(express.static(path.join(__dirname, "public")));
 
 const secret = process.env.SESSION_SECRET || "H7wVAqN5ZXE4uGNTWDTlKtQF1DEQVbLC";
@@ -80,14 +79,13 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
-
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
 let onlineUsers = {}
-
-
 io.on('connection', function (socket) {
+    console.log(socket.id)
     let username = '';
     if (socket.handshake && socket.handshake.headers && socket.handshake.headers.cookie) {
         var raw = cookie.parse(socket.handshake.headers.cookie)['session'];
@@ -99,111 +97,42 @@ io.on('connection', function (socket) {
         store.get(socket.sessionId, function (err, session) {
             username = session.passport.user;
             socket['username'] = session.passport.user;
-            onlineUsers[String(socket.id)] = username
+            onlineUsers[username] = String(socket.id)
         });
     }
-    socket.on('message', ({ message }) => {
-        socket.broadcast.emit('newMessage', { message })
+
+    socket.on("disconnect", () => {
+        console.log('Disconnected')
+        delete onlineUsers[username]
+        console.log(onlineUsers)
     })
-    socket.on('disconnect', () => {
-        socket.broadcast.emit('userDisconnected')
-        delete onlineUsers[socket.id]
+    socket.on('message', async ({ message, to, from, chatID = undefined }) => {
+        const savedMessage = await Message.create({ text: message, author: from })
+        const chat = await PersonalChat.findById(chatID)
+        chat.messages.push(savedMessage._id)
+        const savedChat = await chat.save()
+        console.log(savedChat)
+        console.log(savedMessage)
+        socket.to(onlineUsers[to]).emit('new message', { message, date: new Date(), msgID: savedMessage._id })
     })
 });
 
 const port = 4000;
 
-app.use((req, res, next) => {
-    res.locals.currentUser = req.user;
-    res.locals.success = req.flash('success');
-    res.locals.error = req.flash("error");
-    next();
-}) //enabling contents of flash file
+app.use(setGlobelVariables) //enabling contents of flash file
 
-
-
-
-app.use('/user/:id/requests', requestRoutes)
-app.use('/', userRoutes)
-app.use('/user/:id/friends', friendsRoutes)
-app.post('/post', isLoggedIn, upload.array('images'), createPostHandler)
+app.use('/api', apiRouter)
+app.use('/user/:id', userRouter)
+app.use('/auth', authRouter)
+app.use('/user/:id/friends', friendRouter)
+app.use('/posts', postRouter)
+app.use('/posts/:postID/comments', commentRouter)
+app.use('/chats/', chatRouter)
 app.get("/", isLoggedIn, homepageHandler);
-app.get('/get_posts', isLoggedIn, getPosts)
+app.get('/friends', isLoggedIn, friendsPageHandler)
+app.get('/search', isLoggedIn, searchResult)
 
-app.get("/user/:id", isLoggedIn, catchAsync(async (req, res, next) => {
-    const { id } = req.params
-    const user = await User.findById(id).populate('posts').populate('friends')
-    if (!user) throw new ExpressError("User not found", 404)
-    res.render('profilePage', { user })
-}))
 
-app.get('/loggedInUserInfo', isLoggedIn, (req, res) => {
-    try {
-        res.json({ loggedInuser: req.user, status: true })
-    } catch (e) {
-        res.json({ status: false, error: "Something went wrong" })
-    }
-})
-
-app.get('/friends', isLoggedIn, (req, res) => {
-    res.render('friends')
-})
-
-app.get('/posts', async (req, res) => {
-    const { id } = req.query
-    const user = await User.findById(id);
-    const tempPosts = []
-    for (let post of user.posts) {
-        let tPost = await Post.findById(post).populate('User')
-        const comments = []
-        for (let commentId of tPost.comments) {
-            const tComment = await Comment.findById(commentId).populate('author')
-            comments.push(tComment)
-        }
-        tPost.comments = comments
-        tempPosts.push(tPost)
-    }
-    res.json({ status: true, posts: tempPosts })
-})
-
-app.post('/posts/:pId/comments', isLoggedIn, async (req, res) => {
-    const post = await Post.findById(req.params.pId);
-    const { commentBody } = req.body;
-    const { date, time } = getDateAndTime()
-    const tempComment = new Comment({ author: req.user, body: commentBody, date, time })
-    const savedComment = await tempComment.save();
-    post.comments.push(savedComment)
-    const savedPost = await post.save()
-    console.log(savedPost)
-    res.json({ status: true, date, time })
-})
-
-app.delete('/posts/:postID/comments/:commentID', async (req, res) => {
-    const { postID, commentID } = req.params
-    const data = await Comment.findOneAndDelete({ '_id': commentID })
-    let post = await Post.findById(postID)
-    post.comments = post.comments.filter(comment => String(comment._id) !== String(commentID))
-    console.log(post.comments)
-    const t = await post.save();
-    // console.log(t)
-    // console.log(data)
-    console.log(data)
-    res.json({ status: true })
-
-})
-
-app.get('/search', async (req, res) => {
-    const { search_query: username } = req.query
-    const users = await User.find({
-        username: { $regex: `${username}`, $options: "$i" },
-    });
-    res.render('searchResult', { users })
-
-})
-
-app.get('/chat', isLoggedIn, (req, res) => {
-    res.render('chat')
-})
 
 app.all('*', isLoggedIn, (req, res, next) => {
     throw new ExpressError("How did you get here ?", 404)

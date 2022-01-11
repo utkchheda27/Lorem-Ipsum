@@ -97,7 +97,7 @@ sentRequestsBtn.addEventListener('click', () => {
 const getRequests = async () => {
     requestsCtn.append(loadingAnimationCtn)
     if (!loggedInuser) {
-        const { data: { loggedInuser: resUser, status } } = await axios.get('/loggedInUserInfo')
+        const { data: { loggedInuser: resUser, status } } = await axios.get('/api/loggedInUserInfo')
         loggedInuser = resUser
     }
     const { data } = await axios.get(`/user/${loggedInuser._id}/requests`);
@@ -265,7 +265,7 @@ const handleResponse = async (id, status, reqDomEle) => {
     overlay.appendChild(loadingAnimationCtn)
     requestsCtn.appendChild(overlay)
     if (!loggedInuser) {
-        const { loggedInuser: resLoggedInUser, status } = await axios.get('/loggedInUserInfo')
+        const { loggedInuser: resLoggedInUser, status } = await axios.get('/api/loggedInUserInfo')
         loggedInuser = resLoggedInUser
     }
     const { data } = await axios.post(`/user/${loggedInuser._id}/requests/${id}/response`, { status: status });

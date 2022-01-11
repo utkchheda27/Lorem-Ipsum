@@ -4,7 +4,7 @@ export const isLoggedIn = (req, res, next) => {
     }
     req.session.returnTo = req.path;
     req.flash('error', "You need to log in first")
-    return res.redirect('/login')
+    return res.redirect('/auth/login')
 
 }
 
