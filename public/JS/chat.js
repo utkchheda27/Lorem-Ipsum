@@ -34,6 +34,9 @@ form.addEventListener('submit', (e) => {
     }
 })
 
+messageInput.addEventListener('keyup', () => {
+    socket.emit('typing', { to: friend.username.trim() });
+})
 
 
 const appendMessage = (text, rec, date) => {
@@ -44,9 +47,24 @@ const appendMessage = (text, rec, date) => {
 socket.on('new message', async ({ message: text, date = undefined, msgID }) => {
     console.log(date)
     const res = await axios.put(`/api/chat/${chatID}/messages/${msgID}`, { isReaded: true })
-    appendMessage(text, "recieved")
+    appendMessage(text, "recieved", date)
 })
 
+let timeOutCode = undefined;
+socket.on('friendTyping', () => {
+    if (timeOutCode !== undefined) {
+        clearTimeout(timeOutCode)
+    }
+    console.log(`${friend.username} is typing...`)
+    document.querySelector(".friendTyping").innerText = `${friend.username} is typing...`;
+    timeOutCode = setTimeout(() => {
+        document.querySelector(".friendTyping").innerText = '';
+        timeOutCode = undefined
+    }, 1500);
+
+})
+
+socket
 const addFriendInfo = (username, profilePicture, id) => {
     const friendInfoTab = document.createElement('div');
     friendInfoTab.classList.add("friend-info")
@@ -61,6 +79,8 @@ const addFriendInfo = (username, profilePicture, id) => {
                             ${username}
                         </h1>
                     </a>
+                    <p class="friendTyping">
+                    </p>
                 </div>
     `
     messagesCtnS.parentElement.prepend(friendInfoTab);
@@ -71,9 +91,9 @@ window.onload = async () => {
     if (chatID) {
         const chatData = await axios.get(`/api/chat/${chatID}`);
         const { data } = await axios.get('/api/loggedInUserInfo');
-        // console.log(chatData.data.chatData)
-        // console.log(chatData.data.unreadedMsgs)
-        // console.log(data)
+        console.log(chatData.data.chatData)
+        console.log(chatData.data.unreadedMsgs)
+        console.log(data)
 
         loggedInuser = data.loggedInuser
 
@@ -88,7 +108,6 @@ window.onload = async () => {
 
 
         for (let message of chatData.data.chatData.messages) {
-            // t = new Date(message.date);
             if ((chatData.data.firstUnreadedMsg !== undefined) && (String(chatData.data.firstUnreadedMsg) === String(message._id))) {
                 const label = document.createElement('div');
                 label.classList.add('unreadedMessageCount')
@@ -101,18 +120,16 @@ window.onload = async () => {
                 appendMessage(message.text, 'recieved', message.date)
             }
         }
+        if (friend.friends.some((f) => String(f) === String(loggedInuser._id)) === false) {
+            form.remove();
+            const disMsg = document.createElement('div');
+            disMsg.innerText = `You cannot send message as you are no longer friends with ${friend.username}`;
+            document.querySelector('.ctn').append(disMsg);
+        }
 
-        // if (chatData.data.unreadedMsgs !== 0) {
-
-        // }
         messagesCtnS.scrollTop = messagesCtnS.scrollHeight;
         loadingAnimation.remove()
-        // // console.log(chatData.data.chatData.messages[0].date.getMonth())
-        // const t = new Date(chatData.data.chatData.messages[0].date);
-        // // console.log(t.getTime())
-        // const preDate = new Date();
-        // console.log(`${t.getDate()}/${t.getMonth()}/${t.getFullYear() % 100}`);
-        // console.log(`${t.getHours()}:${t.getMinutes()}`)
+
     }
 
 }

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import Comment from "./commentModel.js"
 
 
 const likeSchema = new mongoose.Schema({
@@ -9,7 +8,6 @@ const likeSchema = new mongoose.Schema({
     required: true,
   }
 })
-
 
 const postSchema = {
   images: {
@@ -39,4 +37,6 @@ const postSchema = {
   }]
 };
 
-export default mongoose.model("Post", new mongoose.Schema(postSchema));
+const Post = new mongoose.Schema(postSchema)
+
+export default mongoose.model("Post", Post);

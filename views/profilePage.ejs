@@ -28,6 +28,9 @@
 
 <body>
   <%- include('partials/navbar') %>
+    <div class="display-none user-id">
+      <%= user._id %>
+    </div>
     <main class="main-ctn">
       <div class="profile-background-img">
         <div class="profile-img-ctn">
@@ -36,7 +39,13 @@
           class="profile-img"
           />
         </div>
+        <!-- <div class="overlay">
+          <div class="edit-details-form-ctn">
+            <form action="#" class="edit-details-form">
 
+            </form>
+          </div>
+        </div> -->
 
         <% if (String(currentUser._id)!==String(user._id)) { %>
 
@@ -49,44 +58,103 @@
           <%= user.username %>
         </h2>
       </div>
-      <div class="description">
-        <p>Wierdo</p>
-      </div>
-      <div class="friends-posts-ctn">
-        <div class="friends">
-          <h3 class="friends-title">Friends</h3>
-          <div class="friends-ctn">
-            <% for(let friend of user.friends){ %>
-              <div class="friend">
-                <img src=<%=friend.profilePicture %>
-                alt="friend image" class="friend-img" />
-                <span class="friend-name">
-                  <a href='/user/<%= friend._id %>'>
-                    <%= friend.username %>
-                  </a>
-                </span>
-              </div>
-              <% } %>
+      <% if(user.description){ %>
+        <div class="description">
+          <p>
+            <%= user.description %>
+          </p>
+        </div>
+        <% } else if(String(user._id)===String(currentUser._id)){ %>
+          <div class="bio-form-pop-up-btn">
+            <button class="bio-form-btn">Add Bio</button>
           </div>
-        </div>
-        <div class="user-posts">
-          <% if (String(currentUser._id)===String(user._id)) { %>
-            <form class="create-post-form">
-              <a href=<%=`/user/${user._id}` %>>
-                <img src=<%=user.profilePicture %>
-                alt="logged in user image"
-                class="loggedin-user-img-post"
-                />
-              </a>
-              <input type="text" name="post" id="post" placeholder="Share Something" class="create-post-form-input" />
-            </form>
-            <% } %>
-        </div>
-      </div>
+          <% } %>
+            <div class="friends-posts-ctn">
+              <div class="left">
+                <div class="edit-details-form">
+                  <h3 class="title">Details</h3>
+                  <ul>
+                    <li class="location">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i>
+                      <span>Lives in Mumbai, Maharastra</span>
+                    </li>
+                    <li class="qualification">
+                      <i class="fas fa-school"></i>
+                      <span>B. Tech.&nbsp;</span> <span>Information Technology&nbsp;</span>
+                      <span>(Expected 2024)</span>
+                    </li>
+                    <!-- <li class="course-duration">
+                      <i class="fas fa-clock"></i>
+                      <span>2024</span>
+                    </li> -->
+                  </ul>
+                  <div class="edit-detail-form-popup-btn-ctn">
+                    <button class="edit-detail-form-popup-btn">Edit Details</button>
+                  </div>
+                </div>
+                <div class="interests-ctn">
+                  <h3 class="title">Interests</h3>
+                  <ul class="interests">
+                    <li class="interest">
+                      <img src="/assets/coding.jpg" alt="interest">
+                      <span>Coding</span>
+                    </li>
+                    <li class="interest">
+                      <img src="/assets/cricket.jpg" alt="interest">
+                      <span>Cricket</span>
+                    </li>
+                    <li class="interest">
+                      <img src="/assets/dancing.avif" alt="interest">
+                      <span>Dancing</span>
+                    </li>
+                    <li class="interest">
+                      <img src="/assets/football.webp" alt="interest">
+                      <span>Football</span>
+                    </li>
+                  </ul>
+                  <div class="edit-interest-form-popup-btn-ctn">
+                    <button class="edit-interest-form-popup-btn">
+                      Add Interests
+                    </button>
+                  </div>
+                </div>
+                <div class="friends">
+                  <h3 class="title">Friends</h3>
+                  <div class="friends-ctn">
+                    <% for(let friend of user.friends){ %>
+                      <div class="friend">
+                        <img src=<%=friend.profilePicture %>
+                        alt="friend image" class="friend-img" />
+                        <span class="friend-name">
+                          <a href='/user/<%= friend._id %>'>
+                            <%= friend.username %>
+                          </a>
+                        </span>
+                      </div>
+                      <% } %>
+                  </div>
+                </div>
+              </div>
+              <div class="user-posts">
+                <% if (String(currentUser._id)===String(user._id)) { %>
+                  <form class="create-post-form">
+                    <a href=<%=`/user/${user._id}` %>>
+                      <img src=<%=user.profilePicture %>
+                      alt="logged in user image"
+                      class="loggedin-user-img-post"
+                      />
+                    </a>
+                    <input type="text" name="post" id="post" placeholder="Share Something"
+                      class="create-post-form-input" />
+                  </form>
+                  <% } %>
+              </div>
+            </div>
     </main>
 </body>
 <script src="/JS/profilePage.js" defer></script>
 <script src="/JS/navbar.js" defer></script>
+<script src="/JS/app.js" defer></script>
 
 </html>
 <!-- <for(let post of user.posts) { %>

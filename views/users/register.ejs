@@ -2,52 +2,99 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="stylesheet" href="CSS/app.css" />
-  <link rel="stylesheet" href="CSS/navbar.css" />
-  <link rel="stylesheet" href="CSS/footer.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
-    integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.min.js"
-    integrity="sha512-Idr7xVNnMWCsgBQscTSCivBNWWH30oo/tzYORviOCrLKmBaRxRflm2miNhTFJNVmXvCtzgms5nlJF4az2hiGnA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <title>Register</title>
+	<link rel="stylesheet" href="CSS/app.css" />
+	<link rel="stylesheet" href="CSS/navbar.css" />
+	<link rel="stylesheet" href="CSS/footer.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+		integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.min.js"
+		integrity="sha512-Idr7xVNnMWCsgBQscTSCivBNWWH30oo/tzYORviOCrLKmBaRxRflm2miNhTFJNVmXvCtzgms5nlJF4az2hiGnA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<link rel="stylesheet" href="/CSS/register.css" />
+	<title>Register | VibeIn</title>
 </head>
 
 <body>
-  <div>
-    <%= error %>
-      <h2>Register</h2>
-      <form action="/auth/register" method="POST" enctype="multipart/form-data">
-        <div>
-          <label for="username">Username</label>
-          <input type="text" id="username" name="username" required autofocus />
-        </div>
-        <br />
-        <div>
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required />
-        </div>
-        <br />
-        <div>
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required />
-        </div>
-        <br />
-        <div>
-          <label for="profilepicture">Profile : </label>
-          <input type="file" name="profilePicture" id="profilepicture">
-        </div>
-        <button>Register</button>
-      </form>
-      <%- include("../partials/footer") %>
-  </div>
+	<div class="container">
+		<div class="header">
+			<h2>VibeIn</h2>
+		</div>
+		<form class="form" action="/auth/register" method="POST" enctype="multipart/form-data">
+			<div class="form-control">
+				<label for="username" name="username">Username</label>
+				<input id="txtUserName" type="text" name="username" autofocus />
+				<small>Error Message</small>
+			</div>
+
+			<div class="form-control">
+				<label for="email" name="email">Email</label>
+				<input id="txtEmail" type="email" name="email" />
+				<small>Error Message</small>
+			</div>
+
+			<div class="form-control">
+				<label for="pwd" name="pwd">Password</label>
+				<input id="txtPwd" type="password" name="password" />
+				<small>Error Message</small>
+			</div>
+
+			<div class="form-control">
+				<label for="conpwd" name="conpwd">Confirm Password</label>
+				<input id="txtConPwd" type="password" name="conpwd" />
+				<small>Error Message</small>
+			</div>
+
+			<div class="form-control">
+				<label for="profilepicture">Profile-Pic : </label>
+				<input type="file" name="profilePicture" id="profilepicture" />
+			</div>
+
+			<div class="form-control">
+				<button>Register</button>
+			</div>
+
+			<div class="form-control log_in">
+				<p>Already have an account <a href="/login">Log In</a></p>
+			</div>
+		</form>
+	</div>
+	<script src="/JS/register.js"></script>
+	<%- include("../partials/footer") %>
 </body>
 
 </html>
+
+<!-- <div>
+  
+  <h2>Register</h2>
+  <form action="/register" method="POST" enctype="multipart/form-data">
+    <div>
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required autofocus />
+    </div>
+    <br />
+    <div>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required />
+    </div>
+    <br />
+    <div>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required />
+    </div>
+    <br />
+    <div>
+      <label for="profilepicture">Profile : </label>
+      <input type="file" name="profilePicture" id="profilepicture">
+    </div>
+    <button>Register</button>
+  </form>
+  
+</div> -->

@@ -1,6 +1,26 @@
 import Post from "../models/postSchema.js";
 import User from "../models/user.js";
 import Comment from "../models/commentModel.js";
+// import Cloud
+import { storage } from "../cloudinary/posts.js"
+
+export const deletePost = async (req, res) => {
+    const { postID = undefined } = req.params
+    const post = await Post.findById(postID);
+    for (let comment of post.comments) {
+        const r1 = await Comment.findByIdAndDelete(comment);
+        console.log(r1)
+    }
+    let user = await User.findById(post.User);
+    user.posts = user.posts.filter((id) => {
+        return String(id) !== String(postID);
+    })
+    const r2 = await user.save();
+    console.log(r2)
+    const r = await Post.findByIdAndDelete(postID);
+    console.log(r);
+    res.json({ status: true });
+}
 
 export const getPosts = async (req, res) => {
     const { id } = req.query
@@ -26,6 +46,12 @@ export const createPostHandler = async (req, res) => {
     const dateN = `${date.getDate()}|${date.getMonth()}|${date.getFullYear()}`
     const time = `${date.getHours()}:${date.getMinutes()}`
     const tempPost = new Post(req.body)
+    console.log(req.files)
+    // const result = await storage.cloudinary.uploader.upload(req.files);
+    for (let file of req.files) {
+        const result = await storage.cloudinary.uploader.upload(file.path);
+        console.log(result)
+    }
     tempPost.images = req.files.map(f => f.path);
     tempPost.User = req.user._id
     tempPost.time = time

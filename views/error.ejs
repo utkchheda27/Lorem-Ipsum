@@ -20,22 +20,21 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <link rel="shortcut icon" href="#">
   <script src="/JS/navbar.js" defer></script>
+  <script src="/JS/app.js" defer></script>
   <link rel="shortcut icon" href="#">
 </head>
 
 <body>
-  <%- include('partials/navbar') %>
-    <div>
-      <div class="alert">
-        <h2>
-          <%=err.message %>
-            </h4>
-            <p>
-              <%=err.stack %>
-            </p>
-      </div>
+  <div>
+    <div class="alert">
+      <h2>
+        <%=err.message %>
+          </h4>
+          <p>
+            <%=err.stack %>
+          </p>
     </div>
-    <%- include("partials/footer") %>
+  </div>
 </body>
 
 </html>

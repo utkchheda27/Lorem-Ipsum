@@ -29,8 +29,11 @@ import * as signature from 'cookie-signature';
 import * as cookie from 'cookie';
 import MongoStore from 'connect-mongo'
 
+import methodOverride from "method-override"
+
 import dotenv from "dotenv";
 dotenv.config();
+
 
 // initializing app instance
 const app = express()
@@ -81,7 +84,7 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
+app.use(methodOverride('_method'))
 
 let onlineUsers = {}
 io.on('connection', function (socket) {
@@ -114,6 +117,10 @@ io.on('connection', function (socket) {
         console.log(savedChat)
         console.log(savedMessage)
         socket.to(onlineUsers[to]).emit('new message', { message, date: new Date(), msgID: savedMessage._id })
+    })
+
+    socket.on('typing', ({ to = undefined }) => {
+        socket.to(onlineUsers[to]).emit('friendTyping')
     })
 });
 

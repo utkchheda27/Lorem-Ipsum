@@ -19,7 +19,7 @@ export const getChatData = async (req, res) => {
     if (chatID) {
         const chatData = await PersonalChat.findById(chatID).populate({ path: 'participants' }).populate({ path: 'messages' })
         for (let msg of chatData.messages) {
-            if (msg.author !== req.user._id) {
+            if (String(msg.author) !== String(req.user._id)) {
                 if (msg.isReaded === false) {
                     if (firstUnreadedMsg === undefined) {
                         firstUnreadedMsg = msg._id
@@ -65,4 +65,25 @@ export const getPosts = async (req, res) => {
         resPost.push(...tempPosts);
     }
     res.json({ posts: resPost });
+}
+
+export const getAllMessages = async (req, res) => {
+    const user = await User.findById(req.user._id).populate({
+        path: "personalChats", populate: {
+            path: 'messages'
+        }
+    });
+    console.log(user)
+    const chats = user.personalChats;
+    let ans = 0;
+
+    for (let chat of chats) {
+        for (let message of chat.messages) {
+            if (String(message.author._id) !== String(req.user._id) && message.isReaded === false) {
+                ans++;
+                break;
+            }
+        }
+    }
+    res.json({ status: true, noOfUnreadedChats: ans });
 }

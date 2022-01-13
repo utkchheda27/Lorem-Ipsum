@@ -28,7 +28,7 @@
 
 /* box-shadow: none|h-offset v-offset blur spread color |inset|initial|inherit; */
 
-.btn-ctn-profile-page{
+.btn-ctn-profile-page {
   position: absolute;
   bottom: 20px;
   left: 80%;
@@ -37,7 +37,7 @@
   align-items: center;
 }
 
-.profile-background-img  .request-btn {
+.profile-background-img .request-btn {
   background-color: #c4bab8;
   height: 50px;
   padding: 10px 5px;
@@ -45,7 +45,7 @@
   border-radius: 5px;
 }
 
-.btn1{
+.btn1 {
   background-color: #c4bab8;
   height: auto;
   padding: 10px 5px;
@@ -57,11 +57,11 @@
   margin: auto 10px;
 }
 
-.btn1:active{
+.btn1:active {
   transform: scale(0.95);
 }
 
-.profile-background-img  .request-btn:active{
+.profile-background-img .request-btn:active {
   height: 45px;
 }
 
@@ -104,20 +104,137 @@
   width: 50%;
 }
 
-.friends {
+.left {
   width: 47%;
-  background-color: #c4bab8;
-  height: auto;
-  padding: 20px;
-  border-radius: 10px;
+  /* padding: 20px; */
   position: sticky;
   top: 90px;
 }
 
-.friends-title {
+/* details area */
+
+.edit-details-form {
+  width: 100%;
+  height: auto;
+  background-color: #c4bab8;
+  border-radius: 10px;
+  margin: 5px auto;
+  padding: 10px;
+}
+
+/* .edit-details-form h3 {
   width: 100%;
   text-align: center;
-  margin: 5px1 0;
+  font-size: 2em;
+  height: 20%;
+} */
+
+.edit-details-form h3 {
+  height: 20%;
+}
+
+.edit-details-form ul {
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-evenly;
+}
+
+.edit-details-form ul li {
+  display: flex;
+  justify-content: start;
+  margin: 10px 0;
+}
+
+.edit-details-form ul li i {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.edit-detail-form-popup-btn-ctn {
+  width: 100%;
+  padding: 20px;
+}
+.edit-detail-form-popup-btn {
+  width: 70%;
+  display: block;
+  margin: auto;
+  text-align: center;
+  background-color: #e4e6eb;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 2px;
+  font-size: 1.2em;
+}
+
+.edit-interest-form-popup-btn-ctn {
+  width: 100%;
+  padding: 20px;
+}
+.edit-interest-form-popup-btn {
+  width: 70%;
+  display: block;
+  margin: auto;
+  text-align: center;
+  background-color: #e4e6eb;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 2px;
+  font-size: 1.2em;
+}
+/* interests */
+
+.interests-ctn {
+  width: 100%;
+  height: auto;
+  background-color: #c4bab8;
+  border-radius: 10px;
+  margin: 5px auto;
+}
+
+.interests-ctn .interests {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.interests .interest {
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+  margin: 0 10px;
+}
+
+.interest img {
+  height: 90px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.interest span {
+  width: 100%;
+  height: 20px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.friends {
+  width: 100%;
+  background-color: #c4bab8;
+  height: auto;
+  padding: 20px;
+  border-radius: 10px;
+  /* position: sticky;
+  top: 90px; */
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+  margin: 5px 0;
   font-size: 2.5em;
 }
 
@@ -155,7 +272,6 @@
   cursor: pointer;
   text-decoration: underline;
 }
-
 
 /* loading animation */
 .lds-ellipsis {
@@ -216,20 +332,88 @@
 
 /* Overlay */
 
-.cover-screen{
+.cover-screen {
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(58, 54, 54, 0.5);
 }
 
-.align-center-ctn{
+.align-center-ctn {
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* high z-index */
+
+.z-200 {
+  z-index: 200 !important;
+}
+
+/* no overflow */
+.overflow-hidden {
+  overflow-y: hidden;
+}
+
+/* pop up form */
+
+.bio-form-ctn {
+  position: relative;
+  top: 0;
+}
+
+.bio-form-pop-up-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.bio-form-btn {
+  cursor: pointer;
+  color: blue;
+  font-size: 1.25em;
+}
+
+.bio-form {
+  width: 250px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: white;
+  padding: 5px;
+  border-radius: 2px;
+}
+
+.bio-form textarea {
+  width: 80%;
+  height: 75px;
+  text-align: start;
+  border: 2px solid #dddddd;
+  resize: none;
+  border-radius: 2px;
+  padding: 5px;
+}
+
+.bio-form button {
+  width: 100px;
+  height: 30px;
+  background-color: #26af62;
+}
+
+.close-bio-form-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 15px;
 }

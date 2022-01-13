@@ -12,6 +12,19 @@ router.get('/', isLoggedIn, catchAsync(async (req, res, next) => {
     res.render('profilePage', { user })
 }))
 
+router.put('/', isLoggedIn, catchAsync(async (req, res) => {
+    const { id } = req.params
+    const { description = undefined } = req.body;
+    const user = await User.findById(id);
+    if (description != undefined) {
+        user.description = description.trim();
+    }
+    const updatedUser = await user.save();
+    console.log(updatedUser)
+    // const
+    return res.redirect(`/user/${req.user._id}`)
+}))
+
 router.use('/requests', requestRoutes);
 
 export default router

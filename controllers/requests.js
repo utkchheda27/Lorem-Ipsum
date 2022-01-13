@@ -25,9 +25,13 @@ export const requestResponseHandler = async (req, res) => { // logged in user(id
         if (status) {
             recipient.friends.push(requesterId);
             requester.friends.push(recipientId);
-            const room = await PersonalChat.create({ participants: [requesterId, recipientId] });
-            recipient.personalChats.push(room.id)
-            requester.personalChats.push(room.id)
+            const chat1 = await PersonalChat.find({ participants: { $all: [requesterId, recipientId] } })
+            console.log("chat 1 ==>", chat1)
+            if (chat1.length === 0) {
+                const room = await PersonalChat.create({ participants: [requesterId, recipientId] });
+                recipient.personalChats.push(room.id)
+                requester.personalChats.push(room.id)
+            }
         }
         recipient.requests = recipient.requests.filter(id => String(id) !== String(requesterId))
         requester.sentRequests = requester.sentRequests.filter(id => String(id) !== String(recipientId))

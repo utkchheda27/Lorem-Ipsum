@@ -1,6 +1,4 @@
-import User from "../models/user.js"
-
-
+import User from "../models/user.js";
 
 export const renderRegister = (req, res) => {
     res.render("users/register")
@@ -8,7 +6,6 @@ export const renderRegister = (req, res) => {
 
 export const register = async (req, res, next) => {
     try {
-        console.log(req.file)
         const user = new User(req.body)
         user.profilePicture = req.file.path;
         const registeredUser = await User.register(user, req.body.password);
@@ -18,12 +15,12 @@ export const register = async (req, res, next) => {
             const redirectUrl = req.session.returnTo || "/";
             console.log("redirectUrl => ", redirectUrl)
             delete req.session.returnTo;
-            res.redirect(redirectUrl)
+            return res.redirect(redirectUrl)
         })
         res.send('success')
     } catch (e) {
         req.flash("error", e.message);
-        res.redirect("register")
+        res.redirect("/auth/register")
     }
 }
 
@@ -32,6 +29,7 @@ export const renderLogin = (req, res) => {
 }
 
 export const login = (req, res) => {
+    console.log(req.user._id)
     req.flash("success", "welcome back")
     const redirectUrl = req.session.returnTo || "/";
     console.log("redirectUrl => ", redirectUrl)

@@ -152,7 +152,8 @@ label {
   font-size: 1.1em;
   border-radius: 10px;
   padding: 10px 0;
-  z-index: 1000;
+  z-index: 10;
+  box-shadow: 0 0 2px black;
 }
 
 /* .post-header-pop-up-options div{
@@ -384,7 +385,7 @@ label {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(182, 169, 166, 0.808);
+  /* background-color: rgba(182, 169, 166, 0.808); */
   display: flex;
   justify-content: center;
   align-items: center;

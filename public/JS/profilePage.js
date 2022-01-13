@@ -1,6 +1,7 @@
 
 const btnCtn = document.querySelector('.btn-ctn-profile-page') //container of btn
 
+
 if (btnCtn) {
   // All types of btn
   const friendRequestBtn = document.createElement('button') //send friend request
@@ -443,7 +444,7 @@ const createPost = ({ caption, likes, comments, images, date, User, time, _id })
                     </div>
                     <div>
                       <i class="fa fa-times"></i>
-                      <span>Hide post</span>
+                      <span>Delete post</span>
                     </div>
                   </div>
                 </div>
@@ -624,5 +625,51 @@ const carasolSelector = () => {
   });
 
 }
+
+const bioPopUpBtn = document.querySelector('.bio-form-btn')
+
+const createBioForm = () => {
+  const bioFormCtn = document.createElement('div')
+  const idCtn = document.querySelector('.user-id')
+  const id = String(idCtn.innerText).trim()
+  console.log(id)
+  bioFormCtn.classList.add('bio-form-ctn')
+  bioFormCtn.innerHTML = `
+            <button  class="close-bio-form-btn">
+              <i class="far fa-times-circle"></i>
+            </button>
+            <form method="POST" action="/user/${id}?_method=PUT" class="bio-form">
+              <textarea name="description" class="description" placeholder="Say Something About Yourself"></textarea>
+              <button>Add Bio</button>
+            </form>
+  `
+  return bioFormCtn
+}
+
+//method="POST" action="/resource?_method=DELETE"
+
+if (bioPopUpBtn) {
+  bioPopUpBtn.addEventListener('click', () => {
+    const overlay1 = document.createElement('div')
+    overlay1.classList.add('cover-screen')
+    overlay1.classList.add('overlay')
+    overlay1.classList.add('z-200')
+    const editBioForm = createBioForm();
+    overlay1.append(editBioForm)
+    document.querySelector('body').append(overlay1);
+    document.querySelector('body').classList.add('overflow-hidden')
+    editBioForm.children[0].addEventListener('click', () => {
+      overlay1.remove()
+      document.querySelector('body').classList.remove('overflow-hidden')
+    })
+  })
+}
+
+const editDetailBtn = document.querySelector('.edit-detail-form-popup-btn')
+const editInterestsForm = document.querySelector('.edit-interest-form-popup-btn')
+
+editDetailBtn.addEventListener('click', () => {
+  // document.querySelector('body').style.filter = "blur(5px)";
+})
 
 window.addEventListener('load', mainLoadEventHandler)  // adds load event to window which adds post to main element
