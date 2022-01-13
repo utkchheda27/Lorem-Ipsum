@@ -19,6 +19,8 @@
         integrity="sha512-Idr7xVNnMWCsgBQscTSCivBNWWH30oo/tzYORviOCrLKmBaRxRflm2miNhTFJNVmXvCtzgms5nlJF4az2hiGnA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="/JS/navbar.js" defer></script>
+    <script src="/JS/app.js" defer></script>
+    <link rel="shortcut icon" href="#">
 </head>
 
 <body>
@@ -29,8 +31,11 @@
                     <div>
                         <img src=<%=user.profilePicture %> alt="">
                         <h3>
-                            <%= user.username %>
+                            <a href="/user/<%= user._id %> ">
+                                <%= user.username %>
+                            </a>
                         </h3>
+
                     </div>
                 </li>
                 <% } %>

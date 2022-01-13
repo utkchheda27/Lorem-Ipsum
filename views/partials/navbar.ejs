@@ -21,25 +21,40 @@
       </a>
     </div>
     <div>
-      <a href="/chat">
+      <a href="/chats">
         <i class="fab fa-facebook-messenger"></i>
       </a>
-      <div class="no-of-notifications">5</div>
+      <div class="no-of-messages <%= (currentUser.personalChats.reduce((val,chatRoom)=> {
+          if(chatRoom.messages.some((msg) => String(currentUser._id) !== String(msg.author._id) && msg.isReaded === false)){
+          return val + 1;
+          } else {
+          return val;
+          }
+          },0)) === 0 && " display-none" %>">
+        <%= currentUser.personalChats.reduce((val,chatRoom)=> {
+          if(chatRoom.messages.some((msg) => String(currentUser._id) !== String(msg.author._id) && msg.isReaded ===
+          false)){
+          return val + 1;
+          } else {
+          return val;
+          }
+          },0) %>
+      </div>
     </div>
     <div>
       <a href="/friends">
         <i class="fas fa-user-friends"></i>
       </a>
-      <div class="no-of-requests">
+      <div class="no-of-requests <%= currentUser.requests.length === 0 && " display-none" %> ">
         <%= currentUser.requests.length %>
       </div>
     </div>
-    <div>
+    <!-- <div>
       <a href="#">
         <i class="fas fa-bell"></i>
       </a>
-      <div class="no-of-messages">5</div>
-    </div>
+      <div class="no-of-notifications">5</div>
+    </div> -->
   </div>
   <div class="user-page-redirect-btn">
     <button class="drop-down-menu-btn">
@@ -51,7 +66,7 @@
       <span class="arrow">
       </span>
       <ul>
-        <li><a href="/logout">Logout</a></li>
+        <li><a href="/auth/logout">Logout</a></li>
       </ul>
     </div>
   </div>

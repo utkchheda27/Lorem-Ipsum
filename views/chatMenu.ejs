@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet" />
+    <link rel="shortcut icon" href="#">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.min.js"
+        integrity="sha512-Idr7xVNnMWCsgBQscTSCivBNWWH30oo/tzYORviOCrLKmBaRxRflm2miNhTFJNVmXvCtzgms5nlJF4az2hiGnA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Messages || VI</title>
+    <link rel="stylesheet" href="/CSS/navbar.css">
+    <link rel="stylesheet" href="/CSS/app.css">
+    <link rel="stylesheet" href="/CSS/chatMenu.css">
+    <script src="/JS/navbar.js" defer></script>
+    <script src="/JS/app.js" defer></script>
+    <link rel="shortcut icon" href="#">
+</head>
+
+<body>
+    <%- include('partials/navbar.ejs') %>
+        <div class="container">
+            <ul class="chats">
+                <% for(let chat of user.personalChats){ %>
+                    <li class="chat">
+                        <a href="/chats/<%= chat._id %>">
+                            <img src="<%= String(currentUser._id) === String(chat.participants[0]._id) ? chat.participants[1].profilePicture : chat.participants[0].profilePicture %>"
+                                alt="Profile Picture">
+                            <h2>
+                                <span>
+                                    <%= String(currentUser._id)===String(chat.participants[0]._id) ?
+                                        chat.participants[1].username : chat.participants[0].username %>
+                                </span>
+                            </h2>
+                            <% if( chat.messages.reduce((sum,message)=> {
+                                if(String(message._id) !== String(currentUser._id) && message.isReaded === false){
+                                return sum + 1;
+                                } else {
+                                return sum;
+                                }
+                                },0) !== 0 ) {%>
+                                <span>
+                                    <%= chat.messages.reduce((sum,message)=> {
+                                        if(String(message._id) !== String(currentUser._id) && message.isReaded ===
+                                        false){
+                                        return sum + 1;
+                                        } else {
+                                        return sum;
+                                        }
+                                        },0)
+                                        %>
+                                </span>
+                                <%}%>
+                        </a>
+                    </li>
+                    <% } %>
+            </ul>
+        </div>
+</body>
+
+
+</html>

@@ -16,6 +16,30 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Post',
     }],
+    description: {
+        type: String
+    },
+    country: {
+        type: String
+    },
+    state: {
+        type: String
+    },
+    city: {
+        type: String
+    },
+    yearOfGraduation: {
+        type: Number
+    },
+    branchInCollege: {
+        type: String,
+    },
+    course: {
+        type: String,
+    },
+    interests: {
+        type: [String],
+    },
     friends: [{
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -27,6 +51,10 @@ const userSchema = new Schema({
     sentRequests: [{
         type: Schema.Types.ObjectId,
         ref: "User"
+    }],
+    personalChats: [{
+        type: Schema.Types.ObjectId,
+        ref: "PersonalChat"
     }]
 })
 

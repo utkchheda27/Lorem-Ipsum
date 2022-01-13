@@ -1,5 +1,5 @@
 import User from "../models/user.js"
-
+import PersonalChat from "../models/PersonalChat.js";
 export const getRequests = async (req, res) => { // sends all the requests recieved
     try {
         const { id } = req.params;
@@ -24,14 +24,21 @@ export const requestResponseHandler = async (req, res) => { // logged in user(id
         if (!recipient && !requester) return res.json({ status: false, error: "User not found" })
         if (status) {
             recipient.friends.push(requesterId);
-            requester.friends.push(recipientId)
+            requester.friends.push(recipientId);
+            const chat1 = await PersonalChat.find({ participants: { $all: [requesterId, recipientId] } })
+            console.log("chat 1 ==>", chat1)
+            if (chat1.length === 0) {
+                const room = await PersonalChat.create({ participants: [requesterId, recipientId] });
+                recipient.personalChats.push(room.id)
+                requester.personalChats.push(room.id)
+            }
         }
         recipient.requests = recipient.requests.filter(id => String(id) !== String(requesterId))
         requester.sentRequests = requester.sentRequests.filter(id => String(id) !== String(recipientId))
         const req1 = await requester.save()
         const rec = await recipient.save()
-        console.log(rec)
-        console.log(req1)
+        // console.log(rec)
+        // console.log(req1)
         return res.json({ status: true })
     } catch (e) {
         console.log(e.message)
