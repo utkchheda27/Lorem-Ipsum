@@ -112,7 +112,7 @@ const getRequests = async () => {
 
     } else {
         requests = data.requests
-        console.log(requests)
+        // console.log(requests)
         showRequests()
         loadingAnimationCtn.remove()
     }
@@ -164,7 +164,7 @@ const getFriends = async () => {
     requestsCtn.append(loadingAnimationCtn)
     const { data } = await axios.get(`/user/${loggedInuser._id}/friends`)
     if (!data.status) {
-        console.log(data.error)
+        // console.log(data.error)
         loadingAnimationCtn.remove()
         error.innerText = data.error
         errorCtn.classList.add('show')
@@ -214,7 +214,7 @@ const getSentRequests = async () => {
     requestsCtn.append(loadingAnimationCtn)
     const { data } = await axios.get(`/user/${loggedInuser._id}/requests/sent`)
     if (!data.status) {
-        console.log(data.error)
+        // console.log(data.error)
         loadingAnimationCtn.remove()
         error.innerText = data.error
         errorCtn.classList.add('show')
@@ -223,7 +223,7 @@ const getSentRequests = async () => {
             error.innerText = ""
         }, 5000)
     } else {
-        console.log("sentRequests => " + data.sentRequests)
+        // console.log("sentRequests => " + data.sentRequests)
         sentRequests = data.sentRequests
         showSentRequests();
         loadingAnimationCtn.remove()
@@ -270,7 +270,7 @@ const handleResponse = async (id, status, reqDomEle) => {
     }
     const { data } = await axios.post(`/user/${loggedInuser._id}/requests/${id}/response`, { status: status });
     if (!data.status) {
-        console.log(data.error)
+        // console.log(data.error)
         loadingAnimationCtn.remove()
         overlay.remove()
         error.innerText = data.error
@@ -292,7 +292,7 @@ const unfriend = async (id, domEle) => {
     requestsCtn.appendChild(overlay)
     const { data } = await axios.delete(`/user/${loggedInuser._id}/friends/${id}`)
     if (!data.status) {
-        console.log(data.error)
+        // console.log(data.error)
         loadingAnimationCtn.remove()
         overlay.remove()
         error.innerText = data.error
@@ -315,7 +315,7 @@ const cancelRequest = async (id, domEle) => {
     requestsCtn.appendChild(overlay)
     const { data } = await axios.delete(`/user/${loggedInuser._id}/requests/sent/${id}`)
     if (!data.status) {
-        console.log(data.error)
+        // console.log(data.error)
         loadingAnimationCtn.remove()
         overlay.remove()
         error.innerText = data.error

@@ -64,7 +64,7 @@ const createCommentObj = (commentText, date, time, commentId, postId, post) => {
   commentCtn.children[0].children[commentCtn.children[0].children.length - 1].children[0].addEventListener('click', () => {
     deleteComment(commentId, postId, commentCtn, post)
   })
-  console.log(commentCtn.children[0].children[commentCtn.children[0].children.length - 1].children[0])
+  // console.log(commentCtn.children[0].children[commentCtn.children[0].children.length - 1].children[0])
   return commentCtn;
 }
 
@@ -80,7 +80,7 @@ const handleCommentForm = async (id, post1) => {
     post1.children[post1.children.length - 1].prepend(commentElement)
     post1.children[2].children[2].innerText = data.commentsLength === 1 ? `1 Comment` : `${data.commentsLength} Comments`
     post1.children[post1.children.length - 1].classList.remove('display-none')
-    console.log(post1.children[post1.children.length - 1].children[post1.children[post1.children.length - 1].children.length - 1])
+    // console.log(post1.children[post1.children.length - 1].children[post1.children[post1.children.length - 1].children.length - 1])
     if (post1.children[post1.children.length - 1].children[post1.children[post1.children.length - 1].children.length - 1].classList.contains('no-comment')) {
       post1.children[post1.children.length - 1].children[post1.children[post1.children.length - 1].children.length - 1].remove()
     }
@@ -150,7 +150,7 @@ postInput.addEventListener('click', (e) => {
 
 const toogleMoreOptionMenu = (btn) => { // toogles more option on a post
   // btn.nextElementSibling.classList.remove('display-none')
-  console.log(btn.nextElementSibling);
+  // console.log(btn.nextElementSibling);
   if (btn.nextElementSibling.classList.contains('display-none')) {
     btn.nextElementSibling.classList.remove('display-none')
   } else {
@@ -206,6 +206,11 @@ const postLike = async (post, _id) => {
     post.children[3].prepend(tempBtn)
   }
 }
+
+// <button class="share-btn">
+//   <span>Share</span>
+//   <i class="fa fa-share"></i>
+// </button>
 
 const unlikePost = async (post, _id) => {
   const res = await axios.delete(`/posts/${_id}/likes`);
@@ -317,10 +322,6 @@ const createPost = ({ caption, likes, comments, images, date, User, time, _id })
                   <span>Comment</span>
                   <i class="far fa-comments"></i>
                 </button>
-                <button class="share-btn">
-                  <span>Share</span>
-                  <i class="fa fa-share"></i>
-                </button>
               </div>
               <div class="create-comment-form">
             <form class="comment-form">
@@ -339,6 +340,8 @@ const createPost = ({ caption, likes, comments, images, date, User, time, _id })
             </form>
           </div>
               `
+
+
 
   const commentContainer = document.createElement('div')
   commentContainer.classList.add('comments-ctn')
@@ -427,7 +430,7 @@ const loadMoreHandler = async (e) => { // add more post at the end when user cli
   pageNo++;
   const posts = await axios.get(`/api/get_posts?pageNo=${pageNo}`) // request backend for more posts
   const morePosts = posts.data.posts  // extract posts
-  console.log(loadedPosts.size, morePosts.length)
+  // console.log(loadedPosts.size, morePosts.length)
   if (loadedPosts.size === morePosts.length) {
     const noMorePostsCtn = document.createElement('div');
     const h3 = document.createElement('h3');
@@ -463,7 +466,7 @@ loadMoreBtn.addEventListener('click', loadMoreHandler) // adds click event to lo
 const mainLoadEventHandler = async () => {  // load event handler
   main.append(loadingElementCtn)
   const data = await axios.get('/api/get_posts');
-  console.log(data.length, loadedPosts.size);
+  // console.log(data.length, loadedPosts.size);
   const posts = data.data.posts
 
   for (let post of posts) {
