@@ -16,6 +16,14 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Post',
     }],
+    savedPosts: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Post',
+    }],
+    hidedPosts: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Post',
+    }],
     description: {
         type: String
     },
@@ -33,9 +41,11 @@ const userSchema = new Schema({
     },
     branchInCollege: {
         type: String,
+        enum: ["Civil Engineering", "Electrical Engineering", "Electronics Engineering", "Electronics", "Information Technology", "Mechanical Engineering", "Production Engineering", "Textile Engineering"]
     },
     course: {
         type: String,
+        enum: ['B. Tech.', 'M. Tech.', 'Diploma', 'Ph. D.', "MCA"]
     },
     interests: {
         type: [String],

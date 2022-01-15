@@ -1,5 +1,6 @@
 import User from "../models/user.js"
 import PersonalChat from "../models/PersonalChat.js";
+import ExpressError from "../utilities/ExpressError.js"
 export const getRequests = async (req, res) => { // sends all the requests recieved
     try {
         const { id } = req.params;
@@ -18,6 +19,7 @@ export const requestResponseHandler = async (req, res) => { // logged in user(id
     try {
         const { id: recipientId, fId: requesterId } = req.params
         const { status } = req.body;
+        if (String(recipientId) !== String(req.user._id)) return res.json({ status: false, error: "Illegal Operation" })
         if (String(recipientId) === String(requesterId)) return res.json({ status: false, error: "Illegal Operation" })
         const recipient = await User.findById(recipientId)
         const requester = await User.findById(requesterId)
@@ -26,7 +28,7 @@ export const requestResponseHandler = async (req, res) => { // logged in user(id
             recipient.friends.push(requesterId);
             requester.friends.push(recipientId);
             const chat1 = await PersonalChat.find({ participants: { $all: [requesterId, recipientId] } })
-            console.log("chat 1 ==>", chat1)
+            // console.log("chat 1 ==>", chat1)
             if (chat1.length === 0) {
                 const room = await PersonalChat.create({ participants: [requesterId, recipientId] });
                 recipient.personalChats.push(room.id)
@@ -37,11 +39,11 @@ export const requestResponseHandler = async (req, res) => { // logged in user(id
         requester.sentRequests = requester.sentRequests.filter(id => String(id) !== String(recipientId))
         const req1 = await requester.save()
         const rec = await recipient.save()
-        // console.log(rec)
-        // console.log(req1)
+        // // console.log(rec)
+        // // console.log(req1)
         return res.json({ status: true })
     } catch (e) {
-        console.log(e.message)
+        console.log(e)
         res.json({ status: false, error: "Something Went wrong" })
     }
 }
@@ -57,8 +59,8 @@ export const sendRequest = async (req, res) => { // logged in user(id) sending r
         requester.sentRequests.push(recipient)
         const n = await recipient.save()
         const t = await requester.save()
-        console.log("requester => ", t.username)
-        console.log("recipient => ", n.username)
+        // console.log("requester => ", t.username)
+        // console.log("recipient => ", n.username)
         res.json({ status: true })
     } catch (e) {
         console.log(e.message, "\n", e.stack)
@@ -71,10 +73,10 @@ export const getSentRequests = async (req, res) => { // responds with all the re
         const { id } = req.params
         const user = await User.findById(id).populate("sentRequests");
         if (!user) return res.json({ status: false, error: "User doesn't exist" })
-        console.log("sentRequests => " + user.sentRequests)
+        // console.log("sentRequests => " + user.sentRequests)
         res.json({ status: true, sentRequests: user.sentRequests })
     } catch (e) {
-        console.log(e.message)
+        // console.log(e.message)
         res.json({ status: false, error: "Something Went wrong" })
     }
 }
@@ -90,10 +92,10 @@ export const deleteARequest = async (req, res) => { // deletes a request sent by
         receiver.requests = receiver.requests.filter(id1 => String(id1) !== String(id));
         const newReceiver = await receiver.save()
         const newSender = await sender.save();
-        console.log(newReceiver, newSender)
+        // console.log(newReceiver, newSender)
         res.json({ status: true })
     } catch (e) {
-        console.log(e.message)
+        // console.log(e.message)
         res.json({ status: false, error: "Something Went wrong" })
     }
 }

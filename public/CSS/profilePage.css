@@ -109,11 +109,13 @@
   /* padding: 20px; */
   position: sticky;
   top: 90px;
+  /* max-height: 100vh; */
+  overflow-y: auto;
 }
 
 /* details area */
 
-.edit-details-form {
+.details-form {
   width: 100%;
   height: auto;
   background-color: #c4bab8;
@@ -129,11 +131,11 @@
   height: 20%;
 } */
 
-.edit-details-form h3 {
+.details-form h3 {
   height: 20%;
 }
 
-.edit-details-form ul {
+.details-form ul {
   height: 80%;
   display: flex;
   flex-direction: column;
@@ -141,13 +143,13 @@
   justify-content: space-evenly;
 }
 
-.edit-details-form ul li {
+.details-form ul li {
   display: flex;
   justify-content: start;
   margin: 10px 0;
 }
 
-.edit-details-form ul li i {
+.details-form ul li i {
   display: inline-block;
   margin: 0 10px;
 }
@@ -182,6 +184,78 @@
   padding: 5px 0;
   border-radius: 2px;
   font-size: 1.2em;
+}
+
+.details-input {
+  display: block !important;
+  height: 35px;
+  width: 100%;
+  font-size: 1.15em;
+  padding: 5px;
+}
+
+.edit-details-form-ctn {
+  height: 400px;
+  width: 300px;
+  background-color: cadetblue;
+  padding: 10px;
+  position: relative;
+  top: 0;
+  animation: scaleUp 5s linear;
+  animation-iteration-count: 1;
+}
+@keyframes scaleUp {
+  form {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.edit-details-form-title {
+  text-align: center;
+  font-size: 1.25em;
+  height: 10%;
+  font-weight: bold;
+}
+.edit-details-form {
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: stretch;
+}
+.edit-details-form .description-input {
+  text-align: start;
+  width: 100%;
+}
+
+.branch-ctn {
+  width: 100%;
+}
+.branch-ctn .branch-label {
+  width: 30%;
+  font-size: 1.25em;
+}
+
+.branch-ctn .course {
+  width: 65%;
+  height: 100% !important;
+}
+.branch-ctn .course option {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.edit-details-submit-btn-ctn {
+  width: 100% !important;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  height: 30px;
+  width: 70px;
+  background-color: #26af62;
 }
 /* interests */
 
@@ -219,6 +293,7 @@
   height: 20px;
   text-transform: uppercase;
   text-align: center;
+  text-transform: capitalize;
 }
 
 .friends {
@@ -407,7 +482,9 @@
   background-color: #26af62;
 }
 
-.close-bio-form-btn {
+.close-bio-form-btn,
+.close-details-edit-form-btn,
+.close-interests-edit-form-btn {
   position: absolute;
   top: 0;
   right: 0;
@@ -416,4 +493,65 @@
   cursor: pointer;
   border-radius: 50%;
   font-size: 15px;
+  margin: 10px 10px 0 0;
+}
+
+/* edit interests form */
+
+.edit-interests-form-ctn {
+  width: 500px;
+  max-height: 500px;
+  background-color: rgb(117, 182, 182);
+  border-radius: 20px;
+  padding: 20px;
+  position: relative;
+  top: 0;
+}
+
+.edit-interests-form {
+  width: 100%;
+  height: 100%;
+}
+
+.check-box-ctn {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.input {
+  margin: 10px;
+}
+
+.interests-input {
+  display: none !important;
+}
+
+.label {
+  position: relative;
+  top: 0;
+}
+
+.overlay-tick {
+  height: 100px;
+  width: 100px;
+  border-radius: 20px;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 200000;
+  background-color: rgba(0, 0, 0, 0.507);
+}
+
+.edit-interests-form-submit-btn-ctn {
+  width: 100%;
+}
+
+.edit-interests-form-submit-btn {
+  width: 80%;
+  height: 50px;
+  background-color: azure;
+  font-size: 1.25em;
+  display: block;
+  margin: auto;
 }
