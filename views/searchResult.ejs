@@ -25,21 +25,87 @@
 
 <body>
     <%- include('partials/navbar') %>
-        <ul>
-            <% for(let user of users){ %>
-                <li>
-                    <div>
-                        <img src=<%=user.profilePicture %> alt="">
-                        <h3>
-                            <a href="/user/<%= user._id %> ">
-                                <%= user.username %>
-                            </a>
-                        </h3>
-
+        <main class="search-main-ctn">
+            <div class="search-form-ctn">
+                <h2>Search:</h2>
+                <form action="/search">
+                    <div class="search-query-username search-input-ctn">
+                        <input type="text" autocomplete="off" name="username" placeholder="Username">
                     </div>
-                </li>
-                <% } %>
-        </ul>
+                    <div class="search-query-email search-input-ctn">
+                        <input type="email" autocomplete="off" name="email" placeholder="E-mail">
+                    </div>
+                    <div class="search-query-country search-input-ctn">
+                        <input type="text" autocomplete="off" name="country" placeholder="Country">
+                    </div>
+                    <div class="search-query-state search-input-ctn">
+                        <input type="text" autocomplete="off" name="state" placeholder="State">
+                    </div>
+                    <div class="search-query-city search-input-ctn">
+                        <input type="text" autocomplete="off" name="city" placeholder="City">
+                    </div>
+                    <div class="search-query-branch search-input-ctn">
+                        <input type="text" autocomplete="off" placeholder="Branch" name="branch">
+                    </div>
+                    <div class="search-query-batch search-input-ctn">
+                        <input type="number" autocomplete="off" placeholder="Batch" name="batch">
+                    </div>
+                    <div class="search-query-course search-input-ctn">
+                        <input type="text" autocomplete="off" placeholder="Course" name="course">
+                    </div>
+                    <div class="search-submit-btn-ctn">
+                        <button type="submit">Search!</button>
+                    </div>
+                </form>
+            </div>
+            <div class="search-result-ctn <%= Object.keys(result).length !==0 ? " shadow" : "" %> ">
+
+                <% if(Object.keys(result).length !==0) {%>
+                    <% for(let key in result) {%>
+                        <div class="result-ctn">
+                            <h3>Results related to <%= key %> : <span>
+                                        <%= result[key].queryName %>
+                                    </span>
+                            </h3>
+                            <ul class="results">
+                                <% for(let r of result[key].res ) {%>
+                                    <li class="result">
+                                        <div class="img-ctn">
+                                            <img src="<%= r.profilePicture %> " alt="">
+                                        </div>
+                                        <div class="username-ctn">
+                                            <h2>
+                                                <a href="/user/<%= r._id %>">
+                                                    <%= r.username %>
+                                                </a>
+                                            </h2>
+                                            <% if(r[key]) {%>
+                                                <p>
+                                                    <%= key %> : <%= r[key] %>
+                                                </p>
+                                                <% } %>
+                                        </div>
+                                    </li>
+                                    <% } %>
+                            </ul>
+                        </div>
+                        <% } %>
+                            <% } else { %>
+                                <h1 id="no-data"></h1>
+                                <% } %>
+            </div>
+        </main>
 </body>
+<script>
+    const noData = document.querySelector('#no-data')
+    console.log(noData)
+    if (noData) {
+        if (location.search.length === 0) {
+            noData.innerText = 'Enter Information to search'
+        } else {
+            noData.innerText = 'Nothing to Show :('
+        }
+    }
+</script>
 
 </html>

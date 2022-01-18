@@ -6,22 +6,14 @@ import { storage } from "../cloudinary/posts.js"
 import user from "../models/user.js";
 import ExpressError from "../utilities/ExpressError.js";
 
-export const deletePost = async (req, res) => {
+export const deletePost = async (req, res, next) => {
     const { postID = undefined } = req.params
     const post = await Post.findById(postID);
-    for (let comment of post.comments) {
-        const r1 = await Comment.findByIdAndDelete(comment);
-        // console.log(r1)
+    if (String(post.User) !== String(req.user._id)) {
+        next(new ExpressError("Illeagel Operation", 401))
     }
-    let user = await User.findById(post.User);
-    user.posts = user.posts.filter((id) => {
-        return String(id) !== String(postID);
-    })
-    const r2 = await user.save();
-    // console.log(r2)
     const r = await Post.findByIdAndDelete(postID);
-    // console.log(r);
-    res.json({ status: true });
+    res.redirect(`/user/${req.user._id}`);
 }
 
 export const getPosts = async (req, res) => {
@@ -35,7 +27,7 @@ export const createPostHandler = async (req, res) => {
     try {
         // console.log(req.files)
         const date = new Date;
-        const dateN = `${date.getDate()}|${date.getMonth()}|${date.getFullYear()}`
+        const dateN = `${date.getDate()}|${date.getMonth() + 1}|${date.getFullYear()}`
         const time = `${date.getHours()}:${date.getMinutes()}`
         const tempPost = new Post(req.body)
         // console.log(req.files)

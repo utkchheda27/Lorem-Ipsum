@@ -66,13 +66,15 @@ export const getPosts = async (req, res) => {
             if (tempPosts.length >= 2 * pageNo) break;
             let tPost = await Post.findById(post).populate('User');
             const comments = []
-            for (let commentId of tPost.comments) {
-                const tComment = await Comment.findById(commentId).populate('author')
-                if (tComment != null)
-                    comments.push(tComment)
+            if (tPost) {
+                for (let commentId of tPost.comments) {
+                    const tComment = await Comment.findById(commentId).populate('author')
+                    if (tComment != null)
+                        comments.push(tComment)
+                }
+                tPost.comments = comments
+                tempPosts.push(tPost)
             }
-            tPost.comments = comments
-            tempPosts.push(tPost)
         }
         resPost.push(...tempPosts);
     }
