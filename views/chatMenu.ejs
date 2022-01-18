@@ -27,8 +27,10 @@
 <body>
     <%- include('partials/navbar.ejs') %>
         <div class="container">
+           <h1 class="heading">CHATS</h1>
             <ul class="chats">
                 <% for(let chat of user.personalChats){ %>
+                    
                     <li class="chat">
                         <a href="/chats/<%= chat._id %>">
                             <img src="<%= String(currentUser._id) === String(chat.participants[0]._id) ? chat.participants[1].profilePicture : chat.participants[0].profilePicture %>"

@@ -116,10 +116,12 @@
 .edit-details-form {
   width: 100%;
   height: auto;
-  background-color: #c4bab8;
   border-radius: 10px;
-  margin: 5px auto;
   padding: 10px;
+  margin:  auto;
+  margin-bottom: 40px;
+  background-color: #B0E2FF;
+  font-size: 1.1rem;
 }
 
 /* .edit-details-form h3 {
@@ -153,11 +155,14 @@
 }
 
 .edit-detail-form-popup-btn-ctn {
-  width: 100%;
+  width: 70%;
   padding: 20px;
+  margin: auto;
+  
 }
 .edit-detail-form-popup-btn {
   width: 70%;
+  height:50px;
   display: block;
   margin: auto;
   text-align: center;
@@ -166,6 +171,11 @@
   padding: 5px 0;
   border-radius: 2px;
   font-size: 1.2em;
+  border-radius: 20px;
+}
+
+.edit-detail-form-popup-btn:hover{
+  cursor: pointer;
 }
 
 .edit-interest-form-popup-btn-ctn {
@@ -173,7 +183,8 @@
   padding: 20px;
 }
 .edit-interest-form-popup-btn {
-  width: 70%;
+  width: 45%;
+  height:50px;
   display: block;
   margin: auto;
   text-align: center;
@@ -182,15 +193,22 @@
   padding: 5px 0;
   border-radius: 2px;
   font-size: 1.2em;
+  border-radius: 20px;
+}
+
+.edit-interest-form-popup-btn:hover{
+  cursor: pointer;
 }
 /* interests */
 
 .interests-ctn {
   width: 100%;
   height: auto;
-  background-color: #c4bab8;
   border-radius: 10px;
-  margin: 5px auto;
+  margin:  auto;
+  margin-bottom: 40px;
+  background-color: #B0E2FF;
+  font-size: 1.1rem;
 }
 
 .interests-ctn .interests {
@@ -223,10 +241,13 @@
 
 .friends {
   width: 100%;
-  background-color: #c4bab8;
   height: auto;
   padding: 20px;
   border-radius: 10px;
+  margin:  auto;
+  margin-bottom: 40px;
+  background-color: #B0E2FF;
+  font-size: 1.1rem;
   /* position: sticky;
   top: 90px; */
 }

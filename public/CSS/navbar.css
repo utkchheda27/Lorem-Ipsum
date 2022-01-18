@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #6d6875;
+  background-color: #fff;
   /* background-color: #c5d5e8; */
   height: 70px;
   position: sticky;
@@ -16,6 +16,12 @@
 .navbar i {
   font-size: 1.25em;
 }
+
+.logo{
+  height:150px;
+  width: 150px;
+}
+
 
 .brand-icon-searchCtn {
   width: 25%;
@@ -126,7 +132,7 @@
   top: -5px;
   left: 15px;
   border-radius: 50%;
-  background-color: red;
+  background-color: #6CAFB2;
   z-index: 10;
   text-align: center;
 }

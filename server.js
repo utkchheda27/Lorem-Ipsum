@@ -138,6 +138,9 @@ app.use('/chats/', chatRouter)
 app.get("/", isLoggedIn, homepageHandler);
 app.get('/friends', isLoggedIn, friendsPageHandler)
 app.get('/search', isLoggedIn, searchResult)
+app.get("/home",(req,res)=>{
+    res.render("home")
+})
 
 
 

@@ -36,6 +36,9 @@
   align-items: center;
   background-color: #fcf8f7;
   border-radius: 10px;
+  box-shadow: 0 3px 20px rgb(0 0 0 / 0.3);
+  font-size: 1.2em;
+
 }
 
 .loggedin-user-info .profile-img-ctn {
@@ -51,14 +54,19 @@
   border-radius: 50%;
   object-fit: cover;
 }
+
+like-btn{
+  cursor: pointer;
+}
 /* right sidebar */
 
 .sidebar2 {
   width: 20%;
-  height: 400px;
+  height: 70vh;
   border: 1px solid black;
   position: sticky;
   top: 100px;
+  border-radius: 25px;
 }
 
 /* load more btn */
@@ -71,19 +79,23 @@
   /* height: 50px; */
   width: auto;
   padding: 10px;
-  background-color: cadetblue;
+  background-color: #74bce6;
   margin-bottom: 50px;
   border-radius: 10px;
+  font-size: 150%;
 }
 
 .loadmore-btn:hover {
   cursor: pointer;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
+
 
 /* top pririority classes */
 
 .comment-click-btn {
-  background-color: #9bbee9 !important;
+  background-color: #6D9DC5!important;
   border-radius: 10px !important;
 }
 

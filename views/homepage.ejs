@@ -33,8 +33,10 @@
     <div class="main-ctn">
       <aside class="loggedin-user-info">
         <section class="profile-img-ctn">
-          <img src=<%=currentUser.profilePicture %> alt="logged in user
+          <a href="/user/<%= currentUser._id %>">
+            <img src=<%=currentUser.profilePicture %> alt="logged in user
           profile picture" class="profile-pic">
+        </a>
         </section>
         <section>
           <a href="/user/<%= currentUser._id %>">
@@ -44,10 +46,10 @@
           </a>
         </section>
         <section class="no-of-friends">
-          <span>friends <%= currentUser.friends.length %> </span>
+          <a href="/friends"><span>Friends: <%= currentUser.friends.length %> </span></a>
         </section>
         <section class="no-of-posts">
-          <span>posts <%= currentUser.posts.length %> </span>
+          <a href="/user/<%= currentUser._id %>"><span>Posts: <%= currentUser.posts.length %> </span></a>
         </section>
       </aside>
 

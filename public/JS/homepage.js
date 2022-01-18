@@ -15,8 +15,10 @@ let pageNo = 1; // page no
 
 // load more btn which is at the bottom of the page 
 const loadMoreBtn = document.createElement('button')
-loadMoreBtn.innerText = "load more posts"
+loadMoreBtn.innerText = "Load more posts"
 loadMoreBtn.classList.add('loadmore-btn')
+loadMoreBtn.classList.add('loadmore-btn-animated')
+loadMoreBtn.classList.add('loadmore-btn-white')
 
 //overlay
 const overlay = document.createElement('div')

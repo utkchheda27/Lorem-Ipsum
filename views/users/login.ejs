@@ -1,42 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html >
 
 <head>
 	<meta charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Login</title>
+
 	<link rel="stylesheet" href="/CSS/app.css" />
 	<link rel="stylesheet" href="/CSS/navbar.css" />
 	<link rel="stylesheet" href="/CSS/footer.css" />
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
 		integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
 		crossorigin="anonymous" referrerpolicy="no-referrer" />
+		
+
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet" />
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.min.js"
 		integrity="sha512-Idr7xVNnMWCsgBQscTSCivBNWWH30oo/tzYORviOCrLKmBaRxRflm2miNhTFJNVmXvCtzgms5nlJF4az2hiGnA=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<link rel="stylesheet" href="/CSS/login.css" />
+	<title>Login | VibeIn</title>
 </head>
 
 <body>
 	<!-- <%= error %> -->
 	<div class="container">
+		<div class="logo"><img src="/assets/logo_without_text.jpg" alt=""></div>
 		<div class="header">
-			<h2>VibeIn</h2>
+			<h2>Sign In</h2>
 		</div>
 		<form class="form" action="/auth/login" method="POST">
 			<div class="form-control">
 				<label for="username" name="username">Username</label>
-				<input id="username" type="text" name="username" autofocus />
+				<input id="txtUserName" type="text" name="username" autofocus />
 				<small>Error Message</small>
 			</div>
 
 			<div class="form-control">
-				<label for="password" name="password">Password</label>
-				<input id="password" type="password" name="password" />
+				<label for="pwd" name="pwd">Password</label>
+				<input id="txtPwd" type="password" name="password" />
 				<small>Error Message</small>
 			</div>
 
@@ -45,20 +51,19 @@
 			</div>
 
 			<div class="form-control log_in">
-				<p>Don't have an account <a href="/register"> SignUp</a></p>
+				<p>Don't have an account <a href="/auth/register"> SignUp</a></p>
 			</div>
 		</form>
 	</div>
 	<script src="/JS/login.js"></script>
-	<%- include("../partials/footer") %>
+	
 </body>
 
 </html>
 
-<!-- <body>
-  <div class="">
+
+  <!-- <div class="">
     <h3>
-      <%= error %>
     </h3>
     <h5 class="">Login</h5>
     <form action="/auth/login" method="POST">
@@ -72,8 +77,4 @@
       </div>
       <button>Login</button>
     </form>
-  </div>
-  <%- include("../partials/footer") %>
-</body>
-
-</html> -->
+  </div> -->

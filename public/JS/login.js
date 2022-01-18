@@ -1,5 +1,5 @@
-let userName = document.getElementById("username");
-let pwd = document.getElementById("password");
+let userName = document.getElementById("txtUserName");
+let pwd = document.getElementById("txtPwd");
 let form = document.querySelector("form");
 
 function validateInput() {
