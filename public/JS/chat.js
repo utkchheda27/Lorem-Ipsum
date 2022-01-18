@@ -45,7 +45,7 @@ const appendMessage = (text, rec, date) => {
 }
 
 socket.on('new message', async ({ message: text, date = undefined, msgID }) => {
-    console.log(date)
+    // console.log(date)
     const res = await axios.put(`/api/chat/${chatID}/messages/${msgID}`, { isReaded: true })
     appendMessage(text, "recieved", date)
 })
@@ -55,7 +55,7 @@ socket.on('friendTyping', () => {
     if (timeOutCode !== undefined) {
         clearTimeout(timeOutCode)
     }
-    console.log(`${friend.username} is typing...`)
+    // console.log(`${friend.username} is typing...`)
     document.querySelector(".friendTyping").innerText = `${friend.username} is typing...`;
     timeOutCode = setTimeout(() => {
         document.querySelector(".friendTyping").innerText = '';
@@ -91,9 +91,9 @@ window.onload = async () => {
     if (chatID) {
         const chatData = await axios.get(`/api/chat/${chatID}`);
         const { data } = await axios.get('/api/loggedInUserInfo');
-        console.log(chatData.data.chatData)
-        console.log(chatData.data.unreadedMsgs)
-        console.log(data)
+        // console.log(chatData.data.chatData)
+        // console.log(chatData.data.unreadedMsgs)
+        // console.log(data)
 
         loggedInuser = data.loggedInuser
 
@@ -104,7 +104,7 @@ window.onload = async () => {
         }
 
         addFriendInfo(friend.username, friend.profilePicture, friend._id)
-        console.log(chatData.data.unreadedMsgs)
+        // console.log(chatData.data.unreadedMsgs)
 
 
         for (let message of chatData.data.chatData.messages) {

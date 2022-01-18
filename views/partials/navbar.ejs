@@ -6,13 +6,16 @@
         <img src="/assets/VibeIn.png" alt="" class="logo">
       </a>
     </div>
-    <div class="search-form">
-      <form action="/search">
+    <div class="search-redirect-btn-ctn">
+      <!-- <form action="/search">
         <div>
           <label for="search"><i class="fa fa-search" aria-hidden="true"></i></label>
           <input type="text" class="search-input" id="search" placeholder="Search Friends" name="search_query" />
         </div>
-      </form>
+      </form> -->
+      <button class="search-redirect-btn">
+        <i class="fa fa-search" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
   <div class="icons-ctn">
@@ -68,6 +71,11 @@
       </span>
       <ul>
         <li><a href="/auth/logout">Logout</a></li>
+        <li>
+          <form method="post" action="/user/<%= currentUser._id %>?_method=DELETE">
+            <button type="submit" class="delete-user-btn" style="color: white;">Delete Account</button>
+          </form>
+        </li>
       </ul>
     </div>
   </div>

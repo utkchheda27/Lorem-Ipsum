@@ -49,12 +49,12 @@ if (btnCtn) {
     overlay.appendChild(loadingAnimationCtn)
     document.querySelector('body').appendChild(overlay)
     const res1 = await axios.get('/api/loggedInUserInfo');
-    console.log(res1)
+    // console.log(res1)
     const loggedInuser = res1.data.loggedInuser
     const { data } = await axios.post(`/user/${loggedInuser._id}/requests/${id}`)
-    console.log(data)
+    // console.log(data)
     if (!data.status) {
-      console.log(data.error)
+      // console.log(data.error)
       loadingAnimationCtn.remove()
       overlay.remove()
       error.innerText = data.error
@@ -68,7 +68,7 @@ if (btnCtn) {
       btnCtn.append(cancelRequestBtn)
       loadingAnimationCtn.remove()
       overlay.remove()
-      console.log(errorCtn)
+      // console.log(errorCtn)
     }
 
   })
@@ -80,7 +80,7 @@ if (btnCtn) {
     const loggedInuser = res1.data.loggedInuser
     const { data } = await axios.delete(`/user/${loggedInuser._id}/requests/sent/${id}`)
     if (!data.status) {
-      console.log(data.error)
+      // console.log(data.error)
       loadingAnimationCtn.remove()
       overlay.remove()
       error.innerText = data.error
@@ -105,7 +105,7 @@ if (btnCtn) {
     const loggedInuser = res.data.loggedInuser
     const { data } = await axios.post(`/user/${loggedInuser._id}/requests/${id}/response`, { status: true });
     if (data.status) {
-      console.log(data.error)
+      // console.log(data.error)
       loadingAnimationCtn.remove()
       overlay.remove()
       error.innerText = data.error
@@ -130,7 +130,7 @@ if (btnCtn) {
     const loggedInuser = res1.data.loggedInuser
     const { data } = await axios.post(`/user/${loggedInuser._id}/requests/${id}/response`, { status: false });
     if (data.status) {
-      console.log(data.error)
+      // console.log(data.error)
       loadingAnimationCtn.remove()
       overlay.remove()
       error.innerText = data.error
@@ -155,14 +155,14 @@ if (btnCtn) {
     const res1 = await axios.get('/api/loggedInUserInfo');
     const loggedInuser = res1.data.loggedInuser
     const { data } = await axios.delete(`/user/${loggedInuser._id}/friends/${id}`)
-    console.log(data);
+    // console.log(data);
     if (data.error) {
       loadingAnimationCtn.remove()
       overlay.remove()
       error.innerText = data.error
       errorCtn.classList.add('show')
       setTimeout(() => {
-        console.log("Here")
+        // console.log("Here")
         errorCtn.classList.remove('show')
         error.innerText = ""
       }, 5000)
@@ -213,6 +213,7 @@ overlay.classList.add('overlay')
 const main = document.querySelector('.user-posts')
 const postInput = document.querySelector('.create-post-form .create-post-form-input')
 postInput && postInput.addEventListener('click', (e) => {
+
   overlay.innerHTML = `
  <div class="create-post-overlay">
               <div class="create-post-title">
@@ -255,12 +256,14 @@ postInput && postInput.addEventListener('click', (e) => {
   `
   body.append(overlay)
   body.classList.add('noscroll')
+  // body.style.filter = 'blur(2px)';
   postInput.blur()
   closeOverLayBtn = document.querySelector(".create-post-title .close-btn-ctn button")
   closeOverLayBtn.addEventListener('click', () => {
     overlay.innerHTML = ``;
     overlay.remove()
     closeOverLayBtn = undefined;
+    body.style.filter = 'none'
     body.classList.remove('noscroll')
 
   })
@@ -278,7 +281,7 @@ const handleCommentForm = async (id, post1) => {
     post1.children[post1.children.length - 1].prepend(commentElement)
     post1.children[2].children[2].innerText = data.commentsLength === 1 ? `1 Comment` : `${data.commentsLength} Comments`
     post1.children[post1.children.length - 1].classList.remove('display-none')
-    console.log(post1.children[post1.children.length - 1].children[post1.children[post1.children.length - 1].children.length - 1])
+    // console.log(post1.children[post1.children.length - 1].children[post1.children[post1.children.length - 1].children.length - 1])
     if (post1.children[post1.children.length - 1].children[post1.children[post1.children.length - 1].children.length - 1].classList.contains('no-comment')) {
       post1.children[post1.children.length - 1].children[post1.children[post1.children.length - 1].children.length - 1].remove()
     }
@@ -318,7 +321,7 @@ const createCommentObj = (commentText, date, time, commentId, postId, post) => {
   commentCtn.children[0].children[commentCtn.children[0].children.length - 1].children[0].addEventListener('click', () => {
     deleteComment(commentId, postId, commentCtn, post)
   })
-  console.log(commentCtn.children[0].children[commentCtn.children[0].children.length - 1].children[0])
+  // console.log(commentCtn.children[0].children[commentCtn.children[0].children.length - 1].children[0])
   return commentCtn;
 }
 
@@ -390,7 +393,7 @@ const postLike = async (post, _id) => {
 }
 
 const createPost = ({ caption, likes, comments, images, date, User, time, _id }) => {
-  console.log(comments)
+  // console.log(comments)
   const post = document.createElement('div') // post element
   post.classList.add('post')
 
@@ -603,7 +606,7 @@ const addApost = (post) => { // returns a post DOM object
 const mainLoadEventHandler = async () => {  // load event handler
   main.append(loadingElementCtn)
   const { data } = await axios.get(`/posts?id=${currentUser}`)
-  console.log(data.posts)
+  // console.log(data)
   const posts = []
 
   for (let post of data.posts) {
@@ -632,7 +635,7 @@ const createBioForm = () => {
   const bioFormCtn = document.createElement('div')
   const idCtn = document.querySelector('.user-id')
   const id = String(idCtn.innerText).trim()
-  console.log(id)
+  // console.log(id)
   bioFormCtn.classList.add('bio-form-ctn')
   bioFormCtn.innerHTML = `
             <button  class="close-bio-form-btn">
@@ -668,8 +671,166 @@ if (bioPopUpBtn) {
 const editDetailBtn = document.querySelector('.edit-detail-form-popup-btn')
 const editInterestsForm = document.querySelector('.edit-interest-form-popup-btn')
 
-editDetailBtn.addEventListener('click', () => {
-  // document.querySelector('body').style.filter = "blur(5px)";
-})
+const createDetailsEditForm = () => {
+  const detailsEditForm = document.createElement('div')
+  const idCtn = document.querySelector('.user-id')
+  const id = String(idCtn.innerText).trim()
+
+  detailsEditForm.classList.add('edit-details-form-ctn')
+  detailsEditForm.innerHTML = `
+  <div class="edit-details-form-title">
+              Edit Details
+            </div>
+            <button class="close-details-edit-form-btn">
+              <i class="far fa-times-circle"></i>
+            </button>
+            <form class="edit-details-form" method="POST" action="/user/${id}?_method=PUT">
+              <input type="text" value=${loggedInuser.description !== undefined ? loggedInuser.description : ""} class="description-input details-input" placeholder="Description" name="description" >
+              <input type="text" ${loggedInuser.country !== undefined ? `value=${loggedInuser.country}` : ''} class="country details-input" placeholder="Country" name="country" >
+              <input type="text" ${loggedInuser.state !== undefined ? `value=${loggedInuser.state}` : ''} name="state" class="state details-input" placeholder="State">
+              <input type="text" ${loggedInuser.city !== undefined ? `value=${loggedInuser.city}` : ''} name="city" class="city details-input" placeholder="City">
+              <input type="text" ${loggedInuser.yearOfGraduation !== undefined ? `value=${loggedInuser.yearOfGraduation}` : ''} name="yearOfGraduation" class="year-of-graduation details-input" placeholder="Year of graduation ">
+              <div class="branch-ctn">
+                <label for="branch" class="branch-label">Course : </label>
+                <select name="course" class="course" value=${loggedInuser.course} >
+                  <option value="B. Tech.">Bachelor of Technology</option>
+                  <option value="M. Tech.">Master of Technology</option>
+                  <option value="Diploma">Diploma</option>
+                  <option value="Ph. D.">Doctor of Philosophy</option>
+                  <option value="MCA">MCA</option>
+                </select>
+              </div>
+              <div class="branch-ctn">
+                <label for="branch" class="branch-label">Branch : </label>
+                <select name="branchInCollege" class="course" value=${loggedInuser.branchInCollege} >
+                  <option value="Civil Engineering">Civil Engineering</option>
+                  <option value="Electrical Engineering">Electrical Engineering</option>
+                  <option value="Electronics Engineering">Electronics Engineering</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Information Technology">Information Technology</option>
+                  <option value="Mechanical Engineering">Mechanical Engineering</option>
+                  <option value="Production Engineering">Production Engineering</option>
+                  <option value="Textile Engineering">Textile Engineering</option>
+                </select>
+              </div>
+              <div class="edit-details-submit-btn-ctn">
+                <button class="edit-details-submit-btn" type="submit">Update!</button>
+              </div>
+            </form>
+  `
+  return detailsEditForm
+}
+
+if (editDetailBtn) {
+  editDetailBtn.addEventListener('click', () => {
+    const overlay1 = document.createElement('div')
+    // overlay1.classList.add('cover-screen')
+    overlay1.classList.add('overlay')
+    overlay1.classList.add('z-200')
+    const detailsEditForm = createDetailsEditForm()
+    console.log(detailsEditForm)
+    overlay1.append(detailsEditForm);
+    document.querySelector('body').append(overlay1);
+    document.querySelector('body').classList.add('overflow-hidden')
+    document.querySelector('.close-details-edit-form-btn').addEventListener('click', () => {
+      overlay1.remove()
+      document.querySelector('body').classList.remove('overflow-hidden')
+    })
+  })
+}
+
+const createEditInterestsForm = () => {
+  const idCtn = document.querySelector('.user-id')
+  const id = String(idCtn.innerText).trim()
+
+  const formCtn = document.createElement('div')
+  formCtn.classList.add('edit-interests-form-ctn')
+  formCtn.innerHTML = `
+  <button class="close-interests-edit-form-btn">
+              <i class="far fa-times-circle"></i>
+            </button>
+  <form method="POST" action="/user/${id}?_method=PUT" class="edit-interests-form">
+              <h1 class="title">Edit Interests</h1>
+              <div class="check-box-ctn">
+                <div class="input">
+                  <label for="cricket" class="label">
+                    <img src="/assets/tick-mark-2.png" alt="" class="overlay-tick ${loggedInuser.interests.includes('cricket') === true ? "" : "display-none"}">
+                    <img src="/assets/cricket.jpg" alt=""
+                      style="height: 100px; width: 100px; border-radius: 20px; object-fit: cover;">
+                  </label>
+                  <input type="checkbox" name="interests[cricket]" id="cricket" class="interests-input" ${loggedInuser.interests.includes('cricket') === true ? "checked" : ""} >
+                </div>
+                <div class="input">
+                  <label for="football" class="label">
+                    <img src="/assets/tick-mark-2.png" alt="" class="overlay-tick ${loggedInuser.interests.includes('football') === true ? "" : "display-none"}">
+                    <img src="/assets/football.jpg" alt=""
+                      style="height: 100px; width: 100px; border-radius: 20px; object-fit: cover;">
+                  </label>
+                  <input type="checkbox" name="interests[football]" id="football" class="interests-input" ${loggedInuser.interests.includes('football') === true ? "checked" : ""} >
+                </div>
+                <div class="input">
+                  <label for="singing" class="label" class="label">
+                    <img src="/assets/tick-mark-2.png" alt="" class="overlay-tick ${loggedInuser.interests.includes('singing') === true ? "" : "display-none"}">
+                    <img src="/assets/singing.jpg" alt=""
+                      style="height: 100px; width: 100px; border-radius: 20px; object-fit: cover; position: relative;top: 0;">
+                  </label>
+                  <input type="checkbox" name="interests[singing]" id="singing" class="interests-input" ${loggedInuser.interests.includes('singing') === true ? "checked" : ""} >
+                </div>
+                <div class="input">
+                  <label for="coding" class="label">
+                    <img src="/assets/tick-mark-2.png" alt="" class="overlay-tick ${loggedInuser.interests.includes('coding') === true ? "" : "display-none"}">
+                    <img src="/assets/coding.jpg" alt=""
+                      style="height: 100px; width: 100px; border-radius: 20px; object-fit: cover;">
+                  </label>
+                  <input type="checkbox" name="interests[coding]" id="coding" class="interests-input" ${loggedInuser.interests.includes('coding') === true ? "checked" : ""} >
+                </div>
+                <div class="input">
+                  <label for="dancing" class="label">
+                    <img src="/assets/tick-mark-2.png" alt="" class="overlay-tick ${loggedInuser.interests.includes('dancing') === true ? "" : "display-none"}">
+                    <img src="/assets/dancing.jpg" alt=""
+                      style="height: 100px; width: 100px; border-radius: 20px; object-fit: cover;">
+                  </label>
+                  <input type="checkbox" name="interests[dancing]" id="dancing" class="interests-input" ${loggedInuser.interests.includes('dancing') === true ? "checked" : ""} >
+                </div>
+              </div>
+              <div class="edit-interests-form-submit-btn-ctn">
+                <button class="edit-interests-form-submit-btn">Update!</button>
+              </div>
+            </form>
+  `
+  return formCtn
+}
+
+if (editInterestsForm) {
+  editInterestsForm.addEventListener('click', () => {
+    const overlay = document.createElement('div')
+    overlay.classList.add('overlay')
+    overlay.classList.add('z-200')
+    const editInterestsForm = createEditInterestsForm()
+    overlay.appendChild(editInterestsForm)
+    document.querySelector('body').append(overlay);
+    document.querySelector('body').classList.add('overflow-hidden')
+    const checkBoxs = document.querySelectorAll('.interests-input')
+
+    for (let checkBox of checkBoxs) {
+      checkBox.addEventListener('click', () => {
+        checkBox.parentNode.children[0].children[0].classList.toggle('display-none')
+      })
+    }
+
+    document.querySelector('.close-interests-edit-form-btn').addEventListener('click', () => {
+      overlay.remove()
+      document.querySelector('body').classList.remove('overflow-hidden')
+    })
+  })
+}
+
+// const checkBoxs = document.querySelectorAll('.interests-input')
+
+// for (let checkBox of checkBoxs) {
+//   checkBox.addEventListener('click', () => {
+//     checkBox.parentNode.children[0].children[0].classList.toggle('display-none')
+//   })
+// }
 
 window.addEventListener('load', mainLoadEventHandler)  // adds load event to window which adds post to main element

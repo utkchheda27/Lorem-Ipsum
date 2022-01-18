@@ -15,7 +15,7 @@ router.get('/chat', isLoggedIn, getAllMessages)
 router.get('/chat/:chatID', isLoggedIn, getChatData)
 
 
-router.put('/chat/:chatID/messages/:msgID', markMsgReaded)
+router.put('/chat/:chatID/messages/:msgID', isLoggedIn, markMsgReaded)
 
 router.get('/get_posts', isLoggedIn, getPosts)
 

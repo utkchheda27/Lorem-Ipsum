@@ -88,7 +88,7 @@ app.use(methodOverride('_method'))
 
 let onlineUsers = {}
 io.on('connection', function (socket) {
-    console.log(socket.id)
+    // console.log(socket.id)
     let username = '';
     if (socket.handshake && socket.handshake.headers && socket.handshake.headers.cookie) {
         var raw = cookie.parse(socket.handshake.headers.cookie)['session'];
@@ -105,17 +105,17 @@ io.on('connection', function (socket) {
     }
 
     socket.on("disconnect", () => {
-        console.log('Disconnected')
+        // console.log('Disconnected')
         delete onlineUsers[username]
-        console.log(onlineUsers)
+        // console.log(onlineUsers)
     })
     socket.on('message', async ({ message, to, from, chatID = undefined }) => {
         const savedMessage = await Message.create({ text: message, author: from })
         const chat = await PersonalChat.findById(chatID)
         chat.messages.push(savedMessage._id)
         const savedChat = await chat.save()
-        console.log(savedChat)
-        console.log(savedMessage)
+        // // console.log(savedChat)
+        // // console.log(savedMessage)
         socket.to(onlineUsers[to]).emit('new message', { message, date: new Date(), msgID: savedMessage._id })
     })
 

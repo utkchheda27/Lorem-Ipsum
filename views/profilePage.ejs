@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
-    <%= user.username.toUpperCase() %> | | FB
+    <%= user.username.toUpperCase() %> | FB
   </title>
   <link rel="stylesheet" href="/CSS/app.css" />
   <link rel="stylesheet" href="/CSS/navbar.css" />
@@ -40,10 +40,9 @@
           />
         </div>
         <!-- <div class="overlay">
-          <div class="edit-details-form-ctn">
-            <form action="#" class="edit-details-form">
+          <div class="edit-interests-form-ctn">
+            
 
-            </form>
           </div>
         </div> -->
 
@@ -71,52 +70,98 @@
           <% } %>
             <div class="friends-posts-ctn">
               <div class="left">
-                <div class="edit-details-form">
+                <div class="details-form">
                   <h3 class="title">Details</h3>
                   <ul>
-                    <li class="location">
-                      <i class="fa fa-map-marker" aria-hidden="true"></i>
-                      <span>Lives in Mumbai, Maharastra</span>
-                    </li>
-                    <li class="qualification">
-                      <i class="fas fa-school"></i>
-                      <span>B. Tech.&nbsp;</span> <span>Information Technology&nbsp;</span>
-                      <span>(Expected 2024)</span>
-                    </li>
-                    <!-- <li class="course-duration">
-                      <i class="fas fa-clock"></i>
-                      <span>2024</span>
-                    </li> -->
+                    <% if(user.state && user.city ) {%>
+                      <li class="location">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        <span>Lives in <%= user.city %> , <%= user.state %> </span>
+                      </li>
+                      <% } else if(user.city) {%>
+                        <li class="location">
+                          <i class="fa fa-map-marker" aria-hidden="true"></i>
+                          <span>Lives in <%= user.city %></span>
+                        </li>
+                        <% } else if(user.state) {%>
+                          <li class="location">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                            <span>Lives in <%= user.state %></span>
+                          </li>
+                          <% } else if(user.country) {%>
+                            <li class="location">
+                              <i class="fa fa-map-marker" aria-hidden="true"></i>
+                              <span>Lives in <%= user.country %></span>
+                            </li>
+                            <% } else %>
+                              <% if(user.course || user.branchInCollege || user.yearOfGraduation) {%>
+                                <li class="qualification">
+                                  <i class="fas fa-school"></i>
+                                  <% if (user.course) { %>
+                                    <span>
+                                      <%= user.course %>
+                                    </span>
+                                    &nbsp;
+                                    <% } %>
+                                      <% if (user.course && user.branchInCollege) { %>
+                                        <span>
+                                          <%= user.branchInCollege %>
+                                        </span>
+                                        &nbsp;
+                                        <% } %>
+                                          <% if (user.course && user.branchInCollege && user.yearOfGraduation) { %>
+                                            <span>(Expected <%= user.yearOfGraduation %> )</span>
+                                            <% } %>
+                                </li>
+                                <% } %>
+                                  <% if (user.yearOfGraduation) { %>
+                                    <li class="course-duration">
+                                      <i class="fas fa-clock"></i>
+                                      <span>2024</span>
+                                    </li>
+                                    <% } %>
                   </ul>
-                  <div class="edit-detail-form-popup-btn-ctn">
-                    <button class="edit-detail-form-popup-btn">Edit Details</button>
-                  </div>
+                  <% if(String(currentUser._id)===String(user._id)){ %>
+                    <div class="edit-detail-form-popup-btn-ctn">
+                      <button class="edit-detail-form-popup-btn">Edit Details</button>
+                    </div>
+                    <% } %>
                 </div>
                 <div class="interests-ctn">
                   <h3 class="title">Interests</h3>
                   <ul class="interests">
-                    <li class="interest">
-                      <img src="/assets/coding.jpg" alt="interest">
-                      <span>Coding</span>
-                    </li>
-                    <li class="interest">
-                      <img src="/assets/cricket.jpg" alt="interest">
-                      <span>Cricket</span>
-                    </li>
-                    <li class="interest">
-                      <img src="/assets/dancing.avif" alt="interest">
-                      <span>Dancing</span>
-                    </li>
-                    <li class="interest">
-                      <img src="/assets/football.webp" alt="interest">
-                      <span>Football</span>
-                    </li>
+                    <% for(let key of user.interests) { %>
+                      <li class="interest">
+                        <img src="/assets/<%= key %>.jpg" alt="interest">
+                        <span>
+                          <%= key %>
+                        </span>
+                      </li>
+                      <% } %>
+                        <!-- <li class="interest">
+                          <img src="/assets/coding.jpg" alt="interest">
+                          <span>Coding</span>
+                        </li>
+                        <li class="interest">
+                          <img src="/assets/cricket.jpg" alt="interest">
+                          <span>Cricket</span>
+                        </li>
+                        <li class="interest">
+                          <img src="/assets/dancing.jpg" alt="interest">
+                          <span>Dancing</span>
+                        </li>
+                        <li class="interest">
+                          <img src="/assets/football.jpg" alt="interest">
+                          <span>Football</span>
+                        </li> -->
                   </ul>
-                  <div class="edit-interest-form-popup-btn-ctn">
-                    <button class="edit-interest-form-popup-btn">
-                      Add Interests
-                    </button>
-                  </div>
+                  <% if(String(currentUser._id)===String(user._id)){ %>
+                    <div class="edit-interest-form-popup-btn-ctn">
+                      <button class="edit-interest-form-popup-btn">
+                        Add Interests
+                      </button>
+                    </div>
+                    <% } %>
                 </div>
                 <div class="friends">
                   <h3 class="title">Friends</h3>
@@ -154,7 +199,7 @@
 </body>
 <script src="/JS/profilePage.js" defer></script>
 <script src="/JS/navbar.js" defer></script>
-<script src="/JS/app.js" defer></script>
+<!-- <script src="/JS/app.js" defer></script> -->
 
 </html>
 <!-- <for(let post of user.posts) { %>

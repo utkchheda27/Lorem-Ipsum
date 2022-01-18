@@ -13,11 +13,18 @@ export const getLoggedInUserInfo = (req, res) => {
 }
 
 export const getChatData = async (req, res) => {
-    const { chatID = undefined } = req.params;
-    let unreadedMsgs = 0;
-    let firstUnreadedMsg = undefined;
-    if (chatID) {
+    try {
+        const { chatID = undefined } = req.params;
+        if (!chatID) {
+            new ExpressError("chat doesn't exist", 404);
+        }
+        let unreadedMsgs = 0;
+        let firstUnreadedMsg = undefined;
         const chatData = await PersonalChat.findById(chatID).populate({ path: 'participants' }).populate({ path: 'messages' })
+        if (String(req.user._id) !== String(chatData.participants[0]._id) && String(req.user._id) !== String(chatData.participants[1]._id)) {
+
+            throw new ExpressError("Illegal Operation", 401);
+        }
         for (let msg of chatData.messages) {
             if (String(msg.author) !== String(req.user._id)) {
                 if (msg.isReaded === false) {
@@ -31,17 +38,23 @@ export const getChatData = async (req, res) => {
                 }
             }
         }
-        console.log(chatData)
-        res.json({ chatData, unreadedMsgs, firstUnreadedMsg });
+        // // console.log(chatData)
+        res.json({ status: true, chatData, unreadedMsgs, firstUnreadedMsg });
+    } catch (e) {
+        res.json({ status: true, message: e.message })
     }
 }
 
 export const markMsgReaded = async (req, res) => {
-    const { chatID = undefined, msgID = undefined } = req.params;
-    let msg = await Message.findById(msgID);
-    msg.isReaded = req.body.isReaded;
-    await msg.save()
-    res.json({ status: true });
+    try {
+        const { chatID = undefined, msgID = undefined } = req.params;
+        let msg = await Message.findById(msgID);
+        msg.isReaded = req.body.isReaded;
+        await msg.save()
+        res.json({ status: true });
+    } catch (e) {
+        res.json({ status: false, message: e.message })
+    }
 }
 export const getPosts = async (req, res) => {
     const pageNo = req.query.pageNo ? req.query.pageNo : 1;
@@ -53,14 +66,15 @@ export const getPosts = async (req, res) => {
             if (tempPosts.length >= 2 * pageNo) break;
             let tPost = await Post.findById(post).populate('User');
             const comments = []
-            for (let commentId of tPost.comments) {
-                const tComment = await Comment.findById(commentId).populate('author')
-                if (tComment != null)
-                    comments.push(tComment)
+            if (tPost) {
+                for (let commentId of tPost.comments) {
+                    const tComment = await Comment.findById(commentId).populate('author')
+                    if (tComment != null)
+                        comments.push(tComment)
+                }
+                tPost.comments = comments
+                tempPosts.push(tPost)
             }
-            console.log(comments)
-            tPost.comments = comments
-            tempPosts.push(tPost)
         }
         resPost.push(...tempPosts);
     }
@@ -73,7 +87,7 @@ export const getAllMessages = async (req, res) => {
             path: 'messages'
         }
     });
-    console.log(user)
+    // // console.log(user)
     const chats = user.personalChats;
     let ans = 0;
 

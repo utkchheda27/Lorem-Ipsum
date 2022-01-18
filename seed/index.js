@@ -8,10 +8,10 @@ mongoose.connect(
 );
 
 mongoose.connection.on("error", (e) => {
-  console.log(e.message);
+  // console.log(e.message);
 });
 mongoose.connection.once("open", () => {
-  console.log("connected to db");
+  // console.log("connected to db");
 });
 // lenard -- 619e6a7d19ee6f42dd8722ab
 //penny -- 619dd6e7604166e151fd8548
@@ -73,16 +73,34 @@ const seedApi = async () => {
     user.posts.push(tpost);
   }
   const tuser = await user.save();
-  console.log(tuser);
+  // console.log(tuser);
 };
 
 const clearComments = async () => {
   const allComments = await Comment.find({});
   for (let comment of allComments) {
     const res = await Comment.findByIdAndDelete(comment._id);
-    console.log(res);
+    // console.log(res);
   }
 }
 
 // seedApi();
-clearComments()
+
+const clearFriend = async (id) => {
+  const users = await User.find({});
+  for (let user of users) {
+    user.friends = user.friends.filter((fid) => String(fid) !== String(id))
+    await user.save()
+  }
+
+  const posts = await Post.find({})
+
+  for (let post of posts) {
+    if (String(post.User) === String(id)) {
+      await Post.findByIdAndDelete(post._id);
+    }
+  }
+}
+
+clearFriend('619e042d8ca8939b73722f64')
+// clearComments()

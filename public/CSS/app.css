@@ -388,11 +388,12 @@ label {
   position: fixed;
   top: 0;
   left: 0;
-  /* background-color: rgba(182, 169, 166, 0.808); */
+  background-color: rgba(182, 169, 166, 0.808);
+  /* filter: blur(2px); */
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 50;
+  z-index: 200;
 }
 
 /* create post form */
