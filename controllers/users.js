@@ -96,3 +96,24 @@ export const updateUser = catchAsync(async (req, res) => {
         throw new ExpressError(e.message, 500);
     }
 })
+
+export const deleteUser = async (req, res) => {
+    // console.log('deleting user');
+    try {
+        const { id = undefined } = req.params
+        if (id === undefined) {
+            throw new ExpressError("id is required", 404);
+        }
+        const user = await User.findById(id);
+        if (!user) {
+            throw new ExpressError("User not found", 404);
+        }
+        console.log(req.user)
+        const res1 = await User.findOneAndDelete({ _id: req.user._id });
+        // console.log(res1);
+        req.logout()
+        res.redirect('/')
+    } catch (e) {
+        console.log(e.message)
+    }
+}

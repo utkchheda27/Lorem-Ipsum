@@ -5,7 +5,7 @@ import requestRoutes from "./requests.js"
 import catchAsync from "../utilities/catchAsync.js";
 import ExpressError from "../utilities/ExpressError.js";
 const router = express.Router({ mergeParams: true });
-import { updateUser } from "../controllers/users.js"
+import { updateUser, deleteUser } from "../controllers/users.js"
 
 router.get('/', isLoggedIn, catchAsync(async (req, res, next) => {
     const { id } = req.params
@@ -15,6 +15,7 @@ router.get('/', isLoggedIn, catchAsync(async (req, res, next) => {
 }))
 
 router.put('/', isLoggedIn, updateUser)
+router.delete('/', isLoggedIn, deleteUser)
 
 router.use('/requests', requestRoutes);
 

@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #6d6875;
+  background-color: white;
   /* background-color: #c5d5e8; */
   height: 70px;
   position: sticky;
@@ -21,7 +21,7 @@
   width: 25%;
   height: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -35,6 +35,7 @@
   justify-content: space-around;
   align-items: center;
   font-size: 1.25em;
+  margin-left: 10px;
 }
 
 .icons-ctn {
@@ -51,10 +52,8 @@
   position: relative;
   top: 0;
 }
-
+/* 
 .search-form form div {
-  /* min-width: 35px; */
-  /* min-height: 35px; */
   border-radius: 100px;
   display: flex;
   background-color: white;
@@ -90,8 +89,25 @@
   height: 100%;
   width: 100%;
   text-align: center;
-}
+} */
 
+.search-redirect-btn-ctn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  /* background-color: blue; */
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+  margin-right: 1em;
+}
+.search-redirect-btn {
+  font-size: inherit;
+  height: 100%;
+  width: 100%;
+}
 .user-page-redirect-btn {
   width: 25%;
   height: 100%;
@@ -132,7 +148,7 @@
 }
 
 @media all and (max-width: 1000px) {
-  .search-form form div {
+  /* .search-form form div {
     height: 35px;
     min-width: 35px;
     z-index: 100;
@@ -141,7 +157,7 @@
   .search-form .search-input {
     height: 0;
     width: 0;
-  }
+  } */
   .search-input:focus {
     height: 100%;
     width: 100vw;

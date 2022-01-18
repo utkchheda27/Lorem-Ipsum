@@ -11,7 +11,7 @@ router.get('/', isLoggedIn, getPosts)
 
 router.post('/', isLoggedIn, upload.array('images'), createPostHandler)
 
-router.delete('/:postID', deletePost)
+router.delete('/:postID', isLoggedIn, deletePost)
 
 router.post('/:postID/likes', isLoggedIn, likePost)
 

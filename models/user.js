@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import passportLocalMongoose from "passport-local-mongoose";
 const Schema = mongoose.Schema;
+import Post from "./postSchema.js"
 
 const userSchema = new Schema({
     email: {
@@ -66,6 +67,23 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "PersonalChat"
     }]
+})
+
+userSchema.post('findOneAndDelete', async (user) => {
+    console.log("Deleting user")
+    if (user) {
+        for (let post of user.posts) {
+            const res = await Post.findByIdAndDelete(post)
+            // console.log(res);
+        }
+        for (let friendID of user.friends) {
+            let friend = await userSchema.findById(friendID);
+            friend.friends = friend.filter((f) => String(f) !== String(user._id));
+            const res = await friend.save()
+            // console.log(res);
+        }
+
+    }
 })
 
 userSchema.plugin(passportLocalMongoose);

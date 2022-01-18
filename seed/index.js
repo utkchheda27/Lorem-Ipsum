@@ -85,4 +85,22 @@ const clearComments = async () => {
 }
 
 // seedApi();
-clearComments()
+
+const clearFriend = async (id) => {
+  const users = await User.find({});
+  for (let user of users) {
+    user.friends = user.friends.filter((fid) => String(fid) !== String(id))
+    await user.save()
+  }
+
+  const posts = await Post.find({})
+
+  for (let post of posts) {
+    if (String(post.User) === String(id)) {
+      await Post.findByIdAndDelete(post._id);
+    }
+  }
+}
+
+clearFriend('619e042d8ca8939b73722f64')
+// clearComments()
