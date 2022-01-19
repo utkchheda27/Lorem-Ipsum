@@ -3,11 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-<<<<<<< HEAD
   background-color: #fff;
-=======
-  background-color: white;
->>>>>>> 221396b5ce6aea0b77bfd06c3e6b2f447495b37e
   /* background-color: #c5d5e8; */
   height: 70px;
   position: sticky;
@@ -113,11 +109,14 @@
   font-size: 1.5em;
   margin-right: 1em;
 }
+
 .search-redirect-btn {
   font-size: inherit;
   height: 100%;
   width: 100%;
+  cursor: pointer;
 }
+
 .user-page-redirect-btn {
   width: 25%;
   height: 100%;
@@ -186,26 +185,33 @@
   position: absolute;
   top: 65px;
   height: auto;
-  width: 100px;
+  width: 8vw;
 }
 
 .drop-down-menu ul {
   height: 100%;
   width: 100%;
-  background-color: black;
-  color: wheat;
+
+  color: rgb(0, 0, 0);
   border-radius: 5px;
+  font-size: 1.2em;
 }
 
 .drop-down-menu ul li {
   /* padding-left: 10px; */
-  margin: 5px auto;
-  height: 35px;
+  background-color: rgb(209, 205, 205);
+  margin: 10px auto;
+  height: 40px;
   width: 100%;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid black;
+}
+
+.drop-down-menu ul li:hover{
+  cursor: pointer;
 }
 
 span.arrow {
@@ -216,4 +222,14 @@ span.arrow {
   top: 2px;
   left: 70%;
   background-color: black;
+}
+
+.delete-user-btn{
+  color: rgb(0, 0, 0);
+  font-size: 0.85em;
+
+}
+
+.delete-user-btn:hover{
+  cursor: pointer;
 }

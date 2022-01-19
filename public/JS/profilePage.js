@@ -221,7 +221,7 @@ postInput && postInput.addEventListener('click', (e) => {
 
                 </div>
                 <div class="title-ctn">
-                  <h3>Create Post</h3>
+                  <h3>Create New Post</h3>
                 </div>
                 <div class="close-btn-ctn">
                   <button><i class="fa fa-times" aria-hidden="true"></i></button>
@@ -243,7 +243,7 @@ postInput && postInput.addEventListener('click', (e) => {
               </div>
               <form action="/posts" method="post" class="create-post-form-overlay" enctype="multipart/form-data">
                 <textarea name="caption" id="" cols="30" rows="10" class="create-post-caption"
-                  placeholder="What's in your find, ${loggedInuser.username.trim().split(" ")[0]} ?"></textarea>
+                  placeholder="What's in your mind, ${loggedInuser.username.trim().split(" ")[0]} ?"></textarea>
                 <input type="file" name="images" class="create-post-img-link"
                    autocomplete="off" multiple >
                 <div class="create-post-submit-btn-ctn">

@@ -398,12 +398,12 @@ label {
 
 /* create post form */
 .overlay .create-post-overlay {
-  height: 65%;
+  height: 50%;
   width: 50%;
   min-width: 500px;
   border: 0.5px solid black;
   border-radius: 10px;
-  background-color: #30a6aa;
+  background-color:#F0FFFF;
   /* padding: 20px 10px; */
   overflow-y: auto;
 }
@@ -414,10 +414,11 @@ label {
   font-size: 1.4em;
   font-weight: bolder;
   padding: 10px 10px;
-  border-bottom: 0.5px solid cyan;
+  border-bottom: 0.5px solid black;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  background-color: #aad0f0;
 }
 .create-post-title .title-ctn {
   display: flex;
@@ -428,6 +429,7 @@ label {
   display: flex;
   justify-content: center;
   width: 10%;
+
 }
 .create-post-title .close-btn-ctn button:hover {
   cursor: pointer;
@@ -437,7 +439,7 @@ label {
   height: 50px;
   width: 50px;
   border-radius: 50%;
-  background-color: aqua;
+  background-color: rgb(86, 114, 133);
   color: white;
   font-size: 35px;
 }
@@ -503,8 +505,15 @@ label {
   width: 100px;
   height: 50px;
   border: none;
-  background-color: blue;
+  background-color: #228afa;
+  color: #fff;
   border-radius: 5px;
+  font-size: 1.5rem;
+}
+
+.create-post-submit-btn-ctn .submit-btn:hover{
+cursor: pointer;
+background-color:#007aff;
 }
 
 /* ================================Error============================================ */
