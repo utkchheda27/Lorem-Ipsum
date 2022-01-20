@@ -1,25 +1,29 @@
+body {
+  height: 100%;
+}
+
 .container {
   width: 60%;
   margin: auto;
-  height: 700px;
+  height: 80%;
   overflow-y: auto;
-  background-color:#ADD8E6;
+  background-color: #add8e6;
   padding: 0 10px;
   margin-top: 20px;
   border-radius: 15px;
 }
 
-.heading{
-width:30%;
-height:80px;
-padding: 10px;
-margin: 25px auto;
-display: flex;
-justify-content: center;
-font-size: 2.5em;
-border: 2px solid black;
-border-radius: 15px;
-background-color:#F0FFFF;
+.heading {
+  width: 30%;
+  height: 80px;
+  padding: 10px;
+  margin: 25px auto;
+  display: flex;
+  justify-content: center;
+  font-size: 2.5em;
+  border: 2px solid black;
+  border-radius: 15px;
+  background-color: #f0ffff;
 }
 
 .chats {
@@ -30,13 +34,18 @@ background-color:#F0FFFF;
 .chat {
   width: 70%;
   height: 100px;
-  background-color: #F0FFFF;
+  background-color: #f0ffff;
   margin: 25px auto;
   border-radius: 15px;
   box-shadow: 0 3px 20px rgb(0 0 0 / 0.3);
+  position: relative;
+  top: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.chat:hover{
+.chat:hover {
   cursor: pointer;
   transform: translateY(-3px);
 }
@@ -60,7 +69,28 @@ background-color:#F0FFFF;
 .chat a h2 {
   display: flex;
   justify-content: center;
-  
+
   text-transform: capitalize;
   padding-left: 25px;
+}
+
+.unreaded-messages {
+  position: absolute;
+  right: 50px;
+  /* top: 50%; */
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  text-align: center;
+  background-color: #6cafb2;
+}
+
+@media all and (max-width: 800px) {
+  .container {
+    width: 90%;
+    font-size: 1em;
+  }
+  .heading {
+    width: 50%;
+  }
 }

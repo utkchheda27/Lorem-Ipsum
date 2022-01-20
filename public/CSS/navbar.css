@@ -3,11 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-<<<<<<< HEAD
   background-color: #fff;
-=======
-  background-color: white;
->>>>>>> 221396b5ce6aea0b77bfd06c3e6b2f447495b37e
   /* background-color: #c5d5e8; */
   height: 70px;
   position: sticky;
@@ -21,14 +17,13 @@
   font-size: 1.25em;
 }
 
-.logo{
-  height:150px;
+.logo {
+  height: 150px;
   width: 150px;
 }
 
-
 .brand-icon-searchCtn {
-  width: 25%;
+  width: 40%;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -102,7 +97,7 @@
 } */
 
 .search-redirect-btn-ctn {
-  width: 50px;
+  width: 70%;
   height: 50px;
   border-radius: 50%;
   /* background-color: blue; */
@@ -113,6 +108,28 @@
   font-size: 1.5em;
   margin-right: 1em;
 }
+
+.dummy-input-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dummy-input-nav :hover {
+  cursor: pointer !important;
+}
+
+.dummy-input {
+  height: 30px;
+  width: 200px;
+  display: inline-block !important;
+  background-color: #bdbdbd;
+  border-radius: 100px;
+  font-size: 20px;
+  padding-left: 10px;
+  display: inline-block;
+}
+
 .search-redirect-btn {
   font-size: inherit;
   height: 100%;
@@ -152,7 +169,7 @@
   top: -5px;
   left: 15px;
   border-radius: 50%;
-  background-color: #6CAFB2;
+  background-color: #6cafb2;
   z-index: 10;
   text-align: center;
 }
@@ -186,7 +203,8 @@
   position: absolute;
   top: 65px;
   height: auto;
-  width: 100px;
+  width: 150px;
+  /* padding: ; */
 }
 
 .drop-down-menu ul {
@@ -195,6 +213,16 @@
   background-color: black;
   color: wheat;
   border-radius: 5px;
+}
+
+.drop-down-menu form {
+  width: 100%;
+}
+
+.drop-down-menu form > button {
+  width: 100%;
+  font-size: inherit;
+  color: #f1dab0 !important;
 }
 
 .drop-down-menu ul li {
@@ -216,4 +244,22 @@ span.arrow {
   top: 2px;
   left: 70%;
   background-color: black;
+}
+
+.username-ctn-nav {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  text-transform: capitalize;
+}
+.username-ctn-nav > span {
+  margin-right: 10px;
+}
+
+@media all and (max-width: 900px) {
+  .dummy-input {
+    display: none !important;
+  }
 }

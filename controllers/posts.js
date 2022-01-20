@@ -8,6 +8,7 @@ import ExpressError from "../utilities/ExpressError.js";
 
 export const deletePost = async (req, res, next) => {
     const { postID = undefined } = req.params
+    // console.log("POSTID==>", postID)
     const post = await Post.findById(postID);
     if (String(post.User) !== String(req.user._id)) {
         next(new ExpressError("Illeagel Operation", 401))

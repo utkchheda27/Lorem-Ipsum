@@ -1,4 +1,4 @@
-.friends-ctn{
+.friends-ctn {
   /* min-height: calc(100% - 70px); */
   height: calc(100vh - 70px);
   width: 100%;
@@ -7,20 +7,20 @@
   /* margin-top: 20px; */
 }
 
-.friends-ctn .list-options{
+.friends-ctn .list-options {
   width: 30%;
   padding: 5px 10px;
-  background-color: #FFF;
+  background-color: rgb(255, 255, 255);
   height: 100%;
   overflow-y: auto;
   z-index: 0;
   /* box-shadow: 5px 0px 5px #00000081; */
 }
 
-.list-options .list-option{
+.list-options .list-option {
   width: 100%;
 }
-.list-options .list-option button{
+.list-options .list-option button {
   width: 100%;
   height: 50px;
   display: flex;
@@ -31,44 +31,43 @@
   border-radius: 5px;
   margin: 5px auto;
 }
-.list-options .list-option button:hover{
-  background-color: #F3F6F6;
+.list-options .list-option button:hover {
+  background-color: #f3f6f6;
   cursor: pointer;
 }
 
 .list-options .is-active {
-  background-color: #DCE5E3;
+  background-color: #dce5e3;
 }
 
-.friends-ctn .type-friends-ctn{
+.friends-ctn .type-friends-ctn {
   width: 70%;
   overflow-y: auto;
   height: 100%;
   /* border: 2px solid black; */
-
 }
 
-.type-friends-ctn .type-friends{
+.type-friends-ctn .type-friends {
   display: flex;
   width: 100%;
-  margin: 5px auto
+  margin: 5px auto;
 }
 
-.type-friends-ctn .profile-img-ctn{
+.type-friends-ctn .profile-img-ctn {
   width: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.type-friends-ctn .profile-img-ctn img{
+.type-friends-ctn .profile-img-ctn img {
   width: 75px;
   height: 75px;
   border-radius: 50%;
-  object-fit:cover;
+  object-fit: cover;
 }
 
-.type-friends .name-ctn{
+.type-friends .name-ctn {
   width: 30%;
   font-size: 1.4em;
   margin-top: 10px;
@@ -81,14 +80,14 @@
   align-items: center;
 }
 
-.response-ctn > div{
+.response-ctn > div {
   width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.response-ctn button{
+.response-ctn button {
   width: 100px;
   height: 50px;
   font-size: 17px;
@@ -96,16 +95,16 @@
   border-radius: 100px;
   box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.445);
 }
-.response-ctn button:active{
+.response-ctn button:active {
   height: 45px;
   width: 90px;
   font-size: 15px;
 }
 
 .response-ctn .danger {
-  background-color:rgb(228, 48, 48);
+  background-color: rgb(228, 48, 48);
 }
-.response-ctn .danger:hover{
+.response-ctn .danger:hover {
   cursor: pointer;
   transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -113,7 +112,7 @@
 
 /* Align center animation */
 
-.align-center-ctn{
+.align-center-ctn {
   height: 100%;
   width: 100%;
   display: flex;
@@ -180,7 +179,7 @@
 
 /* Overlay */
 
-.cover-screen{
+.cover-screen {
   position: fixed;
   top: 0;
   left: 0;
@@ -188,4 +187,13 @@
   width: 100vw;
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.4);
+}
+
+@media all and (max-width: 800px) {
+  .name-ctn {
+    width: 15%;
+  }
+  .response-ctn {
+    width: 55%;
+  }
 }

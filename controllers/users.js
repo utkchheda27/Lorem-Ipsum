@@ -1,10 +1,13 @@
 import User from "../models/user.js";
 import ExpressError from "../utilities/ExpressError.js";
 import catchAsync from "../utilities/catchAsync.js";
+import Post from "../models/postSchema.js"
 
 export const renderRegister = (req, res) => {
     res.render("users/register")
 }
+
+const defaultUserProfilePicture = "https://www.seekpng.com/png/full/115-1150053_avatar-png-transparent-png-royalty-free-default-user.png"
 
 export const register = async (req, res, next) => {
     try {
@@ -108,12 +111,41 @@ export const deleteUser = async (req, res) => {
         if (!user) {
             throw new ExpressError("User not found", 404);
         }
-        console.log(req.user)
-        const res1 = await User.findOneAndDelete({ _id: req.user._id });
+        if (user) {
+            for (let post of user.posts) {
+                const res = await Post.findByIdAndDelete(post)
+                console.log(res);
+            }
+            for (let friendID of user.friends) {
+                let friend = await User.findById(friendID);
+                friend.friends = friend.friends.filter((f) => String(f) !== String(user._id));
+                const res = await friend.save()
+                console.log(res);
+            }
+
+        }
+        user.profilePicture = defaultUserProfilePicture;
+        // user.username = "Deleted Account";
+        user.isDeleted = true
+        user.friends = undefined
+        user.interests = undefined
+        user.course = undefined
+        user.description = undefined
+        user.country = undefined
+        user.state = undefined
+        user.city = undefined
+        user.yearOfGraduation = undefined
+        user.branchInCollege = undefined
+
+        const res1 = await user.save();
+        console.log(res1)
+        // console.log(req.user)
+        // const res1 = await User.findOneAndDelete({ _id: req.user._id });
         // console.log(res1);
         req.logout()
         res.redirect('/')
     } catch (e) {
         console.log(e.message)
+        throw new ExpressError(e.message, 500);
     }
 }

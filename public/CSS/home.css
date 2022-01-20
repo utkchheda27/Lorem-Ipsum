@@ -1,31 +1,75 @@
-
 body {
-    background:url("/assets/h5.jpg");;
-    background-size:cover;
+  background: url("/assets/h5.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow-y: hidden;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 75%;
+  width: 50vw;
+  padding: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-top: 3%;
+  margin-left: 10%;
+  font-family: "Pacifico", cursive, sans-serif;
+  color: rgb(251, 251, 251);
+  font-size: 4rem;
+}
+
+.description {
+  margin: 10px;
+  width: 35vw;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: rgb(255, 250, 250);
+}
+
+button {
+  background-color: #228afa;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: 2px solid rgb(4, 4, 95);
+  cursor: pointer;
+  font-size: 0.4em;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #0349b9;
+}
+
+@media all and (max-width: 670px) {
+  body {
+    background-image: url("/assets/h_alt2.jpg");
+    background-size: cover;
     background-repeat: no-repeat;
   }
 
-.container{
+  .container {
     display: flex;
     flex-direction: column;
     height: 75%;
-    width: 50vw;
+    width: 70vw;
     padding: 20px;
     overflow-y: auto;
     overflow-x: hidden;
-    margin-top:3%;
-    margin-left: 10%;
-    font-family: 'Pacifico', cursive,sans-serif;
+    margin-top: 3%;
+    margin-left: 0%;
+    font-family: "Pacifico", cursive, sans-serif;
     color: rgb(251, 251, 251);
-    font-size: 4rem;
+    font-size: 3rem;
   }
 
-  .description{
+  .description {
     margin: 10px;
-    width: 35vw;
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: rgb(255, 250, 250);
+    width: 40vw;
+    font-size: 1.4rem;
+    color: white;
   }
 
   button {
@@ -38,53 +82,8 @@ body {
     font-size: 0.4em;
     font-weight: bold;
   }
-  
-  button:hover{
-    background-color:#0349b9 ;
+
+  button:hover {
+    background-color: #0349b9;
   }
-  
-  @media all and (max-width: 670px) {
-    body{
-      background-image: url("/assets/h_alt2.jpg");
-      background-size:cover;
-      background-repeat: no-repeat; 
-    }
-   
-    .container{
-      display: flex;
-      flex-direction: column;
-      height: 75%;
-      width: 70vw;
-      padding: 20px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      margin-top:3%;
-      margin-left: 0%;
-      font-family: 'Pacifico', cursive,sans-serif;
-      color: rgb(251, 251, 251);
-      font-size:3rem;
-    }
-  
-    .description{
-      margin: 10px;
-      width: 40vw;
-      font-size: 1.4rem;
-      color: white;
-    }
-  
-    button {
-      background-color: #228afa;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 4px;
-      border: 2px solid rgb(4, 4, 95);
-      cursor: pointer;
-      font-size: 0.4em;
-      font-weight: bold;
-    }
-    
-    button:hover{
-      background-color:#0349b9 ;
-    }
-    
-  }
+}

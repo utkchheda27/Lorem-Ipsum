@@ -21,20 +21,21 @@
   <link rel="shortcut icon" href="#">
   <script src="/JS/navbar.js" defer></script>
   <script src="/JS/app.js" defer></script>
-  <link rel="shortcut icon" href="#">
+  <link rel="shortcut icon" href="/assets/VibeIn-without-text.png">
 </head>
 
 <body>
-  <div>
-    <div class="alert">
-      <h2>
-        <%=err.message %>
-          </h4>
-          <p>
-            <%=err.stack %>
-          </p>
+  <%- include('partials/navbar.ejs') %>
+    <div>
+      <div class="alert">
+        <h2>
+          <%=err.message %>
+        </h2>
+        <p>
+          <%=err.stack %>
+        </p>
+      </div>
     </div>
-  </div>
 </body>
 
 </html>

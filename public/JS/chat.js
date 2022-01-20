@@ -23,7 +23,7 @@ const createMessage = (text, rec, date) => {
 }
 form.addEventListener('submit', (e) => {
     e.preventDefault()
-    const unreadedMessageCount = document.querySelector('.unreadedMessageCount');
+    const unreadedMessageCount = document.querySelector('.unreaded-message-count');
     if (unreadedMessageCount) {
         unreadedMessageCount.remove();
     }
@@ -110,7 +110,7 @@ window.onload = async () => {
         for (let message of chatData.data.chatData.messages) {
             if ((chatData.data.firstUnreadedMsg !== undefined) && (String(chatData.data.firstUnreadedMsg) === String(message._id))) {
                 const label = document.createElement('div');
-                label.classList.add('unreadedMessageCount')
+                label.classList.add('unreaded-message-count')
                 label.innerText = `${chatData.data.unreadedMsgs} messsages unreaded`
                 messagesCtn.appendChild(label)
             }
@@ -123,6 +123,7 @@ window.onload = async () => {
         if (friend.friends.some((f) => String(f) === String(loggedInuser._id)) === false) {
             form.remove();
             const disMsg = document.createElement('div');
+            disMsg.classList.add('cannot-sent-msg')
             disMsg.innerText = `You cannot send message as you are no longer friends with ${friend.username}`;
             document.querySelector('.ctn').append(disMsg);
         }

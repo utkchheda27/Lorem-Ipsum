@@ -1,4 +1,3 @@
-import user from '../models/user.js';
 import User from '../models/user.js'
 
 export const setGlobelVariables = async (req, res, next) => {
@@ -12,7 +11,10 @@ export const setGlobelVariables = async (req, res, next) => {
 }
 
 export const homepageHandler = (req, res) => {
-    res.render("homepage");
+    if (!req.isAuthenticated()) {
+        return res.render('home');
+    }
+    return res.render('homepage')
 }
 
 export const friendsPageHandler = (req, res) => {

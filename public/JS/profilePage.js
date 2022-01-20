@@ -215,7 +215,7 @@ const postInput = document.querySelector('.create-post-form .create-post-form-in
 postInput && postInput.addEventListener('click', (e) => {
 
   overlay.innerHTML = `
- <div class="create-post-overlay">
+<div class="create-post-overlay">
               <div class="create-post-title">
                 <div class="placeholder">
 
@@ -236,17 +236,17 @@ postInput && postInput.addEventListener('click', (e) => {
                   </a>
                 </div>
                 <div class="create-post-user-name">
-                  <a href="#">
+                  <a href="/user/${loggedInuser._id}">
                     <span>${loggedInuser.username}</span>
                   </a>
                 </div>
               </div>
               <form action="/posts" method="post" class="create-post-form-overlay" enctype="multipart/form-data">
                 <textarea name="caption" id="" cols="30" rows="10" class="create-post-caption"
-                  placeholder="What's in your find, ${loggedInuser.username.trim().split(" ")[0]} ?"></textarea>
-                <input type="file" name="images" class="create-post-img-link"
-                   autocomplete="off" multiple >
-                <div class="create-post-submit-btn-ctn">
+                  placeholder="What's in your mind, ${loggedInuser.username.trim().split(" ")[0]} ?"></textarea>
+                  <div class="create-post-submit-btn-ctn">
+                  <input autocomplete="off" type="file" name="images" class="create-post-img-link"
+                     autocomplete="off" multiple >
                   <button type="submit" class="submit-btn">
                     Post
                   </button>
@@ -295,7 +295,7 @@ const createCommentObj = (commentText, date, time, commentId, postId, post) => {
   commentCtn.classList.add('comment')
   commentCtn.innerHTML = `<div class="comment-header">
       <div class="commentators-img-ctn">
-        <a href="#">
+        <a href="/user/${loggedInuser.profilePicture_id}">
           <img src=${loggedInuser.profilePicture}
             alt="commentators picture" class="commentators-img">
         </a>
@@ -438,16 +438,12 @@ const createPost = ({ caption, likes, comments, images, date, User, time, _id })
                   </button>
                   <div class="post-header-pop-up-options display-none">
                     <div>
-                      <i class="fas fa-bookmark"></i>
-                      <span>Save post</span>
-                    </div>
-                    <div>
-                      <i class="fa fa-link"></i>
-                      <span>Copy link</span>
-                    </div>
-                    <div>
-                      <i class="fa fa-times"></i>
-                      <span>Delete post</span>
+                      <form action="/posts/${_id}?_method=DELETE" method="post">
+                        <button>
+                          <i class="fa fa-times"></i>
+                          <span>Delete post</span>
+                        </button>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -476,10 +472,6 @@ const createPost = ({ caption, likes, comments, images, date, User, time, _id })
                   <span>Comment</span>
                   <i class="far fa-comments"></i>
                 </button>
-                <button class="share-btn">
-                  <span>Share</span>
-                  <i class="fa fa-share"></i>
-                </button>
               </div>
               <div class="create-comment-form">
             <form class="comment-form">
@@ -488,7 +480,7 @@ const createPost = ({ caption, likes, comments, images, date, User, time, _id })
                   <img src=${loggedInuser.profilePicture} alt="" class="comment-loggedIn-user"></a>
               </div>
               <div class="text-input">
-                <input name="commentBody" class="comment-body-input">
+                <input autocomplete="off" name="commentBody" class="comment-body-input">
               </div>
               <div class="btn-ctn">
                 <button type="submit">
@@ -522,7 +514,7 @@ const createPost = ({ caption, likes, comments, images, date, User, time, _id })
         tempArticle.innerHTML = `
                       <div class="comment-header">
                         <div class="commentators-img-ctn">
-                          <a href="#">
+                          <a href="/user/${comment.author._id}">
                             <img src=${comment.author.profilePicture}
                             alt="commentators picture" class="commentators-img">
                           </a>
@@ -582,6 +574,7 @@ const commentShowAndHide = (Btn) => { // shows and hides comment
 }
 
 const addApost = (post) => { // returns a post DOM object
+  // if(post.comments.)
   const post1 = createPost(post)
   const btn = post1.childNodes[0].childNodes[5].childNodes[1]
   const Btn = post1.childNodes[6].childNodes[3]
@@ -607,6 +600,17 @@ const mainLoadEventHandler = async () => {  // load event handler
   main.append(loadingElementCtn)
   const { data } = await axios.get(`/posts?id=${currentUser}`)
   // console.log(data)
+  if (data.posts.length === 0) {
+    loadingElementCtn.remove();
+    // main.innerHTML = `
+    // <div className="align-center">
+    //   <h1>
+    //       ${loggedInuser.username} haven't posted anything
+    //   </h1>
+    // </div>
+    // `
+    // return;
+  }
   const posts = []
 
   for (let post of data.posts) {
@@ -677,6 +681,7 @@ const createDetailsEditForm = () => {
   const id = String(idCtn.innerText).trim()
 
   detailsEditForm.classList.add('edit-details-form-ctn')
+  console.log("description ==> ", loggedInuser.description)
   detailsEditForm.innerHTML = `
   <div class="edit-details-form-title">
               Edit Details
@@ -685,11 +690,11 @@ const createDetailsEditForm = () => {
               <i class="far fa-times-circle"></i>
             </button>
             <form class="edit-details-form" method="POST" action="/user/${id}?_method=PUT">
-              <input type="text" value=${loggedInuser.description !== undefined ? loggedInuser.description : ""} class="description-input details-input" placeholder="Description" name="description" >
-              <input type="text" ${loggedInuser.country !== undefined ? `value=${loggedInuser.country}` : ''} class="country details-input" placeholder="Country" name="country" >
-              <input type="text" ${loggedInuser.state !== undefined ? `value=${loggedInuser.state}` : ''} name="state" class="state details-input" placeholder="State">
-              <input type="text" ${loggedInuser.city !== undefined ? `value=${loggedInuser.city}` : ''} name="city" class="city details-input" placeholder="City">
-              <input type="text" ${loggedInuser.yearOfGraduation !== undefined ? `value=${loggedInuser.yearOfGraduation}` : ''} name="yearOfGraduation" class="year-of-graduation details-input" placeholder="Year of graduation ">
+              <input autocomplete="off" type="text" ${loggedInuser.description !== undefined ? `value="${loggedInuser.description}"` : ''} class="description-input details-input" placeholder="Description" name="description" >
+              <input autocomplete="off" type="text" ${loggedInuser.country !== undefined ? `value="${loggedInuser.country}"` : ''} class="country details-input" placeholder="Country" name="country" >
+              <input autocomplete="off" type="text" ${loggedInuser.state !== undefined ? `value="${loggedInuser.state}"` : ''} name="state" class="state details-input" placeholder="State">
+              <input autocomplete="off" type="text" ${loggedInuser.city !== undefined ? `value="${loggedInuser.city}"` : ''} name="city" class="city details-input" placeholder="City">
+              <input autocomplete="off" type="text" ${loggedInuser.yearOfGraduation !== undefined ? `value="${loggedInuser.yearOfGraduation}"` : ''} name="yearOfGraduation" class="year-of-graduation details-input" placeholder="Year of graduation ">
               <div class="branch-ctn">
                 <label for="branch" class="branch-label">Course : </label>
                 <select name="course" class="course" value=${loggedInuser.course} >
@@ -758,7 +763,7 @@ const createEditInterestsForm = () => {
                     <img src="/assets/cricket.jpg" alt=""
                       style="height: 100px; width: 100px; border-radius: 20px; object-fit: cover;">
                   </label>
-                  <input type="checkbox" name="interests[cricket]" id="cricket" class="interests-input" ${loggedInuser.interests.includes('cricket') === true ? "checked" : ""} >
+                  <input autocomplete="off" type="checkbox" name="interests[cricket]" id="cricket" class="interests-input" ${loggedInuser.interests.includes('cricket') === true ? "checked" : ""} >
                 </div>
                 <div class="input">
                   <label for="football" class="label">
@@ -766,7 +771,7 @@ const createEditInterestsForm = () => {
                     <img src="/assets/football.jpg" alt=""
                       style="height: 100px; width: 100px; border-radius: 20px; object-fit: cover;">
                   </label>
-                  <input type="checkbox" name="interests[football]" id="football" class="interests-input" ${loggedInuser.interests.includes('football') === true ? "checked" : ""} >
+                  <input autocomplete="off" type="checkbox" name="interests[football]" id="football" class="interests-input" ${loggedInuser.interests.includes('football') === true ? "checked" : ""} >
                 </div>
                 <div class="input">
                   <label for="singing" class="label" class="label">
@@ -774,7 +779,7 @@ const createEditInterestsForm = () => {
                     <img src="/assets/singing.jpg" alt=""
                       style="height: 100px; width: 100px; border-radius: 20px; object-fit: cover; position: relative;top: 0;">
                   </label>
-                  <input type="checkbox" name="interests[singing]" id="singing" class="interests-input" ${loggedInuser.interests.includes('singing') === true ? "checked" : ""} >
+                  <input autocomplete="off" type="checkbox" name="interests[singing]" id="singing" class="interests-input" ${loggedInuser.interests.includes('singing') === true ? "checked" : ""} >
                 </div>
                 <div class="input">
                   <label for="coding" class="label">
@@ -782,7 +787,7 @@ const createEditInterestsForm = () => {
                     <img src="/assets/coding.jpg" alt=""
                       style="height: 100px; width: 100px; border-radius: 20px; object-fit: cover;">
                   </label>
-                  <input type="checkbox" name="interests[coding]" id="coding" class="interests-input" ${loggedInuser.interests.includes('coding') === true ? "checked" : ""} >
+                  <input autocomplete="off" type="checkbox" name="interests[coding]" id="coding" class="interests-input" ${loggedInuser.interests.includes('coding') === true ? "checked" : ""} >
                 </div>
                 <div class="input">
                   <label for="dancing" class="label">
@@ -790,7 +795,7 @@ const createEditInterestsForm = () => {
                     <img src="/assets/dancing.jpg" alt=""
                       style="height: 100px; width: 100px; border-radius: 20px; object-fit: cover;">
                   </label>
-                  <input type="checkbox" name="interests[dancing]" id="dancing" class="interests-input" ${loggedInuser.interests.includes('dancing') === true ? "checked" : ""} >
+                  <input autocomplete="off" type="checkbox" name="interests[dancing]" id="dancing" class="interests-input" ${loggedInuser.interests.includes('dancing') === true ? "checked" : ""} >
                 </div>
               </div>
               <div class="edit-interests-form-submit-btn-ctn">

@@ -2,20 +2,16 @@
   <div class="brand-icon-searchCtn">
     <div class="brand-icon-ctn">
       <a href="/">
-        <!-- <i class="fab fa-facebook" class="brand-icon"></i> -->
         <img src="/assets/VibeIn.png" alt="" class="logo">
       </a>
     </div>
     <div class="search-redirect-btn-ctn">
-      <!-- <form action="/search">
-        <div>
-          <label for="search"><i class="fa fa-search" aria-hidden="true"></i></label>
-          <input type="text" class="search-input" id="search" placeholder="Search Friends" name="search_query" />
-        </div>
-      </form> -->
-      <button class="search-redirect-btn">
-        <i class="fa fa-search" aria-hidden="true"></i>
-      </button>
+      <div class="dummy-input-nav">
+        <button class="search-redirect-btn">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+        <input type="text" name="" id="" placeholder="Find Friends" class="dummy-input" autocomplete="off">
+      </div>
     </div>
   </div>
   <div class="icons-ctn">
@@ -53,14 +49,10 @@
         <%= currentUser.requests.length %>
       </div>
     </div>
-    <!-- <div>
-      <a href="#">
-        <i class="fas fa-bell"></i>
-      </a>
-      <div class="no-of-notifications">5</div>
-    </div> -->
+
   </div>
   <div class="user-page-redirect-btn">
+
     <button class="drop-down-menu-btn">
       <img src=<%=currentUser.profilePicture%>
       alt="" class="user-img" />

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
-    <%= user.username.toUpperCase() %> | FB
+    <%= user.username.toUpperCase() %> | VI
   </title>
   <link rel="stylesheet" href="/CSS/app.css" />
   <link rel="stylesheet" href="/CSS/navbar.css" />
@@ -23,7 +23,8 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <link rel="shortcut icon" href="#">
+  <script src="/JS/app.js" defer></script>
+  <link rel="shortcut icon" href="/assets/VibeIn-without-text.png">
 </head>
 
 <body>
@@ -39,12 +40,6 @@
           class="profile-img"
           />
         </div>
-        <!-- <div class="overlay">
-          <div class="edit-interests-form-ctn">
-            
-
-          </div>
-        </div> -->
 
         <% if (String(currentUser._id)!==String(user._id)) { %>
 
@@ -52,10 +47,16 @@
           </div>
           <% } %>
       </div>
+
+      </div>
       <div class="username">
-        <h2>
-          <%= user.username %>
-        </h2>
+        <% if(user.isDeleted===false) { %>
+          <h2>
+            <%= user.username.charAt(0).toUpperCase() + user.username.slice(1) %>
+          </h2>
+          <% } else {%>
+            <h2>Deleted Account</h2>
+            <% } %>
       </div>
       <% if(user.description){ %>
         <div class="description">
@@ -138,22 +139,7 @@
                         </span>
                       </li>
                       <% } %>
-                        <!-- <li class="interest">
-                          <img src="/assets/coding.jpg" alt="interest">
-                          <span>Coding</span>
-                        </li>
-                        <li class="interest">
-                          <img src="/assets/cricket.jpg" alt="interest">
-                          <span>Cricket</span>
-                        </li>
-                        <li class="interest">
-                          <img src="/assets/dancing.jpg" alt="interest">
-                          <span>Dancing</span>
-                        </li>
-                        <li class="interest">
-                          <img src="/assets/football.jpg" alt="interest">
-                          <span>Football</span>
-                        </li> -->
+
                   </ul>
                   <% if(String(currentUser._id)===String(user._id)){ %>
                     <div class="edit-interest-form-popup-btn-ctn">
@@ -165,19 +151,27 @@
                 </div>
                 <div class="friends">
                   <h3 class="title">Friends</h3>
-                  <div class="friends-ctn">
-                    <% for(let friend of user.friends){ %>
-                      <div class="friend">
-                        <img src=<%=friend.profilePicture %>
-                        alt="friend image" class="friend-img" />
-                        <span class="friend-name">
-                          <a href='/user/<%= friend._id %>'>
-                            <%= friend.username %>
-                          </a>
-                        </span>
+                  <% if(user.friends.length===0) {%>
+                    <div class="no-friends">
+                      <h3>
+                        <%= user.username.charAt(0).toUpperCase() + user.username.slice(1) %> has no friends
+                      </h3>
+                    </div>
+                    <% } else {%>
+                      <div class="friends-ctn">
+                        <% for(let friend of user.friends){ %>
+                          <div class="friend">
+                            <img src=<%=friend.profilePicture %>
+                            alt="friend image" class="friend-img" />
+                            <span class="friend-name">
+                              <a href='/user/<%= friend._id %>'>
+                                <%= friend.username %>
+                              </a>
+                            </span>
+                          </div>
+                          <% } %>
                       </div>
                       <% } %>
-                  </div>
                 </div>
               </div>
               <div class="user-posts">
@@ -190,87 +184,23 @@
                       />
                     </a>
                     <input type="text" name="post" id="post" placeholder="Share Something"
-                      class="create-post-form-input" />
+                      class="create-post-form-input" autocomplete="off" />
                   </form>
+
                   <% } %>
+                    <% if(user.posts.length===0) {%>
+                      <div class="no-post">
+                        <h1>
+                          Sorry, nothing to show :(
+                        </h1>
+                      </div>
+                      <% } %>
               </div>
             </div>
     </main>
 </body>
 <script src="/JS/profilePage.js" defer></script>
 <script src="/JS/navbar.js" defer></script>
-<!-- <script src="/JS/app.js" defer></script> -->
+<script src="/JS/app.js" defer></script>
 
 </html>
-<!-- <for(let post of user.posts) { %>
-  <div class="post">
-    <div class="post-header">
-      <div class="post-user-img-ctn">
-        <a href="/user/<= user._id %> ">
-          <img src="<= user.profilePicture %> " alt="user profile" class="post-user-img" />
-        </a>
-      </div>
-      <div class="user-name-date">
-        <a href="/user/<= user._id %>"><span class="username">
-            <= user.username %>
-          </span></a>
-        <span>3h</span>
-      </div>
-      <div class="morebtn-ctn">
-        <button class="more-btn">
-          <i class="fas fa-ellipsis-h"></i>
-        </button>
-        <div class="post-header-pop-up-options display-none">
-          <div>
-            <i class="fas fa-bookmark"></i>
-            <span>Save post</span>
-          </div>
-          <div>
-            <i class="fa fa-link"></i>
-            <span>Copy link</span>
-          </div>
-          <div>
-            <i class="fa fa-times"></i>
-            <span>Hide post</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="post-body">
-      <p class="post-caption">
-        <= post.caption %>
-      </p>
-      <div class="post-img-ctn">
-        < for(let image of post.images) { %>
-          <img src=<=image %>
-          alt="post images"
-          class="post-img"
-          />
-          < } %>
-      </div>
-    </div>
-    <div class="likes-comment-count">
-      <span class="like-count">
-        <= post.likes %> Likes
-      </span>
-      <span class="dot"></span>
-      <span class="comment-count">
-        <= post.comments.length %> comments
-      </span>
-    </div>
-    <div class="post-footer">
-      <button class="like-btn">
-        <span>Like</span>
-        <i class="far fa-thumbs-up"></i>
-      </button>
-      <button class="comment-btn">
-        <span>Comment</span>
-        <i class="far fa-comments"></i>
-      </button>
-      <button class="share-btn">
-        <span>Share</span>
-        <i class="fas fa-share"></i>
-      </button>
-    </div>
-  </div>
-  < } %> -->
