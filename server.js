@@ -180,7 +180,7 @@ app.use((err, req, res, next) => {
     if (!err.message) err.message = "Oh no something went wrong!!";
     res.status(statusCode).render("error", { err })
 })
-
+// Test
 server.listen(port, () => {
     console.log(`App running on port ${port}`);
 });
