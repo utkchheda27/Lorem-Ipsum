@@ -4,7 +4,7 @@ dropDownBtn.addEventListener('click', () => {
     dropDownMenu.classList.toggle('display-none')
 })
 
-const searchRedirectBtn = document.querySelector('.search-redirect-btn')
+const dummyInput = document.querySelector('.dummy-input-nav')
 const deleteAccountBtn = document.querySelector('.delete-user-btn')
 
 deleteAccountBtn.addEventListener('click', (e) => {
@@ -14,7 +14,6 @@ deleteAccountBtn.addEventListener('click', (e) => {
     }
 })
 
-
-searchRedirectBtn.addEventListener('click', () => {
+dummyInput.addEventListener('click', () => {
     window.location.replace("/search");
 })

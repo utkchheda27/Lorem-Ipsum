@@ -69,7 +69,7 @@ export const getPosts = async (req, res) => {
             if (tPost) {
                 for (let commentId of tPost.comments) {
                     const tComment = await Comment.findById(commentId).populate('author')
-                    if (tComment != null)
+                    if (tComment !== null && tComment.author !== null)
                         comments.push(tComment)
                 }
                 tPost.comments = comments

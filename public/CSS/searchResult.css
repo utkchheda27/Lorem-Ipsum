@@ -156,3 +156,9 @@ transform: translateY(-3px);
 .result-ctn .username-ctn {
   margin-top: 10px;
 }
+
+@media all and (max-width: 800px) {
+  main.search-main-ctn {
+    width: 100% !important;
+  }
+}

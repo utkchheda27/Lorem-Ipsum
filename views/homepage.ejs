@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Homepage</title>
+  <title>Homepage | VI</title>
   <link rel="stylesheet" href="/CSS/app.css" />
   <link rel="stylesheet" href="/CSS/navbar.css" />
   <link rel="stylesheet" href="/CSS/homepage.css" />
@@ -25,7 +25,7 @@
   <script src="/JS/homepage.js" defer></script>
   <script src="/JS/navbar.js" defer></script>
   <script src="/JS/app.js" defer></script>
-  <link rel="shortcut icon" href="/assets/index1.jpg">
+  <link rel="shortcut icon" href="/assets/VibeIn-without-text.png">
 </head>
 
 <body>
@@ -35,15 +35,23 @@
         <section class="profile-img-ctn">
           <a href="/user/<%= currentUser._id %>">
             <img src=<%=currentUser.profilePicture %> alt="logged in user
-          profile picture" class="profile-pic">
-        </a>
+            profile picture" class="profile-pic">
+          </a>
         </section>
         <section>
-          <a href="/user/<%= currentUser._id %>">
-            <span>
-              <%= currentUser.username %>
-            </span>
-          </a>
+          <% if(currentUser.isDeleted===false) {%>
+            <a href="/user/<%= currentUser._id %>">
+              <span>
+                <%= currentUser.username.charAt(0).toUpperCase() + currentUser.username.slice(1) %>
+              </span>
+            </a>
+            <% } else{ %>
+              <a href="/user/<%= currentUser._id %>">
+                <span>
+                  Deleted Account
+                </span>
+              </a>
+              <% } %>
         </section>
         <section class="no-of-friends">
           <a href="/friends"><span>Friends: <%= currentUser.friends.length %> </span></a>
@@ -59,145 +67,15 @@
             <img src=<%=currentUser.profilePicture%>
             alt="logged in user image" class="loggedin-user-img-post">
           </a>
-          <input type="text" name="post" id="post" placeholder="Share Something" class="create-post-form-input" />
+          <input autocomplete="off" type="text" name="post" id="post" placeholder="Share Something"
+            class="create-post-form-input" />
         </form>
+
       </main>
-      <aside class="sidebar2"></aside>
+      <aside class="sidebar2 suggestions-ctn">
+        <h1 class="suggestion-heading">Suggestions</h1>
+      </aside>
     </div>
 </body>
 
 </html>
-<!-- 
-        <div class="post">
-          <div class="post-header">
-            <div class="post-user-img-ctn">
-              <a href="/user/${User._id}">
-                <img src='https://i.insider.com/5c93980bdd086100517da2e5?width=700&format=jpeg&auto=webp'
-                  alt="user profile" class="post-user-img">
-              </a>
-            </div>
-            <div class="user-name-date">
-              <a href="/user/${User._id}"><span class="username">Penny</span></a>
-              <div class="date-time">
-                <span>12/07/21</span>
-                <span>07:30</span>
-              </div>
-            </div>
-            <div class="morebtn-ctn">
-              <button class="more-btn">
-                <i class="fas fa-ellipsis-h"></i>
-              </button>
-              <div class="post-header-pop-up-options display-none">
-                <div>
-                  <i class="fas fa-bookmark"></i>
-                  <span>Save post</span>
-                </div>
-                <div>
-                  <i class="fa fa-link"></i>
-                  <span>Copy link</span>
-                </div>
-                <div>
-                  <i class="fa fa-times"></i>
-                  <span>Hide post</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="post-body">
-            <p class="post-caption">
-              Carosel Testing
-            </p>
-            <div class="post-img-ctn">
-              <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                  <div class="swiper-slide">
-                    <img
-                      src="https://www.coolest-homemade-costumes.com/files/2012/10/all-female-big-bang-theory-13963-800x600.jpg"
-                      class="slide-image" alt="">
-                  </div>
-                  <div class="swiper-slide">
-                    <img
-                      src="https://www.coolest-homemade-costumes.com/files/2012/10/all-female-big-bang-theory-13963-800x600.jpg"
-                      class="slide-image" alt="">
-                  </div>
-                  <div class="swiper-slide">
-                    <img
-                      src="https://www.coolest-homemade-costumes.com/files/2012/10/all-female-big-bang-theory-13963-800x600.jpg"
-                      class="slide-image" alt="">
-                  </div>
-                </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-              </div>
-            </div>
-            <div class="likes-comment-count">
-              <span class="like-count">
-                12 Likes
-              </span>
-              <span class="dot"></span>
-              <span class="comment-count">
-                3 comments
-              </span>
-            </div>
-          </div>
-          <div class="post-footer">
-            <button class="like-btn">
-              <span>Like</span>
-              <i class="far fa-thumbs-up"></i>
-            </button>
-            <button class="comment-btn">
-              <span>Comment</span>
-              <i class="far fa-comments"></i>
-            </button>
-            <button class="share-btn">
-              <span>Share</span>
-              <i class="fas fa-share"></i>
-            </button>
-          </div>
-          <div class="create-comment-form">
-            <form class="comment-form">
-              <div class="img-ctn">
-                <a href="/user/< currentUser._id %> ">
-                  <img src=<currentUser.profilePicture %> alt="" class="comment-loggedIn-user"></a>
-              </div>
-              <div class="text-input">
-                <textarea name="commentBody" class="comment-body-input"></textarea>
-              </div>
-              <div class="btn-ctn">
-                <button type="submit">
-                  <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                </button>
-              </div>
-            </form>
-          </div>
-          <div class="comments-ctn">
-            <article class="comment">
-              <div class="comment-header">
-                <div class="commentators-img-ctn">
-                  <a href="#">
-                    <img
-                      src="https://onecms-res.cloudinary.com/image/upload/s--_S_cxkh5--/c_crop%2Ch_549%2Cw_732%2Cx_0%2Cy_83/c_fill%2Cg_auto%2Ch_622%2Cw_830/fl_relative%2Cg_south_east%2Cl_one-cms:core:watermark:afp_watermark%2Cw_0.1/f_auto%2Cq_auto/v1/mediacorp/cna/image/2021/10/25/063_455563312.jpg?itok=m9zH3saX"
-                      alt="commentators picture" class="commentators-img">
-                  </a>
-                </div>
-                <div class="commentators-details">
-                  <a href="/user/${comment.author._id}">
-                    <span class="commentators-name">${comment.author.username}</span>
-                  </a>
-                  <span class="time">${comment.date}</span>
-                  <span class="time">${comment.time}</span>
-                </div>
-                <div class="comment-morebtn-ctn">
-                  <button class="comment-morebtn">
-                    <i class="fas fa-ellipsis-h"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="comment-body">
-                <p class="comment-text">
-                  ${comment.body}
-                </p>
-              </div>
-            </article>
-          </div>
-        </div> -->

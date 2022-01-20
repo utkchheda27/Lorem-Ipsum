@@ -126,9 +126,9 @@ postInput.addEventListener('click', (e) => {
               <form action="/posts" method="post" class="create-post-form-overlay" enctype="multipart/form-data">
                 <textarea name="caption" id="" cols="30" rows="10" class="create-post-caption"
                   placeholder="What's in your mind, ${loggedInuser.username.trim().split(" ")[0]} ?"></textarea>
-                <input type="file" name="images" class="create-post-img-link"
-                   autocomplete="off" multiple >
-                <div class="create-post-submit-btn-ctn">
+                  <div class="create-post-submit-btn-ctn">
+                  <input autocomplete="off" type="file" name="images" class="create-post-img-link"
+                     autocomplete="off" multiple >
                   <button type="submit" class="submit-btn">
                     Post
                   </button>
@@ -139,6 +139,13 @@ postInput.addEventListener('click', (e) => {
   body.append(overlay)
   body.classList.add('noscroll')
   postInput.blur()
+  const overlayCreatePostForm = document.querySelector('.create-post-form-overlay')
+  overlayCreatePostForm.addEventListener('submit', (e) => {
+    if (overlayCreatePostForm.children[0].value.trim().length === 0) {
+      console.log("here")
+      e.preventDefault();
+    }
+  })
   closeOverLayBtn = document.querySelector(".create-post-title .close-btn-ctn button")
   closeOverLayBtn.addEventListener('click', () => {
     overlay.innerHTML = ``;
@@ -281,7 +288,7 @@ const createPost = ({ caption, likes, comments, images, date, User, time, _id })
                   </div>
                 </div>
                 <div class="morebtn-ctn">
-                  <button class="more-btn">
+                  <button class="more-btn display-none">
                     <i class="fas fa-ellipsis-h"></i>
                   </button>
                   <div class="post-header-pop-up-options display-none">
@@ -332,7 +339,7 @@ const createPost = ({ caption, likes, comments, images, date, User, time, _id })
                   <img src=${loggedInuser.profilePicture} alt="" class="comment-loggedIn-user"></a>
               </div>
               <div class="text-input">
-                <input name="commentBody" class="comment-body-input">
+                <input name="commentBody" class="comment-body-input" autocomplete="off" >
               </div>
               <div class="btn-ctn">
                 <button type="submit">
@@ -462,14 +469,72 @@ const loadMoreHandler = async (e) => { // add more post at the end when user cli
 }
 loadMoreBtn.addEventListener('click', loadMoreHandler) // adds click event to loadmorw btn
 
+const createASuggestion = (suggestion) => {
+  const li = document.createElement('li')
+  li.classList.add('suggestion')
+  li.innerHTML = `
+            <div class="suggestion-img">
+              <img src="${suggestion.profilePicture}" alt="">
+            </div>
+            <div class="suggestion-username">
+              <a href="/user/${suggestion._id}">
+                <h3>${suggestion.username}</h3>
+              </a>
+            </div>
+    `
+  return li;
+}
 
+const addSuggestions = (suggestions) => {
+  const suggestionsCtn = document.querySelector('.suggestions-ctn')
+  const ul = document.createElement('ul')
+  ul.classList.add('suggestions')
+  for (let suggestion of suggestions) {
+    const s = createASuggestion(suggestion)
+    ul.append(s);
+  }
+  suggestionsCtn.appendChild(ul)
+}
 
+const addEmptySuggestion = () => {
+  const suggestionsCtn = document.querySelector('.suggestions-ctn')
+  const ul = document.createElement('ul')
+  ul.classList.add('suggestions')
+  ul.innerText = "No suggestions\n\nPlease add your interests to find matches"
+  suggestionsCtn.appendChild(ul)
+}
+
+const addNoPosts = () => {
+  const noPostCtn = document.createElement('div')
+  noPostCtn.classList.add('no-posts')
+  noPostCtn.innerHTML = `
+  <h2> Nothing to show</h2>
+  <a href="/search">Make friends</a>`
+  main.append(noPostCtn);
+}
 
 const mainLoadEventHandler = async () => {  // load event handler
   main.append(loadingElementCtn)
   const data = await axios.get('/api/get_posts');
+  // console.log("posts ===>", data)
   // console.log(data.length, loadedPosts.size);
+  const suggestions = await axios.get('/suggestions');
+  console.log(suggestions)
+  if (suggestions.data.suggestions.length === 0) {
+    addEmptySuggestion()
+  } else {
+    addSuggestions(suggestions.data.suggestions);
+  }
   const posts = data.data.posts
+  // <div class="no-posts">
+  // < h2 > Nothing to show</h2>
+  // <a href="/search">Make friends</a>
+  // </div >
+  if (!posts || posts.length === 0) {
+    addNoPosts()
+    loadingElementCtn.remove()
+    return;
+  }
 
   for (let post of posts) {
     loadedPosts.set(post._id, post)

@@ -1,6 +1,10 @@
+body {
+  height: 100%;
+}
+
 .ctn {
   width: 50%;
-  height: 700px;
+  height: 85%;
   background-color: #fff;
   margin: auto;
   overflow-y: auto;
@@ -51,7 +55,7 @@
 }
 
 .message {
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   height: auto;
   list-style: none;
@@ -59,7 +63,8 @@
   padding: 5px 2.5px;
   margin: 10px;
   flex-direction: column;
-  font-size: 1.2em;
+  font-size: 1em;
+  word-wrap: break-word;
 }
 
 .message span {
@@ -67,7 +72,6 @@
   width: auto;
   max-width: 300px;
   height: auto;
-
 }
 
 .sent {
@@ -76,18 +80,16 @@
   border-bottom-left-radius: 5px;
   align-items: flex-end;
   height: auto;
-  
 }
 
 .recieved {
   justify-content: flex-start;
   border-top-right-radius: 5px;
-  
 }
 
 .friend-info {
   width: 100%;
-  background-color: #0EBFE9	;
+  background-color: #0ebfe9;
   height: 100px;
   display: flex;
   flex-direction: row;
@@ -111,7 +113,7 @@
   width: 70%;
   align-items: center;
   text-align: start;
-  
+  text-transform: capitalize;
 }
 
 .dateAndTime {
@@ -131,4 +133,34 @@
   justify-content: center;
   align-items: center;
   background-color: white;
+}
+
+.unreaded-message-count {
+  width: 100%;
+  padding: 5px;
+  text-align: center;
+  background-color: #dadada;
+}
+
+.cannot-sent-msg {
+  width: 100%;
+  text-align: center;
+  height: 100px;
+  font-size: 1.5em;
+}
+
+@media all and (max-width: 800px) {
+  .ctn {
+    width: 80%;
+    font-size: 0.9em;
+  }
+
+  /* .message {
+    font-size: 0.9em;
+  } */
+}
+@media all and (max-width: 500px) {
+  .ctn {
+    width: 100%;
+  }
 }

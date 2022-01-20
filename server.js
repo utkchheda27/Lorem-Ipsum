@@ -32,6 +32,7 @@ import MongoStore from 'connect-mongo'
 import methodOverride from "method-override"
 
 import dotenv from "dotenv";
+import user from './models/user.js';
 dotenv.config();
 
 
@@ -128,6 +129,35 @@ const port = 4000;
 
 app.use(setGlobelVariables) //enabling contents of flash file
 
+app.get('/suggestions', async (req, res) => {
+    try {
+        let suggestions = new Map();
+
+        for (let interset of req.user.interests) {
+            let users = await User.find({ interests: interset });
+            users = users.filter((u) => {
+                if (String(req.user._id) === String(u._id) || req.user.friends.some((f) => String(f) === String(u._id))) {
+                    return false
+                } else {
+                    return true
+                }
+            })
+            users.forEach((u) => {
+                suggestions.set(String(u._id), u)
+            })
+            if (suggestions.size >= 5) {
+                break;
+            }
+
+        }
+        let tempS = Array.from(suggestions.values());
+        res.json({ status: true, suggestions: tempS })
+    } catch (e) {
+        console.log(e)
+        res.json({ status: false, message: e.message })
+    }
+})
+
 app.use('/api', apiRouter)
 app.use('/user/:id', userRouter)
 app.use('/auth', authRouter)
@@ -135,12 +165,9 @@ app.use('/user/:id/friends', friendRouter)
 app.use('/posts', postRouter)
 app.use('/posts/:postID/comments', commentRouter)
 app.use('/chats/', chatRouter)
-app.get("/", isLoggedIn, homepageHandler);
+app.get("/", homepageHandler);
 app.get('/friends', isLoggedIn, friendsPageHandler)
 app.get('/search', isLoggedIn, searchResult)
-app.get("/home",(req,res)=>{
-    res.render("home")
-})
 
 
 
@@ -153,7 +180,7 @@ app.use((err, req, res, next) => {
     if (!err.message) err.message = "Oh no something went wrong!!";
     res.status(statusCode).render("error", { err })
 })
-
+// Test
 server.listen(port, () => {
     console.log(`App running on port ${port}`);
 });

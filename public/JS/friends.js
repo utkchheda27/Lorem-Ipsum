@@ -7,7 +7,7 @@ loadingAnimationCtn.innerHTML = '<div class="lds-ellipsis" ><div></div><div></di
 const requestsCtn = document.querySelector('.friends-ctn .type-friends-ctn')
 
 // sub-part-btns
-const suggestionBtn = document.querySelector('.list-options .suggestions')
+// const suggestionBtn = document.querySelector('.list-options .suggestions')
 const friendsBtn = document.querySelector('.list-options .friends')
 const requestBtn = document.querySelector('.list-options .requests')
 const sentRequestsBtn = document.querySelector('.list-options .sent-requests')
@@ -44,15 +44,15 @@ const cleanRequestCtn = () => {
     }
 }
 
-suggestionBtn.addEventListener('click', (e) => {
-    if (active == suggestionBtn) return;
-    active.classList.remove('is-active')
-    suggestionBtn.classList.add('is-active')
-    active = suggestionBtn
-    cleanRequestCtn()
-    if (suggestions.length == 0) {
-    }
-})
+// suggestionBtn.addEventListener('click', (e) => {
+//     if (active == suggestionBtn) return;
+//     active.classList.remove('is-active')
+//     suggestionBtn.classList.add('is-active')
+//     active = suggestionBtn
+//     cleanRequestCtn()
+//     if (suggestions.length == 0) {
+//     }
+// })
 
 friendsBtn.addEventListener('click', () => {
     if (active == friendsBtn) return;
@@ -60,11 +60,12 @@ friendsBtn.addEventListener('click', () => {
     friendsBtn.classList.add('is-active')
     active = friendsBtn
     cleanRequestCtn()
-    if (friends.length == 0) {
-        getFriends()
-    } else {
-        showFriends()
-    }
+    getFriends()
+    // if (friends.length == 0) {
+    //     getFriends()
+    // } else {
+    //     showFriends()
+    // }
 })
 
 requestBtn.addEventListener('click', () => {
@@ -73,11 +74,12 @@ requestBtn.addEventListener('click', () => {
     requestBtn.classList.add('is-active')
     active = requestBtn
     cleanRequestCtn()
-    if (requests.length === 0) {
-        getRequests()
-    } else {
-        showRequests()
-    }
+    getRequests()
+    // if (requests.length === 0) {
+    //     getRequests()
+    // } else {
+    //     showRequests()
+    // }
 })
 
 sentRequestsBtn.addEventListener('click', () => {
@@ -86,11 +88,12 @@ sentRequestsBtn.addEventListener('click', () => {
     sentRequestsBtn.classList.add('is-active')
     active = sentRequestsBtn
     cleanRequestCtn()
-    if (sentRequests.length == 0) {
-        getSentRequests()
-    } else {
-        showSentRequests()
-    }
+    getSentRequests()
+    // if (sentRequests.length == 0) {
+    //     getSentRequests()
+    // } else {
+    //     showSentRequests()
+    // }
 })
 
 
@@ -119,6 +122,13 @@ const getRequests = async () => {
 }
 
 const showRequests = () => {
+    if (requests.length === 0) {
+        requestsCtn.innerHTML = `
+        <div class="align-center"> 
+            <h1> No request pending </h1>
+        </div>
+        `
+    }
     for (let request1 of requests) {
         const request = document.createElement('div')
         request.classList.add('type-friends')
@@ -182,6 +192,17 @@ const getFriends = async () => {
 }
 
 const showFriends = () => {
+    if (friends.length === 0) {
+        requestsCtn.innerHTML = `
+        <div class="align-center"> 
+            <div>
+                    <h1> You have no friends </h1>
+                    <a href="/search" style="color:blue"> Find friends </a>
+            </div>
+        </div>
+        `
+    }
+
     for (let friend of friends) {
         const friend1 = document.createElement('div')
         friend1.classList.add('type-friends')
@@ -211,6 +232,7 @@ const showFriends = () => {
 }
 
 const getSentRequests = async () => {
+
     requestsCtn.append(loadingAnimationCtn)
     const { data } = await axios.get(`/user/${loggedInuser._id}/requests/sent`)
     if (!data.status) {
@@ -231,6 +253,13 @@ const getSentRequests = async () => {
 }
 
 const showSentRequests = () => {
+    if (sentRequests.length === 0) {
+        requestsCtn.innerHTML = `
+        <div class="align-center"> 
+            <h1> No request pending </h1>
+        </div>
+        `
+    }
     for (let sentRequest of sentRequests) {
         const friend1 = document.createElement('div')
         friend1.classList.add('type-friends')
