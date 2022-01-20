@@ -125,7 +125,7 @@ io.on('connection', function (socket) {
     })
 });
 
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 app.use(setGlobelVariables) //enabling contents of flash file
 
