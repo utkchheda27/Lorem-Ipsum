@@ -418,6 +418,7 @@ label {
   border: 0.5px solid black;
   border-radius: 10px;
   background-color: #48bfe3;
+
   /* padding: 20px 10px; */
   /* overflow-y: auto; */
 }
@@ -429,9 +430,11 @@ label {
   font-weight: bolder;
   padding: 10px 10px;
   border-bottom: 0.5px solid rgb(0, 0, 0);
+
   display: flex;
   justify-content: space-around;
   align-items: center;
+  background-color: #aad0f0;
 }
 .create-post-title .title-ctn {
   display: flex;
@@ -442,6 +445,7 @@ label {
   display: flex;
   justify-content: center;
   width: 10%;
+
 }
 .create-post-title .close-btn-ctn button:hover {
   cursor: pointer;
@@ -454,6 +458,7 @@ label {
   background-color: inherit;
   color: black;
   font-size: 20px;
+
 }
 
 .create-post-title .placeholder {
@@ -518,9 +523,15 @@ label {
   width: 100px;
   height: 50px;
   border: none;
-  background-color: blue;
+  background-color: #228afa;
+  color: #fff;
   border-radius: 5px;
-  font-size: 1.5em;
+  font-size: 1.5rem;
+}
+
+.create-post-submit-btn-ctn .submit-btn:hover{
+cursor: pointer;
+background-color:#007aff;
 }
 
 /* ================================Error============================================ */

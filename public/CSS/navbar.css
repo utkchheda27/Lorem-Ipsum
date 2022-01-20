@@ -130,11 +130,14 @@
   display: inline-block;
 }
 
+
 .search-redirect-btn {
   font-size: inherit;
   height: 100%;
   width: 100%;
+  cursor: pointer;
 }
+
 .user-page-redirect-btn {
   width: 25%;
   height: 100%;
@@ -205,14 +208,16 @@
   height: auto;
   width: 150px;
   /* padding: ; */
+
 }
 
 .drop-down-menu ul {
   height: 100%;
   width: 100%;
-  background-color: black;
-  color: wheat;
+
+  color: rgb(0, 0, 0);
   border-radius: 5px;
+  font-size: 1.2em;
 }
 
 .drop-down-menu form {
@@ -227,13 +232,19 @@
 
 .drop-down-menu ul li {
   /* padding-left: 10px; */
-  margin: 5px auto;
-  height: 35px;
+  background-color: rgb(209, 205, 205);
+  margin: 10px auto;
+  height: 40px;
   width: 100%;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid black;
+}
+
+.drop-down-menu ul li:hover{
+  cursor: pointer;
 }
 
 span.arrow {
@@ -262,4 +273,13 @@ span.arrow {
   .dummy-input {
     display: none !important;
   }
+}
+.delete-user-btn{
+  color: rgb(0, 0, 0);
+  font-size: 0.85em;
+
+}
+
+.delete-user-btn:hover{
+  cursor: pointer;
 }

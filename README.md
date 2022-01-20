@@ -13,10 +13,10 @@ A social networking web application created by team
 
 ## 🧑‍💻Team Members 
 
-- Utkarsh Chheda - [utkchheda27@gmail.com](utkchheda27@gmail.com)
-- Abhishek Gupta - [abhishek.9867.338961@gmail.com](abhishek.9867.338961@gmail.com)
-- Mayuri Pawar - [pawarmayuri0811@gmail.com](pawarmayuri0811@gmail.com)
-- Dhanashree Pawar - [pawardhanashree1409@gmail.com](pawardhanashree1409@gmail.com)
+- [Utkarsh Chheda](https://github.com/utkchheda27) - utkchheda27@gmail.com
+- [Abhishek Gupta](https://github.com/Abhishekohm) - abhishek.9867.338961@gmail.com
+- [Mayuri Pawar](https://github.com/Mayuri811)- pawarmayuri0811@gmail.com
+- [Dhanashree Pawar](https://github.com/dhanashree1409) - pawardhanashree1409@gmail.com
 
 
 ## 👨‍🏫Mentors
@@ -67,9 +67,9 @@ Website Link: will put it here shortly
 - [x] Profile Page
 - [x] Sending and Accepting a Follow Request
 - [x] Loading Posts with Pagination
-- [ ] Improving UI
-- [ ] Deleting the account  
-- [ ] Chat Feature
+- [x] Improving UI
+- [x] Deleting the account  
+- [x] Chat Feature
  
 ## 🛠️Project Setup
 

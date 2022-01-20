@@ -221,7 +221,7 @@ postInput && postInput.addEventListener('click', (e) => {
 
                 </div>
                 <div class="title-ctn">
-                  <h3>Create Post</h3>
+                  <h3>Create New Post</h3>
                 </div>
                 <div class="close-btn-ctn">
                   <button><i class="fa fa-times" aria-hidden="true"></i></button>

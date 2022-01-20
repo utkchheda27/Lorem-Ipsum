@@ -6,7 +6,7 @@ export const postInputClickHandler = (e) => {
 
                 </div>
                 <div class="title-ctn">
-                  <h3>Create Post</h3>
+                  <h3>Create New Post</h3>
                 </div>
                 <div class="close-btn-ctn">
                   <button><i class="fa fa-times" aria-hidden="true"></i></button>
@@ -28,7 +28,7 @@ export const postInputClickHandler = (e) => {
               </div>
               <form action="/createPost" method="post" class="create-post-form-overlay">
                 <textarea name="caption" id="" cols="30" rows="10" class="create-post-caption"
-                  placeholder="What's in your find, Rajesh ?"></textarea>
+                  placeholder="What's in your mind, Rajesh ?"></textarea>
                 <input type="text" name="image" class="create-post-img-link"
                   placeholder="Wanna share image? submit link here" autocomplete="off">
                 <div class="create-post-submit-btn-ctn">

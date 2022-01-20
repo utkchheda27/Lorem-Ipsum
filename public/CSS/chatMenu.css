@@ -43,6 +43,7 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: center;
+
 }
 
 .chat:hover {
@@ -94,3 +95,4 @@ body {
     width: 50%;
   }
 }
+

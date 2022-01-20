@@ -33,6 +33,7 @@
 
                     <li class="chat">
                         <a href="/chats/<%= chat._id %>">
+                         
                             <img src="<%= String(currentUser._id) === String(chat.participants[0]._id) ? chat.participants[1].profilePicture : chat.participants[0].profilePicture %>"
                                 alt="Profile Picture">
                             <h2>
@@ -41,6 +42,7 @@
                                         chat.participants[1].username : chat.participants[0].username %>
                                 </span>
                             </h2>
+                         
                             <% if( chat.messages.reduce((sum,message)=> {
                                 if(String(message.author._id) !== String(currentUser._id) && message.isReaded ===
                                 false){
