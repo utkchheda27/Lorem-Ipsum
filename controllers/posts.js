@@ -46,7 +46,7 @@ export const createPostHandler = async (req, res) => {
         const user = await User.findById(req.user._id);
         user.posts.push(res1);
         await user.save();
-        res.redirect('/')
+        res.redirect(`/user/${req.user._id}`)
     } catch (e) {
         throw new ExpressError(e.message, 500);
     }

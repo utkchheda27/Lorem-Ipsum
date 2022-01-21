@@ -192,7 +192,7 @@ const deleteComment = async (commentId, postId, domELe, post) => {
 const postLike = async (post, _id) => {
   const res = await axios.post(`/posts/${_id}/likes`);
   if (res.data.status == true) {
-    post.children[2].children[0].innerText = `${res.data.noOfLikes === 1 ? `${res.data.noOfLikes} Likes` : `${res.data.noOfLikes} Likes`}`
+    post.children[2].children[0].innerText = `${res.data.noOfLikes === 1 ? `${res.data.noOfLikes} Like` : `${res.data.noOfLikes} Likes`}`
     // post.children[3].children[0].children[0].innerText = "Liked"
     // post.children[3].children[0].children[1].classList.remove('far')
     // post.children[3].children[0].children[1].classList.add('fas')
@@ -413,6 +413,8 @@ const createPost = ({ caption, likes, comments, images, date, User, time, _id })
 
 }
 
+
+
 const addApost = (post) => {
   const post1 = createPost(post)
   const btn = post1.childNodes[0].childNodes[5].childNodes[1]
@@ -432,9 +434,18 @@ const addApost = (post) => {
   return post1
 }
 
+const infiniteScroll = () => {
+  // console.log(window.innerHeight, window.scrollY, document.documentElement.scrollHeight)
+  if (window.innerHeight + window.scrollY === document.documentElement.scrollHeight) {
+    console.log("Bottom reached")
+    loadMoreHandler()
+  }
+  // console.log(body.scrollTop, body.scrollHeight, body.offsetHeight)
+}
+
 
 const loadMoreHandler = async (e) => { // add more post at the end when user clicks on load more
-  loadMoreBtn.remove()
+  // loadMoreBtn.remove()
   main.append(loadingElementCtn) // adding loading animation 
   pageNo++;
   const posts = await axios.get(`/api/get_posts?pageNo=${pageNo}`) // request backend for more posts
@@ -448,6 +459,7 @@ const loadMoreHandler = async (e) => { // add more post at the end when user cli
     noMorePostsCtn.classList.add('no-more-posts')
     loadingElementCtn.remove()
     main.append(noMorePostsCtn);
+    window.removeEventListener('scroll', infiniteScroll)
     return;
   }
 
@@ -463,11 +475,11 @@ const loadMoreHandler = async (e) => { // add more post at the end when user cli
   loadingElementCtn.remove() // removing loading animation
   main.append(...temp)      // adding posts
   carasolSelector()
-  main.append(loadMoreBtn) // appending load more posts option
+  // main.append(loadMoreBtn) // appending load more posts option
 
 
 }
-loadMoreBtn.addEventListener('click', loadMoreHandler) // adds click event to loadmorw btn
+// loadMoreBtn.addEventListener('click', loadMoreHandler) // adds click event to loadmorw btn
 
 const createASuggestion = (suggestion) => {
   const li = document.createElement('li')
@@ -546,7 +558,7 @@ const mainLoadEventHandler = async () => {  // load event handler
   main.append(...postElements)
   loadingElementCtn.remove()
   carasolSelector()
-  main.append(loadMoreBtn)
+  // main.append(loadMoreBtn)
 
 }
 
@@ -559,5 +571,7 @@ const carasolSelector = () => {
   });
 
 }
+
+window.addEventListener('scroll', infiniteScroll)
 
 window.addEventListener('load', mainLoadEventHandler)  // adds load event to window which adds post to main element

@@ -136,3 +136,21 @@ button {
 button:hover {
   background-color: #0349b9;
 }
+
+@media all and (max-width: 800px) {
+  .container {
+    width: 60%;
+  }
+  .form {
+    padding: 20px;
+  }
+}
+
+@media all and (max-width: 500px) {
+  .container {
+    width: 90%;
+  }
+  .form {
+    padding: 5px;
+  }
+}
