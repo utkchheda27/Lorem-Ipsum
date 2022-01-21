@@ -25,39 +25,40 @@
 	<link rel="stylesheet" href="/CSS/login.css" />
 	<script src="/JS/app.js" defer></script>
 	<link rel="shortcut icon" href="/assets/VibeIn-without-text.png">
+	<link rel="shortcut icon" href="#" />
 	<title>Login | VibeIn</title>
 </head>
 
 <body>
-	<!-- <%= error %> -->
-	<div class="container">
-		<div class="logo"><img src="/assets/logo_without_text.jpg" alt=""></div>
-		<div class="header">
-			<h2>Sign In</h2>
+	<%= error %>
+		<div class="container">
+			<div class="logo"><img src="/assets/logo_without_text.jpg" alt=""></div>
+			<div class="header">
+				<h2>Sign In</h2>
+			</div>
+			<form class="form" action="/auth/login" method="POST">
+				<div class="form-control">
+					<label for="username" name="username">Username</label>
+					<input id="txtUserName" type="text" name="username" autofocus autocomplete="off" />
+					<small>Error Message</small>
+				</div>
+
+				<div class="form-control">
+					<label for="pwd" name="pwd">Password</label>
+					<input id="txtPwd" type="password" name="password" autocomplete="off" />
+					<small>Error Message</small>
+				</div>
+
+				<div class="form-control">
+					<button>Login</button>
+				</div>
+
+				<div class="form-control log_in">
+					<p>Don't have an account <a href="/auth/register"> SignUp</a></p>
+				</div>
+			</form>
 		</div>
-		<form class="form" action="/auth/login" method="POST">
-			<div class="form-control">
-				<label for="username" name="username">Username</label>
-				<input id="txtUserName" type="text" name="username" autofocus autocomplete="off" />
-				<small>Error Message</small>
-			</div>
-
-			<div class="form-control">
-				<label for="pwd" name="pwd">Password</label>
-				<input id="txtPwd" type="password" name="password" autocomplete="off" />
-				<small>Error Message</small>
-			</div>
-
-			<div class="form-control">
-				<button>Login</button>
-			</div>
-
-			<div class="form-control log_in">
-				<p>Don't have an account <a href="/auth/register"> SignUp</a></p>
-			</div>
-		</form>
-	</div>
-	<script src="/JS/login.js"></script>
+		<script src="/JS/login.js"></script>
 
 </body>
 

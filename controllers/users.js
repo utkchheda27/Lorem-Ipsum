@@ -14,13 +14,13 @@ export const register = async (req, res, next) => {
         const user = new User(req.body)
         user.profilePicture = req.file.path;
         const registeredUser = await User.register(user, req.body.password);
-        // console.log(registeredUser)
+        console.log(registeredUser)
         req.login(registeredUser, err => {
             if (err) return next(err);
-            const redirectUrl = req.session.returnTo || "/";
+            // const redirectUrl = req.session.returnTo || "/";
             // console.log("redirectUrl => ", redirectUrl)
-            delete req.session.returnTo;
-            return res.redirect(redirectUrl)
+            // delete req.session.returnTo;
+            return res.redirect("/")
         })
         res.send('success')
     } catch (e) {
@@ -34,17 +34,17 @@ export const renderLogin = (req, res) => {
 }
 
 export const login = (req, res) => {
-    // console.log(req.user._id)
-    req.flash("success", "welcome back")
+    console.log(req.user._id)
+    // req.flash("success", "welcome back")
     const redirectUrl = req.session.returnTo || "/";
-    // console.log("redirectUrl => ", redirectUrl)
+    console.log("redirectUrl => ", redirectUrl)
     delete req.session.returnTo;
     res.redirect(redirectUrl)
 }
 
 export const logout = (req, res) => {
     req.logout();
-    res.redirect("/")
+    res.redirect("/auth/login")
 }
 
 export const updateUser = catchAsync(async (req, res) => {
@@ -125,7 +125,6 @@ export const deleteUser = async (req, res) => {
 
         }
         user.profilePicture = defaultUserProfilePicture;
-        // user.username = "Deleted Account";
         user.isDeleted = true
         user.friends = undefined
         user.interests = undefined

@@ -104,7 +104,7 @@ if (btnCtn) {
     const res = await axios.get('/api/loggedInUserInfo');
     const loggedInuser = res.data.loggedInuser
     const { data } = await axios.post(`/user/${loggedInuser._id}/requests/${id}/response`, { status: true });
-    if (data.status) {
+    if (data.status === false) {
       // console.log(data.error)
       loadingAnimationCtn.remove()
       overlay.remove()
@@ -233,7 +233,7 @@ postInput && postInput.addEventListener('click', (e) => {
                     <img
                     src=${loggedInuser.profilePicture}
                     alt="loggedInUserInfo" class="create-post-user-img">
-                  </a>
+                  </a>dr
                 </div>
                 <div class="create-post-user-name">
                   <a href="/user/${loggedInuser._id}">
@@ -367,7 +367,7 @@ const unlikePost = async (post, _id) => {
 const postLike = async (post, _id) => {
   const res = await axios.post(`/posts/${_id}/likes`);
   if (res.data.status == true) {
-    post.children[2].children[0].innerText = `${res.data.noOfLikes === 1 ? `${res.data.noOfLikes} Likes` : `${res.data.noOfLikes} Likes`}`
+    post.children[2].children[0].innerText = `${res.data.noOfLikes === 1 ? `${res.data.noOfLikes} Like` : `${res.data.noOfLikes} Likes`}`
     // post.children[3].children[0].children[0].innerText = "Liked"
     // post.children[3].children[0].children[1].classList.remove('far')
     // post.children[3].children[0].children[1].classList.add('fas')
@@ -432,7 +432,7 @@ const createPost = ({ caption, likes, comments, images, date, User, time, _id })
                     <span>${time}</span>
                   </div>
                 </div>
-                <div class="morebtn-ctn">
+                <div class="morebtn-ctn ${String(User._id) !== String(loggedInuser._id) ? 'display-none' : ''}">
                   <button class="more-btn">
                     <i class="fas fa-ellipsis-h"></i>
                   </button>
@@ -835,6 +835,14 @@ if (editInterestsForm) {
 // for (let checkBox of checkBoxs) {
 //   checkBox.addEventListener('click', () => {
 //     checkBox.parentNode.children[0].children[0].classList.toggle('display-none')
+//   })
+// }
+
+
+// const profilePicture = document.querySelector('.profile-img')
+// if (profilePicture) {
+//   profilePicture.addEventListener('click', () => {
+//     profilePicture.classList.add('high-z-index');
 //   })
 // }
 

@@ -111,9 +111,11 @@ body {
 .friend-info .name {
   display: flex;
   width: 70%;
-  align-items: center;
   text-align: start;
   text-transform: capitalize;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
 }
 
 .dateAndTime {

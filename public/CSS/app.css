@@ -91,7 +91,7 @@ label {
 .post-header {
   height: 70px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   border-bottom: 1px solid #000;
 }
@@ -716,4 +716,8 @@ width:40px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.high-z-index {
+  z-index: 1000 !important;
 }

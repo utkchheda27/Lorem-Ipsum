@@ -24,52 +24,52 @@
 </head>
 
 <body>
-	<!-- <%= error %> -->
-	<div class="container">
-		<div class="logo"><img src="/assets/logo_without_text.jpg" alt=""></div>
-		<div class="header">
-			<h2>Sign Up</h2>
+	<%= error %>
+		<div class="container">
+			<div class="logo"><img src="/assets/logo_without_text.jpg" alt=""></div>
+			<div class="header">
+				<h2>Sign Up</h2>
+			</div>
+			<form class="form" action="/auth/register" method="POST" enctype="multipart/form-data">
+				<div class="form-control">
+					<label for="username" name="username">Username</label>
+					<input id="txtUserName" type="text" name="username" autofocus autocomplete="off" />
+					<small>Error Message</small>
+				</div>
+
+				<div class="form-control">
+					<label for="email" name="email">Email</label>
+					<input id="txtEmail" type="email" name="email" autocomplete="off" />
+					<small>Error Message</small>
+				</div>
+
+				<div class="form-control">
+					<label for="pwd" name="pwd">Password</label>
+					<input id="txtPwd" type="password" name="password" autocomplete="off" />
+					<small>Error Message</small>
+				</div>
+
+				<div class="form-control">
+					<label for="conpwd" name="conpwd">Confirm Password</label>
+					<input id="txtConPwd" type="password" name="conpwd" autocomplete="off" />
+					<small>Error Message</small>
+				</div>
+
+				<div class="form-control">
+					<label for="profilepicture">Profile-Pic : </label>
+					<input type="file" name="profilePicture" id="profilepicture" autocomplete="off" />
+				</div>
+
+				<div class="form-control">
+					<button>Register</button>
+				</div>
+
+				<div class="form-control log_in">
+					<p>Already have an account <a href="/login">Log In</a></p>
+				</div>
+			</form>
 		</div>
-		<form class="form" action="/auth/register" method="POST" enctype="multipart/form-data">
-			<div class="form-control">
-				<label for="username" name="username">Username</label>
-				<input id="txtUserName" type="text" name="username" autofocus autocomplete="off" />
-				<small>Error Message</small>
-			</div>
-
-			<div class="form-control">
-				<label for="email" name="email">Email</label>
-				<input id="txtEmail" type="email" name="email" autocomplete="off" />
-				<small>Error Message</small>
-			</div>
-
-			<div class="form-control">
-				<label for="pwd" name="pwd">Password</label>
-				<input id="txtPwd" type="password" name="password" autocomplete="off" />
-				<small>Error Message</small>
-			</div>
-
-			<div class="form-control">
-				<label for="conpwd" name="conpwd">Confirm Password</label>
-				<input id="txtConPwd" type="password" name="conpwd" autocomplete="off" />
-				<small>Error Message</small>
-			</div>
-
-			<div class="form-control">
-				<label for="profilepicture">Profile-Pic : </label>
-				<input type="file" name="profilePicture" id="profilepicture" autocomplete="off" />
-			</div>
-
-			<div class="form-control">
-				<button>Register</button>
-			</div>
-
-			<div class="form-control log_in">
-				<p>Already have an account <a href="/login">Log In</a></p>
-			</div>
-		</form>
-	</div>
-	<script src="/JS/register.js"></script>
+		<script src="/JS/register.js"></script>
 
 </body>
 
