@@ -24,8 +24,109 @@
   height: 200px;
   width: 200px;
   border-radius: 50%;
+  position: relative;
+  top: 0;
+}
+.profile-img-ctn:hover {
+  cursor: pointer;
+}
+.form-change-dp-ctn {
+  position: absolute;
 }
 
+.profile-pic-pop-up-menu {
+  position: absolute;
+  /* width: 150px; */
+  padding: 10px;
+  background-color: antiquewhite;
+  border-radius: 5px;
+  right: 0;
+  font-size: 1em;
+}
+
+.profile-pic-pop-up-menu ul {
+  width: 100%;
+}
+
+.profile-pic-pop-up-menu li {
+  width: 100%;
+  margin: 5px auto;
+  font-size: inherit !important;
+}
+
+.profile-pic-pop-up-menu li:hover {
+  background-color: gray;
+  cursor: pointer !important;
+}
+
+.delete-img-submit-btn {
+  font-size: inherit;
+}
+
+.delete-img-submit-btn:hover {
+  cursor: pointer;
+}
+
+.dp-change-form-ctn {
+  width: 50%;
+  height: 70%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 0;
+}
+
+.close-dp-change-popup {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.dp-change-form-ctn form {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.dp-change-form-ctn > form > input {
+  width: 200px;
+}
+
+.onchange {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.image-in-pre {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.dp-change-submit-btn {
+  width: 100%;
+  height: 10%;
+}
+.dp-change-submit-btn > button {
+  width: 100px;
+  height: 50px;
+  background-color: #e9e9ed;
+  border-radius: 5px;
+  display: block;
+  margin: auto;
+  border: 0.5px solid black;
+}
 /* box-shadow: none|h-offset v-offset blur spread color |inset|initial|inherit; */
 
 .btn-ctn-profile-page {
@@ -149,6 +250,7 @@
   display: flex;
   justify-content: start;
   margin: 10px 0;
+  font-size: 0.8em;
 }
 
 .details-form ul li i {
@@ -588,4 +690,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media all and (max-width: 1000px) {
+  .main-ctn {
+    width: 100%;
+  }
 }

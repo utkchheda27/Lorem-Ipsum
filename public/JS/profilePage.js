@@ -521,7 +521,7 @@ const createPost = ({ caption, likes, comments, images, date, User, time, _id })
                         </div>
                         <div class="commentators-details">
                           <a href="/user/${comment.author._id}">
-                            <span class="commentators-name">${comment.author.username}</span>
+                            <span class="commentators-name">${User.isDeleted === true ? 'Deleted Account' : comment.author.username}</span>
                           </a>
                           <div>
                             <span class="time">${comment.date}</span>
@@ -839,11 +839,62 @@ if (editInterestsForm) {
 // }
 
 
-// const profilePicture = document.querySelector('.profile-img')
-// if (profilePicture) {
-//   profilePicture.addEventListener('click', () => {
-//     profilePicture.classList.add('high-z-index');
-//   })
-// }
+const profilePicture = document.querySelector('.can-change')
+const profilePictureCtn = document.querySelector('.profile-img-ctn')
+const profilePicturePopUp = document.querySelector('.profile-pic-pop-up-menu')
+const profilePictureOverlay = document.querySelector('.chage-dp-overlay')
+if (profilePicture) {
+  profilePicture.addEventListener('click', () => {
+    profilePictureCtn.classList.toggle('high-z-index');
+    profilePicturePopUp.classList.toggle('display-none');
+    document.querySelector('body').classList.toggle('noscroll')
+    profilePictureOverlay.classList.toggle('display-none')
+  })
+}
+
+const changeProfilePictureBtn = document.querySelector('.change-profile-picture')
+changeProfilePictureBtn.addEventListener('click', () => {
+  profilePictureCtn.classList.remove('high-z-index');
+  profilePicturePopUp.classList.add('display-none')
+  profilePictureOverlay.innerHTML = `
+  <div class="dp-change-form-ctn">
+    <button class="close-dp-change-popup">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+    <form method="POST" action="/user/${loggedInuser._id}?_method=PUT" class="dp-change-form" enctype="multipart/form-data">
+      <div class="image-in-pre">
+        <input type="file" name="profilePicture" id="image-input">
+        <img src="#" alt="" id="dp-change-img-preview">
+      </div>
+      <div class="dp-change-submit-btn">
+        <button type="submit">Update profile picture</button>
+      </div>
+    </form>
+  </div>
+  `
+  const dpChangeIn = document.querySelector('#image-input')
+  const imagePreview = document.querySelector('#dp-change-img-preview')
+  dpChangeIn.onchange = () => {
+    // const [file] = imgInp.files
+    // if (file) {
+    //   blah.src = URL.createObjectURL(file)
+    // }
+    const [file] = dpChangeIn.files
+    console.log(dpChangeIn.files)
+    if (file) {
+      imagePreview.src = URL.createObjectURL(file)
+      imagePreview.classList.add('onchange');
+    }
+  }
+  const closeOverLayBtn = document.querySelector('.close-dp-change-popup')
+  closeOverLayBtn.addEventListener('click', () => {
+    profilePictureOverlay.classList.add('display-none')
+    profilePictureOverlay.innerHTML = ``;
+    document.querySelector('body').classList.remove('noscroll')
+  })
+})
+
+
+
 
 window.addEventListener('load', mainLoadEventHandler)  // adds load event to window which adds post to main element
