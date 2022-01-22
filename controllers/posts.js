@@ -31,12 +31,6 @@ export const createPostHandler = async (req, res) => {
         const dateN = `${date.getDate()}|${date.getMonth() + 1}|${date.getFullYear()}`
         const time = `${date.getHours()}:${date.getMinutes()}`
         const tempPost = new Post(req.body)
-        // console.log(req.files)
-        // const result = await storage.cloudinary.uploader.upload(req.files);
-        for (let file of req.files) {
-            const result = await storage.cloudinary.uploader.upload(file.path);
-            // console.log(result)
-        }
         tempPost.images = req.files.map(f => f.path);
         tempPost.User = req.user._id
         tempPost.time = time

@@ -11,7 +11,7 @@ const userSchema = new Schema({
     },
     profilePicture: {
         type: String,
-        default: "https://img.etimg.com/thumb/msid-50589035,width-650,imgsize-123073,,resizemode-4,quality-100/.jpg"
+        default: "https://thumbs.dreamstime.com/b/default-avatar-profile-trendy-style-social-media-user-icon-187599373.jpg"
     },
     posts: [{
         type: Schema.Types.ObjectId,

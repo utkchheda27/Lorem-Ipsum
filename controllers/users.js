@@ -12,17 +12,17 @@ const defaultUserProfilePicture = "https://www.seekpng.com/png/full/115-1150053_
 export const register = async (req, res, next) => {
     try {
         const user = new User(req.body)
-        user.profilePicture = req.file.path;
+        if (req.file) {
+            user.profilePicture = req.file.path;
+        }
         const registeredUser = await User.register(user, req.body.password);
         console.log(registeredUser)
         req.login(registeredUser, err => {
             if (err) return next(err);
-            // const redirectUrl = req.session.returnTo || "/";
-            // console.log("redirectUrl => ", redirectUrl)
-            // delete req.session.returnTo;
-            return res.redirect("/")
+            setTimeout(() => {
+                return res.redirect("/")
+            }, 2000);
         })
-        res.send('success')
     } catch (e) {
         req.flash("error", e.message);
         res.redirect("/auth/register")
@@ -34,34 +34,51 @@ export const renderLogin = (req, res) => {
 }
 
 export const login = (req, res) => {
-    console.log(req.user._id)
-    // req.flash("success", "welcome back")
-    const redirectUrl = req.session.returnTo || "/";
-    console.log("redirectUrl => ", redirectUrl)
-    delete req.session.returnTo;
-    res.redirect(redirectUrl)
+    setTimeout(() => {
+        return res.redirect("/")
+    }, 2000);
 }
 
 export const logout = (req, res) => {
     req.logout();
-    res.redirect("/auth/login")
+    setTimeout(() => {
+        return res.redirect("/auth/login")
+    }, 2000);
 }
 
 export const updateUser = catchAsync(async (req, res) => {
     try {
         const { id } = req.params
         const { description = undefined, country = undefined, state = undefined, city = undefined, yearOfGraduation = undefined, branchInCollege = undefined, course = undefined, interests = undefined } = req.body;
+        const { deleteProfilePicture } = req.query;
+        console.log(Boolean(deleteProfilePicture))
         if (!id) {
             throw new ExpressError('id is not defined', 404);
         }
         if (String(id) !== String(req.user._id)) {
-            throw ExpressError("Illegal operation", 401)
+            throw new ExpressError("Illegal operation", 401)
         }
-        const user = await User.findById(id);
+        let user = await User.findById(id);
         if (!user) {
-            throw ExpressError("User not found", 404);
+            throw new ExpressError("User not found", 404);
         }
-
+        if (deleteProfilePicture) {
+            user.profilePicture = 'https://thumbs.dreamstime.com/b/default-avatar-profile-trendy-style-social-media-user-icon-187599373.jpg';
+        }
+        if (req.file !== undefined) {
+            user.profilePicture = req.file.path;
+            const profileChangePost = new Post();
+            profileChangePost.caption = "New Profile Picture"
+            profileChangePost.images = [req.file.path]
+            profileChangePost.User = req.user._id;
+            const date = new Date;
+            const dateN = `${date.getDate()}|${date.getMonth() + 1}|${date.getFullYear()}`
+            const time = `${date.getHours()}:${date.getMinutes()}`
+            profileChangePost.date = dateN
+            profileChangePost.time = time
+            const res1 = await profileChangePost.save()
+            user.posts.push(res1._id)
+        }
         if (description != undefined && description.trim()) {
             user.description = description.trim();
         }

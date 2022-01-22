@@ -37,10 +37,28 @@
         <div class="profile-img-ctn">
           <img src=<%=user.profilePicture %>
           alt=""
-          class="profile-img"
-          />
+          class="profile-img <%= (String(user._id)===String(currentUser._id)) ? "can-change" : "" %> "
+            />
+            <!-- <div class="form-change-dp-ctn">
+            <form action="/posts" method="post" enctype="multipart/form-data">
+              <input type="file">
+          </div>
+          </form>
+        </div> -->
+            <div class="profile-pic-pop-up-menu display-none">
+              <ul>
+                <li class="delete-profile-picture">
+                  <form action="/user/<%= user._id %>?_method=PUT&deleteProfilePicture=true" method="post">
+                    <button class="delete-img-submit-btn">Remove profile picture</button>
+                  </form>
+                </li>
+                <li class="change-profile-picture">
+                  Update Profile Picture
+                </li>
+              </ul>
+            </div>
         </div>
-        <div class="overlay">
+        <div class="overlay display-none chage-dp-overlay">
 
         </div>
         <% if (String(currentUser._id)!==String(user._id)) { %>

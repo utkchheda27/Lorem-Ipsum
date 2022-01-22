@@ -158,6 +158,9 @@ app.get('/suggestions', async (req, res) => {
     }
 })
 
+app.get("/", homepageHandler);
+app.get('/friends', isLoggedIn, friendsPageHandler)
+app.get('/search', isLoggedIn, searchResult)
 app.use('/api', apiRouter)
 app.use('/user/:id', userRouter)
 app.use('/auth', authRouter)
@@ -165,9 +168,6 @@ app.use('/user/:id/friends', friendRouter)
 app.use('/posts', postRouter)
 app.use('/posts/:postID/comments', commentRouter)
 app.use('/chats/', chatRouter)
-app.get("/", homepageHandler);
-app.get('/friends', isLoggedIn, friendsPageHandler)
-app.get('/search', isLoggedIn, searchResult)
 
 
 
